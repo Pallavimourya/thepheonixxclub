@@ -35,7 +35,7 @@ export default function Home() {
             </nav>
             <div className="hidden md:flex items-center space-x-4">
               <Link
-                href="#"
+                href="/auth/signin"
                 className="px-4 py-2 rounded-md bg-[#0a1433] text-white hover:bg-[#162552] transition-colors"
               >
                 Login
@@ -107,45 +107,7 @@ export default function Home() {
       </section>
 
       {/* Video/Slideshow Section */}
-      <section className="py-16 bg-gray-50">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-[#0a1433] mb-4">Experience The Phoenixx Club</h2>
-            <p className="text-gray-600 max-w-2xl mx-auto">
-              Take a glimpse into our exclusive events and the unforgettable experiences we create.
-            </p>
-          </div>
-          <div className="relative aspect-video max-w-4xl mx-auto rounded-xl overflow-hidden shadow-xl">
-            <div className="absolute inset-0 bg-[#0a1433] flex items-center justify-center">
-              <div className="text-center">
-                <div className="w-20 h-20 rounded-full bg-[#ffb74d] flex items-center justify-center mx-auto mb-4 cursor-pointer hover:bg-[#ffa726] transition-colors">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    className="w-10 h-10 text-[#0a1433]"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"
-                    />
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                    />
-                  </svg>
-                </div>
-                <p className="text-white text-lg">Watch our highlight reel</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      
 
       {/* Events Section */}
       <section id="events" className="py-16">
@@ -329,7 +291,7 @@ export default function Home() {
                 </div>
 
                 <Link
-                  href="#"
+                  href="/auth/signup"
                   className="block w-full py-4 rounded-md bg-[#0a1433] text-white text-center font-bold hover:bg-[#162552] transition-colors text-lg"
                 >
                   Apply for Membership
@@ -706,7 +668,7 @@ export default function Home() {
               </div>
               <p className="text-gray-600 mb-4">Luxury, Laughter and Legacy</p>
               <div className="flex space-x-4">
-                <a href="#" className="text-gray-400 hover:text-[#ffb74d]">
+                <a href="https://www.facebook.com/profile.php?id=61575687517147" className="text-gray-400 hover:text-[#ffb74d]">
                   <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                     <path
                       fillRule="evenodd"
@@ -715,7 +677,7 @@ export default function Home() {
                     ></path>
                   </svg>
                 </a>
-                <a href="#" className="text-gray-400 hover:text-[#ffb74d]">
+                <a href="https://www.instagram.com/thephoenixxclub?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" className="text-gray-400 hover:text-[#ffb74d]">
                   <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                     <path
                       fillRule="evenodd"
@@ -784,10 +746,9 @@ export default function Home() {
             <div>
               <h3 className="text-sm font-bold text-[#0a1433] uppercase tracking-wider mb-4">Contact</h3>
               <ul className="space-y-2">
-                <li className="text-gray-600">123 Luxury Avenue</li>
-                <li className="text-gray-600">New York, NY 10001</li>
-                <li className="text-gray-600">info@phoenixxclub.com</li>
-                <li className="text-gray-600">+1 (555) 123-4567</li>
+               
+                <li className="text-gray-600">thephoenixxclub@gmail.com</li>
+                <li className="text-gray-600">+91-9977334588</li>
               </ul>
             </div>
           </div>
