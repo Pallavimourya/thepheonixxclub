@@ -29,7 +29,7 @@ export default function Home() {
               <Link href="#community" className="text-[#0a1433] hover:text-[#ffb74d] font-medium">
                 Community
               </Link>
-              <Link href="#about" className="text-[#0a1433] hover:text-[#ffb74d] font-medium">
+              <Link href="/about" className="text-[#0a1433] hover:text-[#ffb74d] font-medium">
                 About
               </Link>
             </nav>
@@ -631,31 +631,83 @@ export default function Home() {
       </section>
 
       {/* Call to Action */}
-      <section className="py-20 bg-[#0a1433] relative">
-        <div className="absolute inset-0 bg-[url('/hero-pattern.png')] bg-repeat opacity-5"></div>
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="max-w-3xl mx-auto text-center">
-            <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">Ready to Join The Phoenixx Club?</h2>
-            <p className="text-xl text-gray-300 mb-8">
-              Become part of an exclusive community where luxury, laughter, and legacy come together.
-            </p>
-            <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 justify-center">
-              <Link
-                href="#membership"
-                className="px-8 py-3 rounded-md bg-[#ffb74d] text-[#0a1433] font-bold hover:bg-[#ffa726] transition-colors"
-              >
-                Join Now
-              </Link>
-              <Link
-                href="#"
-                className="px-8 py-3 rounded-md bg-transparent border-2 border-white text-white font-bold hover:bg-white/10 transition-colors"
-              >
-                Contact Us
-              </Link>
+      <section className="py-12 bg-[#0a1433] relative">
+  <div className="absolute inset-0 bg-[url('/hero-pattern.png')] bg-cover opacity-5"></div>
+  <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    <div className="flex flex-col lg:flex-row items-center justify-center space-y-8 lg:space-y-0 lg:space-x-12">
+      {/* Left Side - Call to Action */}
+      <div className="text-center lg:text-left max-w-md mx-auto">
+        <h2 className="text-2xl font-bold text-white mb-4">Join The Phoenixx Club</h2>
+        <p className="text-lg text-gray-300 mb-6">
+          Be part of an exclusive community with access to events, collaborations, and more.
+        </p>
+        <Link
+          href="#membership"
+          className="px-6 py-2 rounded-md bg-[#ffb74d] text-[#0a1433] font-bold hover:bg-[#ffa726] transition-colors"
+        >
+          Join Now
+        </Link>
+      </div>
+
+      {/* Right Side - Wider Contact Form */}
+      <div className="bg-white p-6 rounded-xl shadow-lg w-full max-w-[700px]">
+        <h3 className="text-xl font-semibold text-[#0a1433] mb-4">Contact Us</h3>
+        <form action="#" method="POST" className="space-y-4">
+          <div className="flex space-x-6">
+            <div className="flex-1">
+              <label className="block text-[#0a1433] font-medium mb-2" htmlFor="name">
+                Name
+              </label>
+              <input
+                type="text"
+                name="name"
+                id="name"
+                required
+                className="w-full border border-gray-300 rounded-md p-3"
+                placeholder="Your Name"
+              />
+            </div>
+            <div className="flex-1">
+              <label className="block text-[#0a1433] font-medium mb-2" htmlFor="email">
+                Email
+              </label>
+              <input
+                type="email"
+                name="email"
+                id="email"
+                required
+                className="w-full border border-gray-300 rounded-md p-3"
+                placeholder="you@example.com"
+              />
             </div>
           </div>
-        </div>
-      </section>
+
+          <div>
+            <label className="block text-[#0a1433] font-medium mb-2" htmlFor="message">
+              Message
+            </label>
+            <textarea
+              name="message"
+              id="message"
+              rows={3}
+              required
+              className="w-full border border-gray-300 rounded-md p-3"
+              placeholder="Your Message"
+            ></textarea>
+          </div>
+
+          <button
+            type="submit"
+            className="w-full px-6 py-2 bg-[#ffb74d] text-[#0a1433] font-bold rounded-md hover:bg-[#ffa726] transition-colors"
+          >
+            Send Message
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
 
       {/* Footer */}
       <footer className="bg-white border-t border-gray-200">
@@ -686,10 +738,10 @@ export default function Home() {
                     ></path>
                   </svg>
                 </a>
-                <a href="#" className="text-gray-400 hover:text-[#ffb74d]">
-                  <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                    <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84"></path>
-                  </svg>
+                <a href="mailto:thephoenixxclub@gmail.com" className="text-gray-400 hover:text-[#ffb74d]">
+                 <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                   <path d="M2 6.5V17.5C2 18.328 2.672 19 3.5 19H20.5C21.328 19 22 18.328 22 17.5V6.5C22 5.672 21.328 5 20.5 5H3.5C2.672 5 2 5.672 2 6.5ZM20.5 6L12 11.25L3.5 6H20.5ZM3 7.465L12 12.25L21 7.465V16.535L12 11.75L3 16.535V7.465Z"></path>
+                 </svg>
                 </a>
               </div>
             </div>
@@ -697,22 +749,17 @@ export default function Home() {
               <h3 className="text-sm font-bold text-[#0a1433] uppercase tracking-wider mb-4">Membership</h3>
               <ul className="space-y-2">
                 <li>
-                  <Link href="#" className="text-gray-600 hover:text-[#ffb74d]">
+                  <Link href="#membership" className="text-gray-600 hover:text-[#ffb74d]">
                     Join Now
                   </Link>
                 </li>
                 <li>
-                  <Link href="#" className="text-gray-600 hover:text-[#ffb74d]">
+                  <Link href="/benefit" className="text-gray-600 hover:text-[#ffb74d]">
                     Benefits
                   </Link>
                 </li>
                 <li>
-                  <Link href="#" className="text-gray-600 hover:text-[#ffb74d]">
-                    Pricing
-                  </Link>
-                </li>
-                <li>
-                  <Link href="#" className="text-gray-600 hover:text-[#ffb74d]">
+                  <Link href="/FAQ" className="text-gray-600 hover:text-[#ffb74d]">
                     FAQ
                   </Link>
                 </li>
@@ -757,13 +804,13 @@ export default function Home() {
               &copy; {new Date().getFullYear()} The Phoenixx Club. All rights reserved.
             </p>
             <div className="flex space-x-6">
-              <Link href="#" className="text-gray-500 hover:text-[#0a1433] text-sm">
+              <Link href="/privacy-policy" className="text-gray-500 hover:text-[#0a1433] text-sm">
                 Privacy Policy
               </Link>
-              <Link href="#" className="text-gray-500 hover:text-[#0a1433] text-sm">
+              <Link href="/terms" className="text-gray-500 hover:text-[#0a1433] text-sm">
                 Terms of Service
               </Link>
-              <Link href="#" className="text-gray-500 hover:text-[#0a1433] text-sm">
+              <Link href="/cookie-policy" className="text-gray-500 hover:text-[#0a1433] text-sm">
                 Cookie Policy
               </Link>
             </div>

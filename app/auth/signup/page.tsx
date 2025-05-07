@@ -10,6 +10,7 @@ interface FormData {
   firstName: string;
   lastName: string;
   email: string;
+  phone: string; // Changed to string
   password: string;
   confirmPassword: string;
 }
@@ -19,6 +20,7 @@ export default function SignUpForm() {
     firstName: '',
     lastName: '',
     email: '',
+    phone: '', // Initial empty value for phone
     password: '',
     confirmPassword: '',
   });
@@ -38,6 +40,13 @@ export default function SignUpForm() {
 
     if (formData.password !== formData.confirmPassword) {
       setError('Passwords do not match');
+      return;
+    }
+
+    // Phone validation using a regular expression for valid phone numbers
+    const phoneRegex = /^[0-9]{10}$/;
+    if (!phoneRegex.test(formData.phone)) {
+      setError('Please enter a valid 10-digit phone number');
       return;
     }
 
@@ -106,6 +115,16 @@ export default function SignUpForm() {
           />
 
           <input
+            name="phone"
+            type="text"
+            required
+            placeholder="Phone number (10 digits)"
+            className="rounded-lg border border-gray-300 px-3 py-2 text-sm w-full focus:ring-[#0a1433] focus:border-[#0a1433]"
+            value={formData.phone}
+            onChange={handleChange}
+          />
+
+          <input
             name="password"
             type="password"
             required
@@ -143,4 +162,4 @@ export default function SignUpForm() {
       </div>
     </div>
   );
-} 
+}
