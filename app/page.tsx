@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Image from "next/image"
 import Link from "next/link"
 import { ChevronRight, Calendar, MapPin, Star, Users, ArrowRight, Clock, Check } from "lucide-react"
@@ -9,6 +9,34 @@ import { useAuth } from '@/lib/auth-context';
 export default function Home() {
   const { user } = useAuth();
   const [showMoreImages, setShowMoreImages] = useState(false);
+  const [currentSlide, setCurrentSlide] = useState(0);
+
+  const slides = [
+    {
+      src: "https://images.unsplash.com/photo-1527529482837-4698179dc6ce?q=80&w=3540&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      alt: "Luxury Club Interior"
+    },
+    {
+      src: "https://images.unsplash.com/photo-1605744435823-b88e4e9bc044?q=80&w=3540&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      alt: "Luxury Event"
+    },
+    {
+      src: "https://images.unsplash.com/photo-1524368535928-5b5e00ddc76b?q=80&w=3540&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      alt: "Exclusive Party"
+    }
+  ];
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % slides.length);
+    }, 3000);
+
+    return () => clearInterval(timer);
+  }, []);
+
+  const handleSlideClick = () => {
+    setCurrentSlide((prev) => (prev + 1) % slides.length);
+  };
 
   return (
     <div className="min-h-screen bg-white">
@@ -73,16 +101,29 @@ export default function Home() {
       </header>
 
       {/* Hero Section */}
-      <section className="relative h-[60vh]">
+      <section className="relative h-[60vh] overflow-hidden">
         <div className="absolute inset-0">
-          <Image
-            src="https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?q=80&w=3540&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-            alt="Luxury Club Interior"
-            fill
-            className="object-cover"
-            priority
-          />
-          <div className="absolute inset-0 bg-black/60 backdrop-blur-sm"></div>
+          <div className="relative w-full h-full">
+            {slides.map((slide, index) => (
+              <div
+                key={index}
+                className={`absolute inset-0 transition-opacity duration-500 ${
+                  index === currentSlide ? 'opacity-100' : 'opacity-0'
+                }`}
+                onClick={handleSlideClick}
+                style={{ cursor: 'pointer' }}
+              >
+                <Image
+                  src={slide.src}
+                  alt={slide.alt}
+                  fill
+                  className="object-cover"
+                  priority={index === 0}
+                />
+                <div className="absolute inset-0 bg-black/50"></div>
+              </div>
+            ))}
+          </div>
         </div>
         <div className="relative h-full flex items-center justify-center text-center px-4">
           <div className="max-w-2xl mx-auto text-center gsap-content">
@@ -745,7 +786,7 @@ export default function Home() {
 </section> */}
 
       {/* Party Gallery Section */}
-      <section id="gallery" className="py-12 bg-white scroll-mt-20">
+      <section className="py-12 bg-white">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-8">
             <h2 className="text-3xl font-bold text-[#0a1433] mb-3">Gallery</h2>
