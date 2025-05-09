@@ -6,13 +6,25 @@ import Image from 'next/image';
 import { useAuth } from '@/lib/auth-context';
 import { useRouter } from 'next/navigation';
 
+interface FormData {
+  email: string;
+  password: string;
+}
+
 export default function SignInForm() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [formData, setFormData] = useState<FormData>({
+    email: '',
+    password: '',
+  });
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const { signin } = useAuth();
   const router = useRouter();
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -20,8 +32,8 @@ export default function SignInForm() {
     setIsLoading(true);
 
     try {
-      await signin(email, password);
-      router.push('/dashboard');
+      await signin(formData.email, formData.password);
+      router.push('/');
     } catch (err) {
       setError('Invalid email or password');
     } finally {
@@ -29,83 +41,56 @@ export default function SignInForm() {
     }
   };
 
-  const handleEmailChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setEmail(e.target.value);
-  };
-
-  const handlePasswordChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setPassword(e.target.value);
-  };
-
   return (
-    <div className="min-h-screen flex items-center justify-center bg-white px-4 py-12">
-      <div className="w-full max-w-md bg-white border border-gray-200 rounded-2xl shadow-lg p-8">
+    <div className="min-h-screen bg-white flex items-center justify-center px-6 py-12">
+      <div className="w-full max-w-md rounded-2xl shadow-xl border border-gray-100 p-8">
         <div className="flex flex-col items-center mb-6">
-          <Image src="/logo.png" alt="The Phoenixx Club" width={60} height={60} className="mb-3" />
-          <h2 className="text-2xl font-bold text-[#0a1433]">Sign in to your account</h2>
-          <p className="mt-1 text-sm text-gray-500">Welcome back to The Phoenixx Club</p>
+          <Image src="/logo.png" alt="The Phoenixx Club" width={60} height={60} className="mb-4" />
+          <h2 className="text-3xl font-bold text-[#0a1433] text-center">Welcome Back</h2>
+          <p className="text-gray-500 text-sm text-center mt-2">Sign in to your account</p>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-5">
+        <form onSubmit={handleSubmit} className="space-y-4">
           {error && (
-            <div className="bg-red-100 text-red-700 px-4 py-2 rounded-md text-sm">
+            <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-2 rounded text-sm">
               {error}
             </div>
           )}
 
-          <div className="space-y-1">
-            <label htmlFor="email-address" className="block text-sm font-medium text-gray-700">
-              Email address
-            </label>
-            <input
-              id="email-address"
-              name="email"
-              type="email"
-              autoComplete="email"
-              required
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg text-sm focus:ring-[#0a1433] focus:border-[#0a1433]"
-              placeholder="you@example.com"
-              value={email}
-              onChange={handleEmailChange}
-            />
-          </div>
+          <input
+            name="email"
+            type="email"
+            required
+            placeholder="Email address"
+            className="rounded-lg border border-gray-300 px-3 py-2 text-sm w-full focus:ring-[#0a1433] focus:border-[#0a1433]"
+            value={formData.email}
+            onChange={handleChange}
+          />
 
-          <div className="space-y-1">
-            <label htmlFor="password" className="block text-sm font-medium text-gray-700">
-              Password
-            </label>
-            <input
-              id="password"
-              name="password"
-              type="password"
-              autoComplete="current-password"
-              required
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg text-sm focus:ring-[#0a1433] focus:border-[#0a1433]"
-              placeholder="••••••••"
-              value={password}
-              onChange={handlePasswordChange}
-            />
-          </div>
-
-          <div className="flex justify-between items-center text-sm">
-            <Link href="/auth/forgot-password" className="text-[#0a1433] hover:text-[#ffb74d]">
-              Forgot your password?
-            </Link>
-          </div>
+          <input
+            name="password"
+            type="password"
+            required
+            placeholder="Password"
+            className="rounded-lg border border-gray-300 px-3 py-2 text-sm w-full focus:ring-[#0a1433] focus:border-[#0a1433]"
+            value={formData.password}
+            onChange={handleChange}
+          />
 
           <button
             type="submit"
             disabled={isLoading}
-            className="w-full flex justify-center py-2 px-4 bg-[#0a1433] text-white text-sm font-medium rounded-lg hover:bg-[#ffb74d] hover:text-[#0a1433] transition disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full bg-[#0a1433] hover:bg-[#ffb74d] text-white hover:text-[#0a1433] transition-colors font-semibold py-2 px-4 rounded-lg text-sm disabled:opacity-60"
           >
-            {isLoading ? 'Signing in...' : 'Sign in'}
+            {isLoading ? 'Signing in...' : 'Sign In'}
           </button>
 
-          <div className="text-center text-sm">
-            <Link href="/auth/signup" className="text-[#0a1433] hover:text-[#ffb74d]">
-              Don&apos;t have an account? Apply for membership
+          <p className="text-sm text-center mt-4 text-gray-600">
+            Don't have an account?{' '}
+            <Link href="/auth/signup" className="text-[#0a1433] hover:text-[#ffb74d] font-medium">
+              Sign up
             </Link>
-          </div>
+          </p>
         </form>
       </div>
     </div>

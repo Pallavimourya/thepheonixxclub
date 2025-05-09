@@ -1,108 +1,108 @@
 'use client';
 
-import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 
-export interface User {
+interface User {
   id: string;
   firstName: string;
   lastName: string;
   email: string;
+  phone: string;
+  password: string;
+  createdAt: string;
+  membershipStatus: string;
+  membershipType: string;
+  joinDate: string;
+  lastLogin: string;
 }
 
-export interface AuthContextType {
+interface AuthContextType {
   user: User | null;
-  signup: (data: { firstName: string; lastName: string; email: string; password: string }) => Promise<void>;
-  signin: (email: string, password: string) => Promise<void>;
+  signup: (userData: Partial<User>) => Promise<{ success: boolean; message: string }>;
+  signin: (email: string, password: string) => Promise<{ success: boolean; message: string }>;
   signout: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-interface AuthProviderProps {
-  children: ReactNode;
-}
-
-export function AuthProvider({ children }: AuthProviderProps) {
+export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const router = useRouter();
 
   useEffect(() => {
-    // Check for existing session
-    const checkSession = async () => {
-      try {
-        const response = await fetch('/api/auth/session');
-        if (response.ok) {
-          const userData = await response.json();
-          setUser(userData);
-        }
-      } catch (error) {
-        console.error('Session check error:', error);
-      }
-    };
-
-    checkSession();
+    // Check if user data exists in localStorage
+    const storedUser = localStorage.getItem('user');
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+    }
   }, []);
 
-  const signup = async (data: { firstName: string; lastName: string; email: string; password: string }) => {
+  const signup = async (userData: Partial<User>) => {
     try {
-      const response = await fetch('/api/auth/signup', {
+      const response = await fetch('/api/users', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify(userData),
       });
 
+      const data = await response.json();
+
       if (!response.ok) {
-        const error = await response.json();
-        throw new Error(error.message || 'Signup failed');
+        return {
+          success: false,
+          message: data.error || 'Failed to create account'
+        };
       }
 
-      const userData = await response.json();
-      setUser(userData);
-      router.push('/dashboard');
+      return {
+        success: true,
+        message: 'Account created successfully! Please sign in.'
+      };
     } catch (error) {
       console.error('Signup error:', error);
-      throw error;
+      return {
+        success: false,
+        message: 'An error occurred during signup'
+      };
     }
   };
 
   const signin = async (email: string, password: string) => {
     try {
-      const response = await fetch('/api/auth/signin', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email, password }),
-      });
-
+      const response = await fetch(`/api/users?email=${email}&password=${password}`);
+      const data = await response.json();
+      
       if (!response.ok) {
-        const error = await response.json();
-        throw new Error(error.message || 'Invalid credentials');
+        return {
+          success: false,
+          message: data.error || 'Invalid credentials'
+        };
       }
 
-      const userData = await response.json();
-      setUser(userData);
+      setUser(data);
+      localStorage.setItem('user', JSON.stringify(data));
       router.push('/dashboard');
+      
+      return {
+        success: true,
+        message: 'Signed in successfully!'
+      };
     } catch (error) {
       console.error('Signin error:', error);
-      throw error;
+      return {
+        success: false,
+        message: 'An error occurred during sign in'
+      };
     }
   };
 
   const signout = async () => {
-    try {
-      await fetch('/api/auth/signout', {
-        method: 'POST',
-      });
-      setUser(null);
-      router.push('/auth/signin');
-    } catch (error) {
-      console.error('Signout error:', error);
-      throw error;
-    }
+    setUser(null);
+    localStorage.removeItem('user');
+    router.push('/signin');
   };
 
   return (

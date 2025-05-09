@@ -1,8 +1,15 @@
+'use client';
+
+import React, { useState } from 'react';
 import Image from "next/image"
 import Link from "next/link"
 import { ChevronRight, Calendar, MapPin, Star, Users, ArrowRight, Clock, Check } from "lucide-react"
+import { useAuth } from '@/lib/auth-context';
 
 export default function Home() {
+  const { user } = useAuth();
+  const [showMoreImages, setShowMoreImages] = useState(false);
+
   return (
     <div className="min-h-screen bg-white">
       {/* Navigation */}
@@ -22,6 +29,9 @@ export default function Home() {
               </Link>
               <Link href="#events" className="text-[#0a1433] hover:text-[#ffb74d] font-medium">
                 Events
+              </Link>
+              <Link href="#gallery" className="text-[#0a1433] hover:text-[#ffb74d] font-medium">
+                Gallery
               </Link>
               <Link href="#membership" className="text-[#0a1433] hover:text-[#ffb74d] font-medium">
                 Membership
@@ -63,44 +73,38 @@ export default function Home() {
       </header>
 
       {/* Hero Section */}
-      <section className="relative bg-[#0a1433] py-20 md:py-32">
-        <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-r from-[#0a1433] to-[#162552] opacity-90"></div>
-          <div className="absolute inset-0 bg-[url('/hero-pattern.png')] bg-repeat opacity-10"></div>
+      <section className="relative h-[60vh]">
+        <div className="absolute inset-0">
+          <Image
+            src="https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?q=80&w=3540&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+            alt="Luxury Club Interior"
+            fill
+            className="object-cover"
+            priority
+          />
+          <div className="absolute inset-0 bg-black/60 backdrop-blur-sm"></div>
         </div>
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="flex flex-col items-center text-center">
-            <div className="mb-10 gsap-logo">
-              <Image
-                src="/logo.png"
-                alt="The Phoenixx Club"
-                width={150}
-                height={150}
-                className="object-contain"
-                priority
-              />
-            </div>
-            <div className="max-w-2xl mx-auto text-center gsap-content">
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight mb-6">
-                Ignite the Night with Phoenixx Events
-              </h1>
-              <p className="text-xl text-gray-300 mb-8">
-                Experience luxury, laughter and legacy with the most exclusive club events in the city.
-              </p>
-              <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 justify-center">
-                <Link
-                  href="#membership"
-                  className="px-8 py-3 rounded-md bg-[#ffb74d] text-[#0a1433] font-bold hover:bg-[#ffa726] transition-colors flex items-center justify-center gsap-button-1"
-                >
-                  Join Now <ChevronRight className="ml-2 h-5 w-5" />
-                </Link>
-                <Link
-                  href="#events"
-                  className="px-8 py-3 rounded-md bg-transparent border-2 border-white text-white font-bold hover:bg-white/10 transition-colors flex items-center justify-center gsap-button-2"
-                >
-                  Upcoming Events <ChevronRight className="ml-2 h-5 w-5" />
-                </Link>
-              </div>
+        <div className="relative h-full flex items-center justify-center text-center px-4">
+          <div className="max-w-2xl mx-auto text-center gsap-content">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight mb-6">
+              Ignite the Night with Phoenixx Events
+            </h1>
+            <p className="text-xl text-gray-300 mb-8">
+              Experience luxury, laughter and legacy with the most exclusive club events in the city.
+            </p>
+            <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 justify-center">
+              <Link
+                href="#membership"
+                className="px-8 py-3 rounded-md bg-[#ffb74d] text-[#0a1433] font-bold hover:bg-[#ffa726] transition-colors flex items-center justify-center gsap-button-1"
+              >
+                Join Now <ChevronRight className="ml-2 h-5 w-5" />
+              </Link>
+              <Link
+                href="#events"
+                className="px-8 py-3 rounded-md bg-transparent border-2 border-white text-white font-bold hover:bg-white/10 transition-colors flex items-center justify-center gsap-button-2"
+              >
+                Upcoming Events <ChevronRight className="ml-2 h-5 w-5" />
+              </Link>
             </div>
           </div>
         </div>
@@ -110,7 +114,7 @@ export default function Home() {
       
 
       {/* Events Section */}
-      <section id="events" className="py-16">
+      <section id="events" className="py-12">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-[#0a1433] mb-4">Our Events</h2>
@@ -123,7 +127,13 @@ export default function Home() {
           {/* Featured Event */}
           <div className="mb-16 bg-white rounded-xl overflow-hidden shadow-xl border-2 border-[#ffb74d]">
             <div className="grid md:grid-cols-2">
-              <div className="h-64 md:h-auto bg-[#0a1433] relative">
+              <div className="h-64 md:h-auto relative">
+                <Image
+                  src="https://images.unsplash.com/photo-1721133073235-e4b5facb27fa?q=80&w=3540&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                  alt="Luxury Event"
+                  fill
+                  className="object-cover"
+                />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#0a1433] to-transparent opacity-60"></div>
                 <div className="absolute top-4 left-4 bg-[#ffb74d] text-[#0a1433] px-3 py-1 rounded-md font-bold">
                   FEATURED EVENT
@@ -153,7 +163,7 @@ export default function Home() {
                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                   <div className="text-[#0a1433] font-bold">Exclusive to Members</div>
                   <Link
-                    href="#membership"
+                    href="/auth/signup"
                     className="px-6 py-3 rounded-md bg-[#ffb74d] text-[#0a1433] hover:bg-[#ffa726] transition-colors text-sm font-bold flex items-center"
                   >
                     Become a Member <ChevronRight className="ml-2 h-4 w-4" />
@@ -164,7 +174,7 @@ export default function Home() {
           </div>
 
           {/* Event Calendar */}
-          <div className="bg-white rounded-xl p-8 shadow-lg mb-12">
+          {/* <div className="bg-white rounded-xl p-8 shadow-lg mb-12">
             <h3 className="text-xl font-bold text-[#0a1433] mb-6 text-center">2025 Event Calendar</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               <div className="border border-gray-200 rounded-lg p-4 text-center hover:border-[#ffb74d] transition-colors">
@@ -191,119 +201,145 @@ export default function Home() {
             <div className="text-center text-gray-600 mt-6">
               Event details will be provided to members as each event approaches.
             </div>
-          </div>
+          </div> */}
 
           <div className="text-center">
-            <Link
-              href="#membership"
+            {/* <Link
+              href="/auth/signup"
               className="inline-flex items-center px-6 py-3 rounded-md bg-[#0a1433] text-white hover:bg-[#162552] transition-colors"
             >
               Join to Access All Events <ArrowRight className="ml-2 h-5 w-5" />
-            </Link>
+            </Link> */}
           </div>
         </div>
       </section>
 
       {/* Membership Section */}
-      <section id="membership" className="py-16 bg-gray-50">
+      <section id="membership" className="py-12 bg-gradient-to-b from-white to-gray-50">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-[#0a1433] mb-4">Exclusive Membership</h2>
-            <p className="text-gray-600 max-w-2xl mx-auto">
-              Join our exclusive club and gain access to all our premium events and networking opportunities.
+            <h2 className="text-4xl font-bold text-[#0a1433] mb-4">Exclusive Membership</h2>
+            <p className="text-gray-600 max-w-2xl mx-auto text-lg">
+              Join our elite community and unlock a world of luxury experiences, networking opportunities, and exclusive events.
             </p>
           </div>
 
-          <div className="max-w-3xl mx-auto">
-            {/* Single Membership Tier */}
-            <div className="bg-white rounded-xl overflow-hidden shadow-xl border-2 border-[#ffb74d]">
-              <div className="bg-[#ffb74d] text-[#0a1433] text-center py-3 font-bold text-lg">PREMIUM MEMBERSHIP</div>
-              <div className="p-8">
-                <div className="flex flex-col md:flex-row md:justify-between md:items-center mb-8">
-                  <div>
-                    <h3 className="text-2xl font-bold text-[#0a1433] mb-2">The Phoenixx Club Membership</h3>
-                    <p className="text-gray-600">Exclusive access to all club benefits and events</p>
-                  </div>
-                  <div className="mt-4 md:mt-0">
-                    <div className="text-3xl font-bold text-[#0a1433]">₹55,000</div>
-                    <div className="text-sm text-gray-500">+ ₹5,000 one-time registration</div>
-                  </div>
+          <div className="max-w-5xl mx-auto">
+            <div className="bg-white rounded-2xl overflow-hidden shadow-2xl border border-[#ffb74d]/20">
+              {/* Membership Header */}
+              <div className="bg-gradient-to-r from-[#0a1433] to-[#162552] p-8 text-center">
+                <div className="inline-block bg-[#ffb74d] text-[#0a1433] px-4 py-1 rounded-full text-sm font-bold mb-4">
+                  PREMIUM MEMBERSHIP
                 </div>
-
-                <div className="grid md:grid-cols-2 gap-8 mb-8">
-                  <div>
-                    <h4 className="text-lg font-bold text-[#0a1433] mb-4 flex items-center">
-                      <Star className="w-5 h-5 text-[#ffb74d] mr-2" /> Membership Benefits
-                    </h4>
-                    <ul className="space-y-3">
-                      <li className="flex items-start">
-                        <Check className="w-5 h-5 text-[#ffb74d] mr-2 mt-0.5 flex-shrink-0" />
-                        <span>Access to all 8 exclusive events per year</span>
-                      </li>
-                      <li className="flex items-start">
-                        <Check className="w-5 h-5 text-[#ffb74d] mr-2 mt-0.5 flex-shrink-0" />
-                        <span>Premium networking opportunities with elite professionals</span>
-                      </li>
-                      <li className="flex items-start">
-                        <Check className="w-5 h-5 text-[#ffb74d] mr-2 mt-0.5 flex-shrink-0" />
-                        <span>Complimentary guest passes for select events</span>
-                      </li>
-                      <li className="flex items-start">
-                        <Check className="w-5 h-5 text-[#ffb74d] mr-2 mt-0.5 flex-shrink-0" />
-                        <span>Priority access to limited-capacity events</span>
-                      </li>
-                    </ul>
-                  </div>
-                  <div>
-                    <h4 className="text-lg font-bold text-[#0a1433] mb-4 flex items-center">
-                      <Star className="w-5 h-5 text-[#ffb74d] mr-2" /> Additional Perks
-                    </h4>
-                    <ul className="space-y-3">
-                      <li className="flex items-start">
-                        <Check className="w-5 h-5 text-[#ffb74d] mr-2 mt-0.5 flex-shrink-0" />
-                        <span>Exclusive partner benefits and discounts</span>
-                      </li>
-                      <li className="flex items-start">
-                        <Check className="w-5 h-5 text-[#ffb74d] mr-2 mt-0.5 flex-shrink-0" />
-                        <span>Access to members-only communication channels</span>
-                      </li>
-                      <li className="flex items-start">
-                        <Check className="w-5 h-5 text-[#ffb74d] mr-2 mt-0.5 flex-shrink-0" />
-                        <span>Personalized concierge service for event arrangements</span>
-                      </li>
-                      <li className="flex items-start">
-                        <Check className="w-5 h-5 text-[#ffb74d] mr-2 mt-0.5 flex-shrink-0" />
-                        <span>Opportunity to host and sponsor club events</span>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-
-                <div className="bg-gray-50 p-6 rounded-lg mb-8">
-                  <h4 className="text-lg font-bold text-[#0a1433] mb-3">Membership Details:</h4>
-                  <ul className="space-y-2 text-gray-600">
-                    <li>• One-time registration fee: ₹5,000</li>
-                    <li>• Annual membership: ₹55,000</li>
-                    <li>• Access to all 8 annual events</li>
-                    <li>• Membership valid for one calendar year</li>
-                    <li>• Limited memberships available to maintain exclusivity</li>
-                  </ul>
-                </div>
-
-                <Link
-                  href="/auth/signup"
-                  className="block w-full py-4 rounded-md bg-[#0a1433] text-white text-center font-bold hover:bg-[#162552] transition-colors text-lg"
-                >
-                  Apply for Membership
-                </Link>
+                <h3 className="text-3xl font-bold text-white mb-2">The Phoenixx Club</h3>
+                <p className="text-gray-300">Elevate Your Social Experience</p>
               </div>
-            </div>
 
-            <div className="mt-8 text-center text-gray-600">
-              <p>
-                For membership inquiries, please contact us at{" "}
-                <span className="text-[#0a1433] font-medium">membership@phoenixxclub.com</span>
-              </p>
+              {/* Membership Content */}
+              <div className="p-8 md:p-12">
+                <div className="grid md:grid-cols-2 gap-12">
+                  {/* Left Column - Benefits */}
+                  <div>
+                    <div className="mb-8">
+                      <h4 className="text-2xl font-bold text-[#0a1433] mb-6 flex items-center">
+                        <Star className="w-6 h-6 text-[#ffb74d] mr-2" /> Membership Benefits
+                      </h4>
+                      <ul className="space-y-4">
+                        <li className="flex items-start">
+                          <div className="flex-shrink-0 w-6 h-6 rounded-full bg-[#ffb74d]/20 flex items-center justify-center mr-3">
+                            <Check className="w-4 h-4 text-[#ffb74d]" />
+                          </div>
+                          <span className="text-gray-700">Access to all 8 exclusive events per year</span>
+                        </li>
+                        <li className="flex items-start">
+                          <div className="flex-shrink-0 w-6 h-6 rounded-full bg-[#ffb74d]/20 flex items-center justify-center mr-3">
+                            <Check className="w-4 h-4 text-[#ffb74d]" />
+                          </div>
+                          <span className="text-gray-700">Premium networking with elite professionals</span>
+                        </li>
+                        <li className="flex items-start">
+                          <div className="flex-shrink-0 w-6 h-6 rounded-full bg-[#ffb74d]/20 flex items-center justify-center mr-3">
+                            <Check className="w-4 h-4 text-[#ffb74d]" />
+                          </div>
+                          <span className="text-gray-700">Complimentary guest passes for select events</span>
+                        </li>
+                        <li className="flex items-start">
+                          <div className="flex-shrink-0 w-6 h-6 rounded-full bg-[#ffb74d]/20 flex items-center justify-center mr-3">
+                            <Check className="w-4 h-4 text-[#ffb74d]" />
+                          </div>
+                          <span className="text-gray-700">Priority access to limited-capacity events</span>
+                        </li>
+                      </ul>
+                    </div>
+
+                    <div>
+                      <h4 className="text-2xl font-bold text-[#0a1433] mb-6 flex items-center">
+                        <Star className="w-6 h-6 text-[#ffb74d] mr-2" /> Additional Perks
+                      </h4>
+                      <ul className="space-y-4">
+                        <li className="flex items-start">
+                          <div className="flex-shrink-0 w-6 h-6 rounded-full bg-[#ffb74d]/20 flex items-center justify-center mr-3">
+                            <Check className="w-4 h-4 text-[#ffb74d]" />
+                          </div>
+                          <span className="text-gray-700">Exclusive partner benefits and discounts</span>
+                        </li>
+                        <li className="flex items-start">
+                          <div className="flex-shrink-0 w-6 h-6 rounded-full bg-[#ffb74d]/20 flex items-center justify-center mr-3">
+                            <Check className="w-4 h-4 text-[#ffb74d]" />
+                          </div>
+                          <span className="text-gray-700">Access to members-only communication channels</span>
+                        </li>
+                        <li className="flex items-start">
+                          <div className="flex-shrink-0 w-6 h-6 rounded-full bg-[#ffb74d]/20 flex items-center justify-center mr-3">
+                            <Check className="w-4 h-4 text-[#ffb74d]" />
+                          </div>
+                          <span className="text-gray-700">Personalized concierge service</span>
+                        </li>
+                        <li className="flex items-start">
+                          <div className="flex-shrink-0 w-6 h-6 rounded-full bg-[#ffb74d]/20 flex items-center justify-center mr-3">
+                            <Check className="w-4 h-4 text-[#ffb74d]" />
+                          </div>
+                          <span className="text-gray-700">Opportunity to host club events</span>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+
+                  {/* Right Column - Pricing & CTA */}
+                  <div className="bg-gray-50 rounded-xl p-8">
+                    <div className="mb-8">
+                      <div className="text-4xl font-bold text-[#0a1433] mb-2">₹55,000</div>
+                      <div className="text-gray-600">Annual Membership</div>
+                      <div className="text-sm text-gray-500 mt-2">+ ₹5,000 one-time registration</div>
+                    </div>
+
+                    <div className="space-y-6 mb-8">
+                      <div className="flex items-center text-gray-700">
+                        <Calendar className="w-5 h-5 text-[#ffb74d] mr-3" />
+                        <span>Valid for one calendar year</span>
+                      </div>
+                      <div className="flex items-center text-gray-700">
+                        <Users className="w-5 h-5 text-[#ffb74d] mr-3" />
+                        <span>Limited memberships available</span>
+                      </div>
+                      <div className="flex items-center text-gray-700">
+                        <Clock className="w-5 h-5 text-[#ffb74d] mr-3" />
+                        <span>Access to all 8 annual events</span>
+                      </div>
+                    </div>
+
+                    <Link
+                      href="/auth/signup"
+                      className="block w-full py-4 rounded-xl bg-[#0a1433] text-white text-center font-bold hover:bg-[#162552] transition-colors text-lg mb-4"
+                    >
+                      Apply for Membership
+                    </Link>
+                    <p className="text-center text-sm text-gray-500">
+                      For inquiries: <a href="mailto:thephoenixxclub@gmail.com" className="text-[#0a1433] hover:underline">thephoenixxclub@gmail.com</a>
+                    </p>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -352,7 +388,7 @@ export default function Home() {
           </div>
 
           {/* Member Profiles */}
-          <div className="mb-16">
+          {/* <div className="mb-16">
             <h3 className="text-2xl font-bold text-[#0a1433] text-center mb-8">Our Distinguished Members</h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
               <div className="bg-white rounded-xl overflow-hidden shadow-lg">
@@ -412,10 +448,10 @@ export default function Home() {
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
 
           {/* Founding Members */}
-          <div className="bg-white rounded-xl p-8 shadow-xl border border-[#ffb74d] max-w-4xl mx-auto">
+          {/* <div className="bg-white rounded-xl p-8 shadow-xl border border-[#ffb74d] max-w-4xl mx-auto">
             <h3 className="text-2xl font-bold text-[#0a1433] text-center mb-6">Founding Members Opportunity</h3>
             <p className="text-gray-600 text-center mb-8">
               We're currently accepting applications for our exclusive founding members. As a founding member, you'll
@@ -469,7 +505,7 @@ export default function Home() {
                 Apply for Founding Membership <ArrowRight className="ml-2 h-5 w-5" />
               </Link>
             </div>
-          </div>
+          </div> */}
         </div>
       </section>
 
@@ -524,7 +560,7 @@ export default function Home() {
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth={2}
-                    d="M21 15.546c-.523 0-1.046.151-1.5.454a2.704 2.704 0 01-3 0 2.704 2.704 0 00-3 0 2.704 2.704 0 01-3 0 2.704 2.704 0 00-3 0 2.704 2.704 0 01-3 0 2.701 2.701 0 00-1.5-.454M9 6v2m3-2v2m3-2v2M9 3h.01M12 3h.01M15 3h.01M21 21v-7a2 2 0 00-2-2H5a2 2 0 00-2 2v7h18zm-3-9v-2a2 2 0 00-2-2H8a2 2 0 00-2 2v2h12z"
+                    d="M21 15.546c-.523 0-1.046.151-1.5.454a2.704 2.704 0 01-3 0 2.704 2.704 0 00-3 0 2.704 2.704 0 01-3 0 2.701 2.701 0 00-1.5-.454M9 6v2m3-2v2m3-2v2M9 3h.01M12 3h.01M15 3h.01M21 21v-7a2 2 0 00-2-2H5a2 2 0 00-2 2v7h18zm-3-9v-2a2 2 0 00-2-2H8a2 2 0 00-2 2v2h12z"
                   />
                 </svg>
               </div>
@@ -631,26 +667,26 @@ export default function Home() {
       </section>
 
       {/* Call to Action */}
-      <section className="py-12 bg-[#0a1433] relative">
+      {/* <section className="py-12 bg-[#0a1433] relative">
   <div className="absolute inset-0 bg-[url('/hero-pattern.png')] bg-cover opacity-5"></div>
   <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-    <div className="flex flex-col lg:flex-row items-center justify-center space-y-8 lg:space-y-0 lg:space-x-12">
+    <div className="flex flex-col lg:flex-row items-center justify-center space-y-8 lg:space-y-0 lg:space-x-12"> */}
       {/* Left Side - Call to Action */}
-      <div className="text-center lg:text-left max-w-md mx-auto">
+      {/* <div className="text-center lg:text-left max-w-md mx-auto">
         <h2 className="text-2xl font-bold text-white mb-4">Join The Phoenixx Club</h2>
         <p className="text-lg text-gray-300 mb-6">
           Be part of an exclusive community with access to events, collaborations, and more.
         </p>
         <Link
-          href="#membership"
+          href="/auth/signup"
           className="px-6 py-2 rounded-md bg-[#ffb74d] text-[#0a1433] font-bold hover:bg-[#ffa726] transition-colors"
         >
           Join Now
         </Link>
-      </div>
+      </div> */}
 
       {/* Right Side - Wider Contact Form */}
-      <div className="bg-white p-6 rounded-xl shadow-lg w-full max-w-[700px]">
+      {/* <div className="bg-white p-6 rounded-xl shadow-lg w-full max-w-[700px]">
         <h3 className="text-xl font-semibold text-[#0a1433] mb-4">Contact Us</h3>
         <form action="#" method="POST" className="space-y-4">
           <div className="flex space-x-6">
@@ -680,9 +716,9 @@ export default function Home() {
                 placeholder="you@example.com"
               />
             </div>
-          </div>
+          </div> */}
 
-          <div>
+          {/* <div>
             <label className="block text-[#0a1433] font-medium mb-2" htmlFor="message">
               Message
             </label>
@@ -706,8 +742,167 @@ export default function Home() {
       </div>
     </div>
   </div>
-</section>
+</section> */}
 
+      {/* Party Gallery Section */}
+      <section id="gallery" className="py-12 bg-white scroll-mt-20">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-8">
+            <h2 className="text-3xl font-bold text-[#0a1433] mb-3">Gallery</h2>
+            <p className="text-gray-600 max-w-2xl mx-auto">
+              Moments from our exclusive events
+            </p>
+          </div>
+
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+            {/* Initial 5 Images */}
+            {/* Gallery Image 1 */}
+            <div className="group relative overflow-hidden rounded-lg aspect-square">
+              <Image
+                src="https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?q=80&w=3540&auto=format&fit=crop"
+                alt="Summer Gala"
+                fill
+                className="object-cover transform group-hover:scale-105 transition-transform duration-500"
+              />
+              <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                <span className="text-white text-sm font-medium">Summer Gala</span>
+              </div>
+            </div>
+
+            {/* Gallery Image 2 */}
+            <div className="group relative overflow-hidden rounded-lg aspect-square">
+              <Image
+                src="https://images.unsplash.com/photo-1721133073235-e4b5facb27fa?q=80&w=3540&auto=format&fit=crop"
+                alt="Wine Tasting"
+                fill
+                className="object-cover transform group-hover:scale-105 transition-transform duration-500"
+              />
+              <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                <span className="text-white text-sm font-medium">Wine Tasting</span>
+              </div>
+            </div>
+
+            {/* Gallery Image 3 */}
+            <div className="group relative overflow-hidden rounded-lg aspect-square">
+              <Image
+                src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?q=80&w=3538&auto=format&fit=crop"
+                alt="Networking Event"
+                fill
+                className="object-cover transform group-hover:scale-105 transition-transform duration-500"
+              />
+              <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                <span className="text-white text-sm font-medium">Networking</span>
+              </div>
+            </div>
+
+            {/* Gallery Image 4 */}
+            <div className="group relative overflow-hidden rounded-lg aspect-square">
+              <Image
+                src="https://images.unsplash.com/photo-1519671482749-fd09be7ccebf?q=80&w=3540&auto=format&fit=crop"
+                alt="Art Night"
+                fill
+                className="object-cover transform group-hover:scale-105 transition-transform duration-500"
+              />
+              <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                <span className="text-white text-sm font-medium">Art Night</span>
+              </div>
+            </div>
+
+            {/* Gallery Image 5 */}
+            <div className="group relative overflow-hidden rounded-lg aspect-square">
+              <Image
+                src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?q=80&w=3538&auto=format&fit=crop"
+                alt="Business Mixer"
+                fill
+                className="object-cover transform group-hover:scale-105 transition-transform duration-500"
+              />
+              <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                <span className="text-white text-sm font-medium">Business Mixer</span>
+              </div>
+            </div>
+
+            {/* Additional Images (shown when showMoreImages is true) */}
+            {showMoreImages && (
+              <>
+                {/* Gallery Image 6 */}
+                <div className="group relative overflow-hidden rounded-lg aspect-square">
+                  <Image
+                    src="https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?q=80&w=3540&auto=format&fit=crop"
+                    alt="Charity Ball"
+                    fill
+                    className="object-cover transform group-hover:scale-105 transition-transform duration-500"
+                  />
+                  <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                    <span className="text-white text-sm font-medium">Charity Ball</span>
+                  </div>
+                </div>
+
+                {/* Gallery Image 7 */}
+                <div className="group relative overflow-hidden rounded-lg aspect-square">
+                  <Image
+                    src="https://images.unsplash.com/photo-1721133073235-e4b5facb27fa?q=80&w=3540&auto=format&fit=crop"
+                    alt="Cocktail Evening"
+                    fill
+                    className="object-cover transform group-hover:scale-105 transition-transform duration-500"
+                  />
+                  <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                    <span className="text-white text-sm font-medium">Cocktail Evening</span>
+                  </div>
+                </div>
+
+                {/* Gallery Image 8 */}
+                <div className="group relative overflow-hidden rounded-lg aspect-square">
+                  <Image
+                    src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?q=80&w=3538&auto=format&fit=crop"
+                    alt="Dinner Party"
+                    fill
+                    className="object-cover transform group-hover:scale-105 transition-transform duration-500"
+                  />
+                  <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                    <span className="text-white text-sm font-medium">Dinner Party</span>
+                  </div>
+                </div>
+
+                {/* Gallery Image 9 */}
+                <div className="group relative overflow-hidden rounded-lg aspect-square">
+                  <Image
+                    src="https://images.unsplash.com/photo-1519671482749-fd09be7ccebf?q=80&w=3540&auto=format&fit=crop"
+                    alt="Jazz Night"
+                    fill
+                    className="object-cover transform group-hover:scale-105 transition-transform duration-500"
+                  />
+                  <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                    <span className="text-white text-sm font-medium">Jazz Night</span>
+                  </div>
+                </div>
+
+                {/* Gallery Image 10 */}
+                <div className="group relative overflow-hidden rounded-lg aspect-square">
+                  <Image
+                    src="https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?q=80&w=3540&auto=format&fit=crop"
+                    alt="New Year's Eve"
+                    fill
+                    className="object-cover transform group-hover:scale-105 transition-transform duration-500"
+                  />
+                  <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                    <span className="text-white text-sm font-medium">New Year's Eve</span>
+                  </div>
+                </div>
+              </>
+            )}
+          </div>
+
+          <div className="text-center mt-8">
+            <button
+              onClick={() => setShowMoreImages(!showMoreImages)}
+              className="inline-flex items-center px-6 py-2 rounded-md bg-[#0a1433] text-white hover:bg-[#162552] transition-colors text-sm"
+            >
+              {showMoreImages ? 'Show Less' : 'View More'}
+              <ArrowRight className={`ml-2 h-4 w-4 transition-transform duration-300 ${showMoreImages ? 'rotate-90' : ''}`} />
+            </button>
+          </div>
+        </div>
+      </section>
 
       {/* Footer */}
       <footer className="bg-white border-t border-gray-200">

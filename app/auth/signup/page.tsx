@@ -10,7 +10,7 @@ interface FormData {
   firstName: string;
   lastName: string;
   email: string;
-  phone: string; // Changed to string
+  phone: string;
   password: string;
   confirmPassword: string;
 }
@@ -20,7 +20,7 @@ export default function SignUpForm() {
     firstName: '',
     lastName: '',
     email: '',
-    phone: '', // Initial empty value for phone
+    phone: '',
     password: '',
     confirmPassword: '',
   });
@@ -59,7 +59,7 @@ export default function SignUpForm() {
         email: formData.email,
         password: formData.password,
       });
-      router.push('/dashboard');
+      router.push('/');
     } catch (err) {
       setError('Failed to create account. Please try again.');
     } finally {

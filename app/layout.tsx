@@ -20,8 +20,8 @@ export default function RootLayout({
   children,
 }: RootLayoutProps) {
   return (
-    <html lang="en">
-      <body className={inter.className}>
+    <html lang="en" className={inter.className}>
+      <body>
         <AuthProvider>
           {children}
         </AuthProvider>
