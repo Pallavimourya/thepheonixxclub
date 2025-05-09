@@ -149,7 +149,7 @@ export default function SignUpForm() {
             disabled={isLoading}
             className="w-full bg-[#0a1433] hover:bg-[#ffb74d] text-white hover:text-[#0a1433] transition-colors font-semibold py-2 px-4 rounded-lg text-sm disabled:opacity-60"
           >
-            {isLoading ? 'Creating account...' : 'Apply for Membership'}
+            {isLoading ? 'Creating account...' : 'Sign up'}
           </button>
 
           <p className="text-sm text-center mt-4 text-gray-600">

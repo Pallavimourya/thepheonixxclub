@@ -5,6 +5,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { ChevronRight, Calendar, MapPin, Star, Users, ArrowRight, Clock, Check } from "lucide-react"
 import { useAuth } from '@/lib/auth-context';
+import { initAnimations } from '@/lib/animations';
 
 export default function Home() {
   const { user } = useAuth();
@@ -32,6 +33,10 @@ export default function Home() {
     }, 3000);
 
     return () => clearInterval(timer);
+  }, []);
+
+  useEffect(() => {
+    initAnimations();
   }, []);
 
   const handleSlideClick = () => {
@@ -126,14 +131,14 @@ export default function Home() {
           </div>
         </div>
         <div className="relative h-full flex items-center justify-center text-center px-4">
-          <div className="max-w-2xl mx-auto text-center gsap-content">
+          <div className="max-w-2xl mx-auto text-center hero-content">
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight mb-6">
               Ignite the Night with Phoenixx Events
             </h1>
             <p className="text-xl text-gray-300 mb-8">
               Experience luxury, laughter and legacy with the most exclusive club events in the city.
             </p>
-            <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 justify-center">
+            <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 justify-center hero-buttons">
               <Link
                 href="#membership"
                 className="px-8 py-3 rounded-md bg-[#ffb74d] text-[#0a1433] font-bold hover:bg-[#ffa726] transition-colors flex items-center justify-center gsap-button-1"
@@ -266,7 +271,7 @@ export default function Home() {
           </div>
 
           <div className="max-w-5xl mx-auto">
-            <div className="bg-white rounded-2xl overflow-hidden shadow-2xl border border-[#ffb74d]/20">
+            <div className="bg-white rounded-2xl overflow-hidden shadow-2xl border border-[#ffb74d]/20 membership-card">
               {/* Membership Header */}
               <div className="bg-gradient-to-r from-[#0a1433] to-[#162552] p-8 text-center">
                 <div className="inline-block bg-[#ffb74d] text-[#0a1433] px-4 py-1 rounded-full text-sm font-bold mb-4">
@@ -398,7 +403,7 @@ export default function Home() {
           </div>
 
           {/* Community Highlights */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto mb-16">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto mb-16 community-stats">
             <div className="bg-white rounded-xl p-8 text-center shadow-lg">
               <div className="w-16 h-16 rounded-full bg-[#ffb74d]/20 flex items-center justify-center mx-auto mb-4">
                 <Users className="w-8 h-8 text-[#ffb74d]" />
@@ -563,7 +568,7 @@ export default function Home() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {/* Feature 1 */}
-            <div className="bg-white rounded-xl p-6 shadow-lg">
+            <div className="bg-white rounded-xl p-6 shadow-lg feature-card">
               <div className="w-12 h-12 rounded-full bg-[#ffb74d]/20 flex items-center justify-center mb-4">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -588,7 +593,7 @@ export default function Home() {
             </div>
 
             {/* Feature 2 */}
-            <div className="bg-white rounded-xl p-6 shadow-lg">
+            <div className="bg-white rounded-xl p-6 shadow-lg feature-card">
               <div className="w-12 h-12 rounded-full bg-[#ffb74d]/20 flex items-center justify-center mb-4">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -613,7 +618,7 @@ export default function Home() {
             </div>
 
             {/* Feature 3 */}
-            <div className="bg-white rounded-xl p-6 shadow-lg">
+            <div className="bg-white rounded-xl p-6 shadow-lg feature-card">
               <div className="w-12 h-12 rounded-full bg-[#ffb74d]/20 flex items-center justify-center mb-4">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -637,7 +642,7 @@ export default function Home() {
             </div>
 
             {/* Feature 4 */}
-            <div className="bg-white rounded-xl p-6 shadow-lg">
+            <div className="bg-white rounded-xl p-6 shadow-lg feature-card">
               <div className="w-12 h-12 rounded-full bg-[#ffb74d]/20 flex items-center justify-center mb-4">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -661,7 +666,7 @@ export default function Home() {
             </div>
 
             {/* Feature 5 */}
-            <div className="bg-white rounded-xl p-6 shadow-lg">
+            <div className="bg-white rounded-xl p-6 shadow-lg feature-card">
               <div className="w-12 h-12 rounded-full bg-[#ffb74d]/20 flex items-center justify-center mb-4">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -685,7 +690,7 @@ export default function Home() {
             </div>
 
             {/* Feature 6 */}
-            <div className="bg-white rounded-xl p-6 shadow-lg">
+            <div className="bg-white rounded-xl p-6 shadow-lg feature-card">
               <div className="w-12 h-12 rounded-full bg-[#ffb74d]/20 flex items-center justify-center mb-4">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -796,24 +801,62 @@ export default function Home() {
           </div>
 
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-            {/* Initial 5 Images */}
             {/* Gallery Image 1 */}
-            <div className="group relative overflow-hidden rounded-lg aspect-square">
+            <div className="group relative overflow-hidden rounded-lg aspect-square gallery-item">
               <Image
-                src="https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?q=80&w=3540&auto=format&fit=crop"
-                alt="Summer Gala"
+                src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?q=80&w=3538&auto=format&fit=crop"
+                alt="Luxury Gala"
                 fill
                 className="object-cover transform group-hover:scale-105 transition-transform duration-500"
               />
               <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                <span className="text-white text-sm font-medium">Summer Gala</span>
+                <span className="text-white text-sm font-medium">Luxury Gala</span>
               </div>
             </div>
 
             {/* Gallery Image 2 */}
-            <div className="group relative overflow-hidden rounded-lg aspect-square">
+            <div className="group relative overflow-hidden rounded-lg aspect-square gallery-item">
               <Image
-                src="https://images.unsplash.com/photo-1721133073235-e4b5facb27fa?q=80&w=3540&auto=format&fit=crop"
+                src="https://images.unsplash.com/photo-1605744435823-b88e4e9bc044?q=80&w=3540&auto=format&fit=crop"
+                alt="Cocktail Evening"
+                fill
+                className="object-cover transform group-hover:scale-105 transition-transform duration-500"
+              />
+              <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                <span className="text-white text-sm font-medium">Cocktail Evening</span>
+              </div>
+            </div>
+
+            {/* Gallery Image 3 */}
+            <div className="group relative overflow-hidden rounded-lg aspect-square gallery-item">
+              <Image
+                src="https://images.unsplash.com/photo-1524368535928-5b5e00ddc76b?q=80&w=3540&auto=format&fit=crop"
+                alt="VIP Lounge"
+                fill
+                className="object-cover transform group-hover:scale-105 transition-transform duration-500"
+              />
+              <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                <span className="text-white text-sm font-medium">VIP Lounge</span>
+              </div>
+            </div>
+
+            {/* Gallery Image 4 */}
+            <div className="group relative overflow-hidden rounded-lg aspect-square gallery-item">
+              <Image
+                src="https://images.unsplash.com/photo-1527529482837-4698179dc6ce?q=80&w=3540&auto=format&fit=crop"
+                alt="Exclusive Party"
+                fill
+                className="object-cover transform group-hover:scale-105 transition-transform duration-500"
+              />
+              <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                <span className="text-white text-sm font-medium">Exclusive Party</span>
+              </div>
+            </div>
+
+            {/* Gallery Image 5 */}
+            <div className="group relative overflow-hidden rounded-lg aspect-square gallery-item">
+              <Image
+                src="https://images.unsplash.com/photo-1566737236500-c8ac43014a67?q=80&w=3000&auto=format&fit=crop"
                 alt="Wine Tasting"
                 fill
                 className="object-cover transform group-hover:scale-105 transition-transform duration-500"
@@ -823,52 +866,52 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Gallery Image 3 */}
-            <div className="group relative overflow-hidden rounded-lg aspect-square">
-              <Image
-                src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?q=80&w=3538&auto=format&fit=crop"
-                alt="Networking Event"
-                fill
-                className="object-cover transform group-hover:scale-105 transition-transform duration-500"
-              />
-              <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                <span className="text-white text-sm font-medium">Networking</span>
-              </div>
-            </div>
-
-            {/* Gallery Image 4 */}
-            <div className="group relative overflow-hidden rounded-lg aspect-square">
-              <Image
-                src="https://images.unsplash.com/photo-1519671482749-fd09be7ccebf?q=80&w=3540&auto=format&fit=crop"
-                alt="Art Night"
-                fill
-                className="object-cover transform group-hover:scale-105 transition-transform duration-500"
-              />
-              <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                <span className="text-white text-sm font-medium">Art Night</span>
-              </div>
-            </div>
-
-            {/* Gallery Image 5 */}
-            <div className="group relative overflow-hidden rounded-lg aspect-square">
-              <Image
-                src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?q=80&w=3538&auto=format&fit=crop"
-                alt="Business Mixer"
-                fill
-                className="object-cover transform group-hover:scale-105 transition-transform duration-500"
-              />
-              <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                <span className="text-white text-sm font-medium">Business Mixer</span>
-              </div>
-            </div>
-
             {/* Additional Images (shown when showMoreImages is true) */}
             {showMoreImages && (
               <>
                 {/* Gallery Image 6 */}
-                <div className="group relative overflow-hidden rounded-lg aspect-square">
+                <div className="group relative overflow-hidden rounded-lg aspect-square gallery-item">
+                  <Image
+                    src="https://images.unsplash.com/photo-1623281722102-1bde4c57c90c?q=80&w=3088&auto=format&fit=crop"
+                    alt="Business Mixer"
+                    fill
+                    className="object-cover transform group-hover:scale-105 transition-transform duration-500"
+                  />
+                  <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                    <span className="text-white text-sm font-medium">Business Mixer</span>
+                  </div>
+                </div>
+
+                {/* Gallery Image 7 */}
+                <div className="group relative overflow-hidden rounded-lg aspect-square gallery-item">
+                  <Image
+                    src="https://images.unsplash.com/photo-1519671482749-fd09be7ccebf?q=80&w=3540&auto=format&fit=crop"
+                    alt="Art Night"
+                    fill
+                    className="object-cover transform group-hover:scale-105 transition-transform duration-500"
+                  />
+                  <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                    <span className="text-white text-sm font-medium">Art Night</span>
+                  </div>
+                </div>
+
+                {/* Gallery Image 8 */}
+                <div className="group relative overflow-hidden rounded-lg aspect-square gallery-item">
                   <Image
                     src="https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?q=80&w=3540&auto=format&fit=crop"
+                    alt="Summer Gala"
+                    fill
+                    className="object-cover transform group-hover:scale-105 transition-transform duration-500"
+                  />
+                  <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                    <span className="text-white text-sm font-medium">Summer Gala</span>
+                  </div>
+                </div>
+
+                {/* Gallery Image 9 */}
+                <div className="group relative overflow-hidden rounded-lg aspect-square gallery-item">
+                  <Image
+                    src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?q=80&w=3538&auto=format&fit=crop"
                     alt="Charity Ball"
                     fill
                     className="object-cover transform group-hover:scale-105 transition-transform duration-500"
@@ -878,49 +921,10 @@ export default function Home() {
                   </div>
                 </div>
 
-                {/* Gallery Image 7 */}
-                <div className="group relative overflow-hidden rounded-lg aspect-square">
-                  <Image
-                    src="https://images.unsplash.com/photo-1721133073235-e4b5facb27fa?q=80&w=3540&auto=format&fit=crop"
-                    alt="Cocktail Evening"
-                    fill
-                    className="object-cover transform group-hover:scale-105 transition-transform duration-500"
-                  />
-                  <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                    <span className="text-white text-sm font-medium">Cocktail Evening</span>
-                  </div>
-                </div>
-
-                {/* Gallery Image 8 */}
-                <div className="group relative overflow-hidden rounded-lg aspect-square">
-                  <Image
-                    src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?q=80&w=3538&auto=format&fit=crop"
-                    alt="Dinner Party"
-                    fill
-                    className="object-cover transform group-hover:scale-105 transition-transform duration-500"
-                  />
-                  <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                    <span className="text-white text-sm font-medium">Dinner Party</span>
-                  </div>
-                </div>
-
-                {/* Gallery Image 9 */}
-                <div className="group relative overflow-hidden rounded-lg aspect-square">
-                  <Image
-                    src="https://images.unsplash.com/photo-1519671482749-fd09be7ccebf?q=80&w=3540&auto=format&fit=crop"
-                    alt="Jazz Night"
-                    fill
-                    className="object-cover transform group-hover:scale-105 transition-transform duration-500"
-                  />
-                  <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                    <span className="text-white text-sm font-medium">Jazz Night</span>
-                  </div>
-                </div>
-
                 {/* Gallery Image 10 */}
-                <div className="group relative overflow-hidden rounded-lg aspect-square">
+                <div className="group relative overflow-hidden rounded-lg aspect-square gallery-item">
                   <Image
-                    src="https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?q=80&w=3540&auto=format&fit=crop"
+                    src="https://images.unsplash.com/photo-1605744435823-b88e4e9bc044?q=80&w=3540&auto=format&fit=crop"
                     alt="New Year's Eve"
                     fill
                     className="object-cover transform group-hover:scale-105 transition-transform duration-500"
@@ -947,7 +951,7 @@ export default function Home() {
 
       {/* Footer */}
       <footer className="bg-white border-t border-gray-200">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 footer-content">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             <div className="md:col-span-1">
               <div className="flex items-center mb-4">
@@ -1053,66 +1057,6 @@ export default function Home() {
           </div>
         </div>
       </footer>
-      {/* GSAP Animations */}
-      <script
-        dangerouslySetInnerHTML={{
-          __html: `
-      document.addEventListener('DOMContentLoaded', function() {
-        if (typeof gsap !== 'undefined') {
-          // Hero animations
-          gsap.from('.gsap-logo', { 
-            opacity: 0, 
-            y: -50, 
-            duration: 1.2, 
-            ease: 'power3.out' 
-          });
-          
-          gsap.from('.gsap-content', { 
-            opacity: 0, 
-            y: 50, 
-            duration: 1.2, 
-            delay: 0.3, 
-            ease: 'power3.out' 
-          });
-          
-          gsap.from('.gsap-button-1', { 
-            opacity: 0, 
-            x: -30, 
-            duration: 0.8, 
-            delay: 0.8, 
-            ease: 'back.out(1.7)' 
-          });
-          
-          gsap.from('.gsap-button-2', { 
-            opacity: 0, 
-            x: 30, 
-            duration: 0.8, 
-            delay: 1, 
-            ease: 'back.out(1.7)' 
-          });
-          
-          // Scroll animations
-          gsap.registerPlugin(ScrollTrigger);
-          
-          gsap.utils.toArray('.bg-white').forEach((card, i) => {
-            gsap.from(card, {
-              scrollTrigger: {
-                trigger: card,
-                start: 'top bottom-=100',
-                toggleActions: 'play none none none'
-              },
-              y: 50,
-              opacity: 0,
-              duration: 0.8,
-              delay: i * 0.1,
-              ease: 'power3.out'
-            });
-          });
-        }
-      });
-    `,
-        }}
-      />
     </div>
   )
 }
