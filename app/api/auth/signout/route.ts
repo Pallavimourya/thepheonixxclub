@@ -1,11 +1,10 @@
 import { NextResponse } from 'next/server';
-import type { NextRequest } from 'next/server';
 
-export async function POST(request: NextRequest) {
+export async function POST() {
   try {
     const response = NextResponse.json({ success: true });
     
-    // Clear auth cookie
+    // Clear auth cookie if you're using cookies
     response.cookies.set('auth-token', '', {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',

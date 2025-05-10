@@ -1,53 +1,105 @@
 import { NextResponse } from 'next/server';
-import connectDB from '@/lib/db';
+import dbConnect from '@/lib/db';
 import User from '@/models/User';
-import bcrypt from 'bcryptjs';
 
-export async function POST(req: Request) {
+export async function POST(request: Request) {
   try {
-    const { name, email, password, phone } = await req.json();
-
-    // Connect to database
-    await connectDB();
-
-    // Check if user already exists
-    const existingUser = await User.findOne({ email });
-    if (existingUser) {
+    await dbConnect();
+    
+    // Log the raw request body for debugging
+    const rawBody = await request.text();
+    console.log('Raw request body:', rawBody);
+    
+    let body;
+    try {
+      body = JSON.parse(rawBody);
+    } catch (parseError) {
+      console.error('JSON Parse Error:', parseError);
       return NextResponse.json(
-        { error: 'User with this email already exists' },
+        { error: 'Invalid JSON format in request body' },
         { status: 400 }
       );
     }
 
-    // Hash password
-    const hashedPassword = await bcrypt.hash(password, 10);
+    const { firstName, lastName, email, phone, password } = body;
 
-    // Create new user
-    const user = await User.create({
-      name,
+    // Validate required fields
+    if (!firstName || !lastName || !email || !phone || !password) {
+      return NextResponse.json(
+        { error: 'All fields are required' },
+        { status: 400 }
+      );
+    }
+
+    // Validate email format
+    const emailRegex = /^\S+@\S+\.\S+$/;
+    if (!emailRegex.test(email)) {
+      return NextResponse.json(
+        { error: 'Invalid email format' },
+        { status: 400 }
+      );
+    }
+
+    // Validate password length
+    if (password.length < 6) {
+      return NextResponse.json(
+        { error: 'Password must be at least 6 characters long' },
+        { status: 400 }
+      );
+    }
+
+    // Check for existing user
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      return NextResponse.json(
+        { error: 'User already exists' },
+        { status: 400 }
+      );
+    }
+
+    // Create new user (password will be hashed by the pre-save middleware)
+    const newUser = await User.create({
+      firstName,
+      lastName,
       email,
-      password: hashedPassword,
       phone,
+      password,
+      membershipStatus: 'pending',
+      membershipType: 'standard',
+      joinDate: new Date(),
+      lastLogin: new Date(),
     });
 
     // Remove password from response
-    const userWithoutPassword = {
-      _id: user._id,
-      name: user.name,
-      email: user.email,
-      phone: user.phone,
-      membershipStatus: user.membershipStatus,
-      createdAt: user.createdAt,
-    };
+    const userResponse = newUser.toObject();
+    delete userResponse.password;
 
-    return NextResponse.json(
-      { message: 'User created successfully', user: userWithoutPassword },
-      { status: 201 }
-    );
+    return NextResponse.json({ 
+      success: true,
+      message: 'User created successfully',
+      user: userResponse
+    });
   } catch (error) {
     console.error('Signup error:', error);
+    
+    // Handle specific mongoose errors
+    if (error instanceof Error) {
+      if (error.name === 'ValidationError') {
+        return NextResponse.json(
+          { error: 'Invalid user data' },
+          { status: 400 }
+        );
+      }
+      if (error.name === 'MongoServerError' && (error as any).code === 11000) {
+        return NextResponse.json(
+          { error: 'Email already exists' },
+          { status: 400 }
+        );
+      }
+    }
+
     return NextResponse.json(
-      { error: 'Error creating user' },
+      { error: 'Failed to create user' },
       { status: 500 }
     );
   }

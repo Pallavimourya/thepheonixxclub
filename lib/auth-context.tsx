@@ -9,8 +9,6 @@ interface User {
   lastName: string;
   email: string;
   phone: string;
-  password: string;
-  createdAt: string;
   membershipStatus: string;
   membershipType: string;
   joinDate: string;
@@ -19,7 +17,13 @@ interface User {
 
 interface AuthContextType {
   user: User | null;
-  signup: (userData: Partial<User>) => Promise<{ success: boolean; message: string }>;
+  signup: (userData: {
+    firstName: string;
+    lastName: string;
+    email: string;
+    password: string;
+    phone: string;
+  }) => Promise<{ success: boolean; message: string }>;
   signin: (email: string, password: string) => Promise<{ success: boolean; message: string }>;
   signout: () => Promise<void>;
 }
@@ -34,27 +38,41 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     // Check if user data exists in localStorage
     const storedUser = localStorage.getItem('user');
     if (storedUser) {
-      setUser(JSON.parse(storedUser));
+      try {
+        setUser(JSON.parse(storedUser));
+      } catch (error) {
+        console.error('Error parsing stored user:', error);
+        localStorage.removeItem('user');
+      }
     }
   }, []);
 
-  const signup = async (userData: Partial<User>) => {
+  const signup = async (userData: {
+    firstName: string;
+    lastName: string;
+    email: string;
+    password: string;
+    phone: string;
+  }) => {
     try {
-      const response = await fetch('/api/users', {
+      const res = await fetch('/api/auth/signup', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Accept': 'application/json',
         },
-        body: JSON.stringify(userData),
+        body: JSON.stringify({
+          firstName: userData.firstName.trim(),
+          lastName: userData.lastName.trim(),
+          email: userData.email.trim(),
+          phone: userData.phone.trim(),
+          password: userData.password,
+        }),
       });
 
-      const data = await response.json();
-
-      if (!response.ok) {
-        return {
-          success: false,
-          message: data.error || 'Failed to create account'
-        };
+      const data = await res.json();
+      if (!res.ok) {
+        throw new Error(data.error || 'Signup failed');
       }
 
       return {
@@ -65,44 +83,55 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       console.error('Signup error:', error);
       return {
         success: false,
-        message: 'An error occurred during signup'
+        message: error instanceof Error ? error.message : 'An error occurred during signup'
       };
     }
   };
 
   const signin = async (email: string, password: string) => {
     try {
-      const response = await fetch(`/api/users?email=${email}&password=${password}`);
-      const data = await response.json();
-      
-      if (!response.ok) {
-        return {
-          success: false,
-          message: data.error || 'Invalid credentials'
-        };
+      const res = await fetch('/api/auth/signin', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await res.json();
+      if (!res.ok) {
+        throw new Error(data.error || 'Login failed');
       }
 
-      setUser(data);
-      localStorage.setItem('user', JSON.stringify(data));
+      setUser(data.user);
+      localStorage.setItem('user', JSON.stringify(data.user));
       router.push('/dashboard');
-      
+
       return {
         success: true,
-        message: 'Signed in successfully!'
+        message: 'Successfully signed in'
       };
     } catch (error) {
       console.error('Signin error:', error);
       return {
         success: false,
-        message: 'An error occurred during sign in'
+        message: error instanceof Error ? error.message : 'An error occurred during sign in'
       };
     }
   };
 
   const signout = async () => {
-    setUser(null);
-    localStorage.removeItem('user');
-    router.push('/signin');
+    try {
+      await fetch('/api/auth/signout', {
+        method: 'POST',
+      });
+    } catch (error) {
+      console.error('Signout error:', error);
+    } finally {
+      setUser(null);
+      localStorage.removeItem('user');
+      router.push('/auth/signin');
+    }
   };
 
   return (

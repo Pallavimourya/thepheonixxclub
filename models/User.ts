@@ -1,47 +1,76 @@
 import mongoose from 'mongoose';
+import bcrypt from 'bcryptjs';
 
 const userSchema = new mongoose.Schema({
-  name: {
+  firstName: {
     type: String,
-    required: [true, 'Please provide a name'],
+    required: [true, 'First name is required'],
+    trim: true,
+  },
+  lastName: {
+    type: String,
+    required: [true, 'Last name is required'],
     trim: true,
   },
   email: {
     type: String,
-    required: [true, 'Please provide an email'],
+    required: [true, 'Email is required'],
     unique: true,
     trim: true,
     lowercase: true,
-  },
-  password: {
-    type: String,
-    required: [true, 'Please provide a password'],
-    minlength: [6, 'Password must be at least 6 characters long'],
+    match: [/^\S+@\S+\.\S+$/, 'Please enter a valid email'],
   },
   phone: {
     type: String,
-    required: [true, 'Please provide a phone number'],
+    required: [true, 'Phone number is required'],
     trim: true,
+  },
+  password: {
+    type: String,
+    required: [true, 'Password is required'],
+    minlength: [6, 'Password must be at least 6 characters long'],
   },
   membershipStatus: {
     type: String,
-    enum: ['pending', 'active', 'inactive'],
+    enum: ['pending', 'active', 'suspended'],
     default: 'pending',
   },
-  createdAt: {
+  membershipType: {
+    type: String,
+    enum: ['standard', 'premium', 'vip'],
+    default: 'standard',
+  },
+  joinDate: {
     type: Date,
     default: Date.now,
   },
-  updatedAt: {
+  lastLogin: {
     type: Date,
     default: Date.now,
   },
+}, {
+  timestamps: true,
 });
 
-// Update the updatedAt timestamp before saving
-userSchema.pre('save', function(next) {
-  this.updatedAt = new Date();
-  next();
+// Hash password before saving
+userSchema.pre('save', async function(next) {
+  if (!this.isModified('password')) return next();
+  
+  try {
+    const salt = await bcrypt.genSalt(10);
+    this.password = await bcrypt.hash(this.password, salt);
+    next();
+  } catch (error) {
+    next(error as Error);
+  }
 });
 
-export default mongoose.models.User || mongoose.model('User', userSchema); 
+// Method to compare password
+userSchema.methods.comparePassword = async function(candidatePassword: string): Promise<boolean> {
+  return bcrypt.compare(candidatePassword, this.password);
+};
+
+// Prevent mongoose from creating a new model if it already exists
+const User = mongoose.models.User || mongoose.model('User', userSchema);
+
+export default User;

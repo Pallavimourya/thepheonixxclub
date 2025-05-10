@@ -1,97 +1,112 @@
 'use client';
 
-import React, { useState, FormEvent, ChangeEvent } from 'react';
-import Link from 'next/link';
-import Image from 'next/image';
-import { useAuth } from '@/lib/auth-context';
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { useAuth } from '@/lib/auth-context';
+import Link from 'next/link';
 
-interface FormData {
-  email: string;
-  password: string;
-}
-
-export default function SignInForm() {
-  const [formData, setFormData] = useState<FormData>({
+export default function SignInPage() {
+  const [formData, setFormData] = useState({
     email: '',
     password: '',
   });
   const [error, setError] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
   const { signin } = useAuth();
   const router = useRouter();
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
   };
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
-    setIsLoading(true);
+    setLoading(true);
 
     try {
-      await signin(formData.email, formData.password);
-      router.push('/');
+      const result = await signin(formData.email, formData.password);
+      if (!result.success) {
+        setError(result.message);
+      }
     } catch (err) {
-      setError('Invalid email or password');
+      setError('An error occurred during sign in');
     } finally {
-      setIsLoading(false);
+      setLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen bg-white flex items-center justify-center px-6 py-12">
-      <div className="w-full max-w-md rounded-2xl shadow-xl border border-gray-100 p-8">
-        <div className="flex flex-col items-center mb-6">
-          <Image src="/logo.png" alt="The Phoenixx Club" width={60} height={60} className="mb-4" />
-          <h2 className="text-3xl font-bold text-[#0a1433] text-center">Welcome Back</h2>
-          <p className="text-gray-500 text-sm text-center mt-2">Sign in to your account</p>
-        </div>
+    <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+      <div className="sm:mx-auto sm:w-full sm:max-w-md">
+        <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
+          Sign in to your account
+        </h2>
+        <p className="mt-2 text-center text-sm text-gray-600">
+          Or{' '}
+          <Link href="/auth/signup" className="font-medium text-[#ffb74d] hover:text-[#ffa726]">
+            create a new account
+          </Link>
+        </p>
+      </div>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
-          {error && (
-            <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-2 rounded text-sm">
-              {error}
+      <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+        <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
+          <form className="space-y-6" onSubmit={handleSubmit}>
+            <div>
+              <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+                Email address
+              </label>
+              <div className="mt-1">
+                <input
+                  id="email"
+                  name="email"
+                  type="email"
+                  autoComplete="email"
+                  required
+                  value={formData.email}
+                  onChange={handleChange}
+                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-[#ffb74d] focus:border-[#ffb74d] sm:text-sm"
+                />
+              </div>
             </div>
-          )}
 
-          <input
-            name="email"
-            type="email"
-            required
-            placeholder="Email address"
-            className="rounded-lg border border-gray-300 px-3 py-2 text-sm w-full focus:ring-[#0a1433] focus:border-[#0a1433]"
-            value={formData.email}
-            onChange={handleChange}
-          />
+            <div>
+              <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+                Password
+              </label>
+              <div className="mt-1">
+                <input
+                  id="password"
+                  name="password"
+                  type="password"
+                  autoComplete="current-password"
+                  required
+                  value={formData.password}
+                  onChange={handleChange}
+                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-[#ffb74d] focus:border-[#ffb74d] sm:text-sm"
+                />
+              </div>
+            </div>
 
-          <input
-            name="password"
-            type="password"
-            required
-            placeholder="Password"
-            className="rounded-lg border border-gray-300 px-3 py-2 text-sm w-full focus:ring-[#0a1433] focus:border-[#0a1433]"
-            value={formData.password}
-            onChange={handleChange}
-          />
+            {error && (
+              <div className="text-red-600 text-sm text-center">{error}</div>
+            )}
 
-          <button
-            type="submit"
-            disabled={isLoading}
-            className="w-full bg-[#0a1433] hover:bg-[#ffb74d] text-white hover:text-[#0a1433] transition-colors font-semibold py-2 px-4 rounded-lg text-sm disabled:opacity-60"
-          >
-            {isLoading ? 'Signing in...' : 'Sign In'}
-          </button>
-
-          <p className="text-sm text-center mt-4 text-gray-600">
-            Don't have an account?{' '}
-            <Link href="/auth/signup" className="text-[#0a1433] hover:text-[#ffb74d] font-medium">
-              Sign up
-            </Link>
-          </p>
-        </form>
+            <div>
+              <button
+                type="submit"
+                disabled={loading}
+                className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-[#ffb74d] hover:bg-[#ffa726] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#ffb74d] disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {loading ? 'Signing in...' : 'Sign in'}
+              </button>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   );

@@ -1,103 +1,56 @@
 import { NextResponse } from 'next/server';
-import { promises as fs } from 'fs';
-import path from 'path';
-import { parse } from 'csv-parse/sync';
-import { stringify } from 'csv-stringify/sync';
-
-interface User {
-  id: string;
-  firstName: string;
-  lastName: string;
-  email: string;
-  phone: string;
-  password: string;
-  createdAt: string;
-  membershipStatus: string;
-  membershipType: string;
-  joinDate: string;
-  lastLogin: string;
-}
-
-const CSV_FILE_PATH = path.join(process.cwd(), 'data', 'users.csv');
-
-async function readUsers(): Promise<User[]> {
-  try {
-    const fileContent = await fs.readFile(CSV_FILE_PATH, 'utf-8');
-    const records = parse(fileContent, {
-      columns: true,
-      skip_empty_lines: true,
-    });
-    return records as User[];
-  } catch (error) {
-    console.error('Error reading users:', error);
-    return [];
-  }
-}
-
-async function writeUsers(users: User[]): Promise<void> {
-  try {
-    const csv = stringify(users, {
-      header: true,
-      columns: {
-        id: 'id',
-        firstName: 'firstName',
-        lastName: 'lastName',
-        email: 'email',
-        phone: 'phone',
-        password: 'password',
-        createdAt: 'createdAt',
-        membershipStatus: 'membershipStatus',
-        membershipType: 'membershipType',
-        joinDate: 'joinDate',
-        lastLogin: 'lastLogin',
-      },
-    });
-    await fs.writeFile(CSV_FILE_PATH, csv);
-  } catch (error) {
-    console.error('Error writing users:', error);
-    throw error;
-  }
-}
+import dbConnect from '@/lib/db';
+import User from '@/models/User';
+import bcrypt from 'bcryptjs';
 
 export async function POST(request: Request) {
   try {
+    await dbConnect();
     const body = await request.json();
-    const users = await readUsers();
 
-    // Check for unique email
-    if (users.some(user => user.email === body.email)) {
+    // Check for existing user with same email
+    const existingEmail = await User.findOne({ email: body.email });
+    if (existingEmail) {
       return NextResponse.json(
         { error: 'Email already exists' },
         { status: 400 }
       );
     }
 
-    // Check for unique phone number
-    if (users.some(user => user.phone === body.phone)) {
+    // Check for existing user with same phone
+    const existingPhone = await User.findOne({ phone: body.phone });
+    if (existingPhone) {
       return NextResponse.json(
         { error: 'Phone number already exists' },
         { status: 400 }
       );
     }
 
-    const newUser: User = {
-      id: crypto.randomUUID(),
+    // Hash the password
+    const hashedPassword = await bcrypt.hash(body.password, 10);
+
+    // Create new user
+    const newUser = await User.create({
       firstName: body.firstName,
       lastName: body.lastName,
       email: body.email,
       phone: body.phone,
-      password: body.password,
-      createdAt: new Date().toISOString(),
+      password: hashedPassword,
       membershipStatus: 'pending',
       membershipType: 'standard',
-      joinDate: new Date().toISOString(),
-      lastLogin: new Date().toISOString(),
-    };
+      joinDate: new Date(),
+      lastLogin: new Date(),
+    });
 
-    users.push(newUser);
-    await writeUsers(users);
+    // Remove password from response
+    const userResponse = newUser.toObject();
+    delete userResponse.password;
 
-    return NextResponse.json({ message: 'User created successfully' });
+    return NextResponse.json({ 
+      success: true,
+      message: 'User created successfully',
+      user: userResponse
+    });
   } catch (error) {
     console.error('Error creating user:', error);
     return NextResponse.json(
@@ -109,6 +62,7 @@ export async function POST(request: Request) {
 
 export async function GET(request: Request) {
   try {
+    await dbConnect();
     const { searchParams } = new URL(request.url);
     const email = searchParams.get('email');
     const password = searchParams.get('password');
@@ -120,11 +74,8 @@ export async function GET(request: Request) {
       );
     }
 
-    const users = await readUsers();
-    const user = users.find(
-      u => u.email === email && u.password === password
-    );
-
+    // Find user by email
+    const user = await User.findOne({ email });
     if (!user) {
       return NextResponse.json(
         { error: 'Invalid credentials' },
@@ -132,13 +83,24 @@ export async function GET(request: Request) {
       );
     }
 
-    // Update last login
-    user.lastLogin = new Date().toISOString();
-    await writeUsers(users);
+    // Verify password
+    const isValidPassword = await bcrypt.compare(password, user.password);
+    if (!isValidPassword) {
+      return NextResponse.json(
+        { error: 'Invalid credentials' },
+        { status: 401 }
+      );
+    }
 
-    // Return user data without password
-    const { password: _, ...userWithoutPassword } = user;
-    return NextResponse.json(userWithoutPassword);
+    // Update last login
+    user.lastLogin = new Date();
+    await user.save();
+
+    // Remove password from response
+    const userResponse = user.toObject();
+    delete userResponse.password;
+
+    return NextResponse.json(userResponse);
   } catch (error) {
     console.error('Error authenticating user:', error);
     return NextResponse.json(
