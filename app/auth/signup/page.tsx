@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/lib/auth-context';
 import Link from 'next/link';
+import Logo from '@/app/components/Logo';
 
 export default function SignUpPage() {
   const [formData, setFormData] = useState({
@@ -15,6 +16,7 @@ export default function SignUpPage() {
   });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
   const { signup } = useAuth();
   const router = useRouter();
 
@@ -33,7 +35,17 @@ export default function SignUpPage() {
     try {
       const result = await signup(formData);
       if (result.success) {
-        router.push('/auth/signin');
+        setSuccess(true);
+        setFormData({
+          firstName: '',
+          lastName: '',
+          email: '',
+          phone: '',
+          password: '',
+        });
+        setTimeout(() => {
+          router.push('/auth/signin');
+        }, 2000);
       } else {
         setError(result.message);
       }
@@ -45,125 +57,143 @@ export default function SignUpPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
-      <div className="sm:mx-auto sm:w-full sm:max-w-md">
-        <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-          Create your account
-        </h2>
-        <p className="mt-2 text-center text-sm text-gray-600">
-          Or{' '}
-          <Link href="/auth/signin" className="font-medium text-[#ffb74d] hover:text-[#ffa726]">
-            sign in to your account
-          </Link>
-        </p>
-      </div>
+    <div className="min-h-screen bg-gradient-to-br from-indigo-100 via-purple-50 to-pink-100 flex items-center justify-center p-4">
+      <div className="max-w-md w-full space-y-8 bg-white/80 backdrop-blur-lg p-8 rounded-2xl shadow-xl border border-white/20">
+        <Logo />
+        
+        <div className="text-center">
+          <h2 className="text-3xl font-extrabold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
+            Create your account
+          </h2>
+          <p className="mt-2 text-sm text-gray-600">
+            Join The Phoenixx Club today
+          </p>
+        </div>
 
-      <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-        <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
-          <form className="space-y-6" onSubmit={handleSubmit}>
-            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
-              <div>
-                <label htmlFor="firstName" className="block text-sm font-medium text-gray-700">
-                  First name
-                </label>
-                <div className="mt-1">
-                  <input
-                    id="firstName"
-                    name="firstName"
-                    type="text"
-                    required
-                    value={formData.firstName}
-                    onChange={handleChange}
-                    className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-[#ffb74d] focus:border-[#ffb74d] sm:text-sm"
-                  />
-                </div>
-              </div>
+        {success && (
+          <div className="fixed top-4 right-4 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-lg shadow-lg animate-fade-in">
+            Account created successfully!!
+          </div>
+        )}
 
-              <div>
-                <label htmlFor="lastName" className="block text-sm font-medium text-gray-700">
-                  Last name
-                </label>
-                <div className="mt-1">
-                  <input
-                    id="lastName"
-                    name="lastName"
-                    type="text"
-                    required
-                    value={formData.lastName}
-                    onChange={handleChange}
-                    className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-[#ffb74d] focus:border-[#ffb74d] sm:text-sm"
-                  />
-                </div>
-              </div>
-            </div>
-
-            <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-                Email address
+        <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
+          <div className="grid grid-cols-2 gap-4">
+            <div className="space-y-1">
+              <label htmlFor="firstName" className="block text-sm font-medium text-gray-700">
+                First Name
               </label>
-              <div className="mt-1">
-                <input
-                  id="email"
-                  name="email"
-                  type="email"
-                  autoComplete="email"
-                  required
-                  value={formData.email}
-                  onChange={handleChange}
-                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-[#ffb74d] focus:border-[#ffb74d] sm:text-sm"
-                />
-              </div>
+              <input
+                id="firstName"
+                name="firstName"
+                type="text"
+                required
+                value={formData.firstName}
+                onChange={handleChange}
+                className="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-200"
+                placeholder="John"
+              />
             </div>
-
-            <div>
-              <label htmlFor="phone" className="block text-sm font-medium text-gray-700">
-                Phone number
+            <div className="space-y-1">
+              <label htmlFor="lastName" className="block text-sm font-medium text-gray-700">
+                Last Name
               </label>
-              <div className="mt-1">
-                <input
-                  id="phone"
-                  name="phone"
-                  type="tel"
-                  required
-                  value={formData.phone}
-                  onChange={handleChange}
-                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-[#ffb74d] focus:border-[#ffb74d] sm:text-sm"
-                />
-              </div>
+              <input
+                id="lastName"
+                name="lastName"
+                type="text"
+                required
+                value={formData.lastName}
+                onChange={handleChange}
+                className="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-200"
+                placeholder="Doe"
+              />
             </div>
+          </div>
 
-            <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700">
-                Password
-              </label>
-              <div className="mt-1">
-                <input
-                  id="password"
-                  name="password"
-                  type="password"
-                  autoComplete="new-password"
-                  required
-                  value={formData.password}
-                  onChange={handleChange}
-                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-[#ffb74d] focus:border-[#ffb74d] sm:text-sm"
-                />
-              </div>
+          <div className="space-y-1">
+            <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+              Email address
+            </label>
+            <input
+              id="email"
+              name="email"
+              type="email"
+              autoComplete="email"
+              required
+              value={formData.email}
+              onChange={handleChange}
+              className="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-200"
+              placeholder="john@example.com"
+            />
+          </div>
+
+          <div className="space-y-1">
+            <label htmlFor="phone" className="block text-sm font-medium text-gray-700">
+              Phone Number
+            </label>
+            <input
+              id="phone"
+              name="phone"
+              type="tel"
+              required
+              value={formData.phone}
+              onChange={handleChange}
+              className="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-200"
+              placeholder="+1 (555) 000-0000"
+            />
+          </div>
+
+          <div className="space-y-1">
+            <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+              Password
+            </label>
+            <input
+              id="password"
+              name="password"
+              type="password"
+              autoComplete="new-password"
+              required
+              value={formData.password}
+              onChange={handleChange}
+              className="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-200"
+              placeholder="••••••••"
+            />
+          </div>
+
+          {error && (
+            <div className="text-red-600 text-sm text-center bg-red-50 p-3 rounded-lg border border-red-100">
+              {error}
             </div>
+          )}
 
-            {error && (
-              <div className="text-red-600 text-sm text-center">{error}</div>
-            )}
+          <div>
+            <button
+              type="submit"
+              disabled={loading}
+              className="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
+            >
+              {loading ? (
+                <span className="flex items-center">
+                  <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                  </svg>
+                  Creating account...
+                </span>
+              ) : (
+                'Sign up'
+              )}
+            </button>
+          </div>
+        </form>
 
-            <div>
-              <button
-                type="submit"
-                disabled={loading}
-                className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-[#ffb74d] hover:bg-[#ffa726] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#ffb74d] disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                {loading ? 'Creating account...' : 'Create account'}
-              </button>
-            </div>
-          </form>
+        <div className="text-center mt-6">
+          <p className="text-sm text-gray-600">
+            Already have an account?{' '}
+            <Link href="/auth/signin" className="font-medium text-indigo-600 hover:text-indigo-500 transition-colors duration-200">
+              Sign in
+            </Link>
+          </p>
         </div>
       </div>
     </div>

@@ -35,15 +35,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const router = useRouter();
 
   useEffect(() => {
-    // Check if user data exists in localStorage
     const storedUser = localStorage.getItem('user');
     if (storedUser) {
-      try {
-        setUser(JSON.parse(storedUser));
-      } catch (error) {
-        console.error('Error parsing stored user:', error);
-        localStorage.removeItem('user');
-      }
+      setUser(JSON.parse(storedUser));
     }
   }, []);
 
@@ -59,18 +53,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Accept': 'application/json',
         },
-        body: JSON.stringify({
-          firstName: userData.firstName.trim(),
-          lastName: userData.lastName.trim(),
-          email: userData.email.trim(),
-          phone: userData.phone.trim(),
-          password: userData.password,
-        }),
+        body: JSON.stringify(userData),
       });
 
       const data = await res.json();
+
       if (!res.ok) {
         throw new Error(data.error || 'Signup failed');
       }
@@ -80,7 +68,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         message: 'Account created successfully! Please sign in.'
       };
     } catch (error) {
-      console.error('Signup error:', error);
       return {
         success: false,
         message: error instanceof Error ? error.message : 'An error occurred during signup'
@@ -99,6 +86,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       });
 
       const data = await res.json();
+
       if (!res.ok) {
         throw new Error(data.error || 'Login failed');
       }
@@ -112,7 +100,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         message: 'Successfully signed in'
       };
     } catch (error) {
-      console.error('Signin error:', error);
       return {
         success: false,
         message: error instanceof Error ? error.message : 'An error occurred during sign in'
@@ -124,6 +111,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     try {
       await fetch('/api/auth/signout', {
         method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
       });
     } catch (error) {
       console.error('Signout error:', error);
