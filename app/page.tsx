@@ -400,7 +400,26 @@ export default function Home() {
 
                     {/* Right Column */}
                     <div className="bg-white/50 backdrop-blur-sm rounded-xl p-8">
-                      
+                      <div className="space-y-6 mb-8">
+                        <h3 className="text-xl font-bold text-indigo-900">Legal</h3>
+                        <ul className="space-y-2">
+                          <li>
+                            <Link href="/privacy-policy" className="text-slate-700 hover:text-pink-600 transition-colors">
+                              Privacy Policy
+                            </Link>
+                          </li>
+                          <li>
+                            <Link href="/terms" className="text-slate-700 hover:text-pink-600 transition-colors">
+                              Terms of Service
+                            </Link>
+                          </li>
+                          <li>
+                            <Link href="/cookie-policy" className="text-slate-700 hover:text-pink-600 transition-colors">
+                              Cookie Policy
+                            </Link>
+                          </li>
+                        </ul>
+                      </div>
 
                       <div className="space-y-6 mb-8">
                         <div className="flex items-center text-slate-700">
