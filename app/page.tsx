@@ -69,10 +69,10 @@ export default function Home() {
 
             {/* Navigation */}
             <nav className="hidden md:flex space-x-8">
-              {["Home", "Events", "Gallery", "Membership", "Community", "About"].map((item, index) => (
+              {["Home", "Events", "Gallery", "Membership", "Community", "About", "FAQ", "Benefits"].map((item, index) => (
                 <Link
                   key={index}
-                  href={item === "Home" ? "#" : `#${item.toLowerCase()}`}
+                  href={item === "Home" ? "/" : item === "About" ? "/about" : item === "FAQ" ? "/FAQ" : item === "Benefits" ? "/benefit" : `#${item.toLowerCase()}`}
                   className="text-white font-semibold hover:text-amber-200 transition-all duration-300 hover:scale-110"
                 >
                   {item}
@@ -121,10 +121,10 @@ export default function Home() {
               {/* Mobile Dropdown */}
               {isMenuOpen && (
                 <div className="absolute right-0 mt-2 w-48 bg-indigo-900/95 backdrop-blur-sm border border-indigo-200/20 rounded-lg shadow-lg z-50 py-2 space-y-2">
-                  {["Home", "Events", "Gallery", "Membership", "Community", "About"].map((item, index) => (
+                  {["Home", "Events", "Gallery", "Membership", "Community", "About", "FAQ", "Benefits"].map((item, index) => (
                     <Link
                       key={index}
-                      href={item === "Home" ? "#" : `#${item.toLowerCase()}`}
+                      href={item === "Home" ? "/" : item === "About" ? "/about" : item === "FAQ" ? "/FAQ" : item === "Benefits" ? "/benefit" : `#${item.toLowerCase()}`}
                       className="block px-4 py-2 text-white hover:text-amber-200 transition"
                       onClick={() => setIsMenuOpen(false)}
                     >
@@ -155,7 +155,7 @@ export default function Home() {
 
       <main>
         {/* Hero Section */}
-        <section className="relative min-h-[90vh] overflow-hidden">
+        <section className="relative min-h-[70vh] overflow-hidden">
           {/* Background with Parallax Effect */}
           <div className="absolute inset-0">
             <div className="relative w-full h-full">
@@ -184,82 +184,80 @@ export default function Home() {
           {/* Hero Content */}
           <div className="relative h-full">
             <div className="container mx-auto px-4 h-full">
-              <div className="grid lg:grid-cols-2 gap-12 items-center h-full py-20">
+              <div className="grid lg:grid-cols-2 gap-8 items-center h-full py-12">
                 {/* Left Column - Main Content */}
                 <div className="text-left space-y-8">
                   <div className="space-y-4">
-                    <div className="inline-flex items-center space-x-2 px-4 py-2 rounded-full bg-black/40 backdrop-blur-sm border border-amber-200/20 shadow-[0_0_15px_rgba(0,0,0,0.5)]">
-                      <span className="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
-                      <span className="text-amber-200 text-sm font-medium">Now Accepting New Members</span>
+                    <div className="inline-flex items-center space-x-2 px-4 py-2 rounded-full bg-gradient-to-r from-pink-500/40 to-purple-500/40 backdrop-blur-sm border border-amber-200/20 shadow-[0_0_15px_rgba(0,0,0,0.5)] animate-pulse">
+                      <span className="w-2 h-2 rounded-full bg-amber-400 animate-ping"></span>
+                      <span className="text-amber-200 text-sm font-medium">Join the Party! Limited Spots Available</span>
                     </div>
                     <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-tight drop-shadow-[0_2px_4px_rgba(0,0,0,0.7)]">
-                      <span className="block">Elevate Your</span>
-                      <span className="block mt-2 bg-gradient-to-r from-amber-200 via-white to-amber-200 bg-clip-text text-transparent drop-shadow-[0_2px_4px_rgba(0,0,0,0.7)]">
-                        Social Experience
+                      <span className="block">Where Fun Meets</span>
+                      <span className="block mt-2 bg-gradient-to-r from-pink-500 via-amber-200 to-purple-500 bg-clip-text text-transparent drop-shadow-[0_2px_4px_rgba(0,0,0,0.7)] animate-gradient">
+                        Elite Social Life
                       </span>
                     </h1>
                     <p className="text-lg text-slate-200 max-w-lg leading-relaxed drop-shadow-[0_2px_4px_rgba(0,0,0,0.7)]">
-                      Join an exclusive community where luxury meets legacy. Experience curated events, premium networking, and unforgettable moments.
+                      Experience the most exclusive parties, meet amazing people, and create unforgettable memories. Your VIP journey starts here! 🎉
                     </p>
                   </div>
 
                   <div className="flex flex-col sm:flex-row gap-4">
                     <Link
                       href="#membership"
-                      className="group relative px-8 py-4 bg-amber-500 text-slate-900 font-bold rounded-lg overflow-hidden shadow-[0_4px_12px_rgba(0,0,0,0.5)]"
+                      className="group relative px-8 py-4 bg-gradient-to-r from-pink-500 to-purple-500 text-white font-bold rounded-lg overflow-hidden shadow-[0_4px_12px_rgba(0,0,0,0.5)] hover:shadow-[0_4px_20px_rgba(255,0,128,0.5)] transition-all duration-300"
                     >
                       <span className="relative z-10 flex items-center">
-                        Join Now
+                        Join the Party
                         <ChevronRight className="ml-2 h-5 w-5 transform group-hover:translate-x-1 transition-transform" />
                       </span>
-                      <div className="absolute inset-0 bg-amber-400 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></div>
+                      <div className="absolute inset-0 bg-gradient-to-r from-purple-500 to-pink-500 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></div>
                     </Link>
                     <Link
                       href="#events"
-                      className="group px-8 py-4 bg-white/10 backdrop-blur-sm text-white font-bold rounded-lg border border-amber-200/20 hover:bg-white/20 transition-all duration-300 shadow-[0_4px_12px_rgba(0,0,0,0.5)]"
+                      className="group px-8 py-4 bg-white/10 backdrop-blur-sm text-white font-bold rounded-lg border border-amber-200/20 hover:bg-white/20 transition-all duration-300 shadow-[0_4px_12px_rgba(0,0,0,0.5)] hover:shadow-[0_4px_20px_rgba(255,215,0,0.3)]"
                     >
                       <span className="flex items-center">
-                        View Events
+                        See What's Hot
                         <ChevronRight className="ml-2 h-5 w-5 transform group-hover:translate-x-1 transition-transform" />
                       </span>
                     </Link>
                   </div>
 
                   {/* Quick Stats */}
-                  <div className="grid grid-cols-3 gap-8 pt-8">
-                  
-                  </div>
+            
                 </div>
 
                 {/* Right Column - Feature Card */}
                 <div className="hidden lg:block">
-                  <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-amber-200/20">
+                  <div className="bg-gradient-to-br from-pink-500/20 to-purple-500/20 backdrop-blur-sm rounded-2xl p-8 border border-amber-200/20 shadow-[0_8px_32px_rgba(0,0,0,0.3)] hover:shadow-[0_8px_32px_rgba(255,0,128,0.3)] transition-all duration-300">
                     <div className="space-y-6">
                       <div className="flex items-center space-x-4">
-                        <div className="w-12 h-12 rounded-full bg-amber-500/20 flex items-center justify-center">
-                          <Star className="w-6 h-6 text-amber-200" />
+                        <div className="w-12 h-12 rounded-full bg-gradient-to-r from-pink-500 to-purple-500 flex items-center justify-center animate-pulse">
+                          <Star className="w-6 h-6 text-white" />
                         </div>
                         <div>
-                          <h3 className="text-xl font-bold text-white">Premium Membership</h3>
-                          <p className="text-slate-200">Exclusive access to all events</p>
+                          <h3 className="text-xl font-bold text-white">VIP Access</h3>
+                          <p className="text-slate-200">Exclusive parties & events</p>
                         </div>
                       </div>
                       <div className="flex items-center space-x-4">
-                        <div className="w-12 h-12 rounded-full bg-amber-500/20 flex items-center justify-center">
-                          <Users className="w-6 h-6 text-amber-200" />
+                        <div className="w-12 h-12 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 flex items-center justify-center animate-pulse">
+                          <Users className="w-6 h-6 text-white" />
                         </div>
                         <div>
                           <h3 className="text-xl font-bold text-white">Elite Network</h3>
-                          <p className="text-slate-200">Connect with industry leaders</p>
+                          <p className="text-slate-200">Connect with amazing people</p>
                         </div>
                       </div>
                       <div className="flex items-center space-x-4">
-                        <div className="w-12 h-12 rounded-full bg-amber-500/20 flex items-center justify-center">
-                          <Calendar className="w-6 h-6 text-amber-200" />
+                        <div className="w-12 h-12 rounded-full bg-gradient-to-r from-pink-500 to-purple-500 flex items-center justify-center animate-pulse">
+                          <Calendar className="w-6 h-6 text-white" />
                         </div>
                         <div>
-                          <h3 className="text-xl font-bold text-white">Curated Events</h3>
-                          <p className="text-slate-200">8 premium events annually</p>
+                          <h3 className="text-xl font-bold text-white">Party Calendar</h3>
+                          <p className="text-slate-200">8 epic events annually</p>
                         </div>
                       </div>
                     </div>
@@ -335,21 +333,21 @@ export default function Home() {
         <section id="membership" className="py-16 bg-gradient-to-b from-slate-50 to-indigo-50">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12">
-              <h2 className="text-4xl font-bold text-indigo-900 mb-4 tracking-wide uppercase">Club Phoenixx Membership</h2>
+              <h2 className="text-4xl font-bold text-indigo-900 mb-4 tracking-wide uppercase">Join the Party! 🎉</h2>
               <p className="text-slate-700 max-w-2xl mx-auto text-lg">
-                Unlock elite access to exclusive events, VIP lounges, and unforgettable experiences.
+                Get ready for the most exclusive social experiences in town. Your VIP journey awaits!
               </p>
             </div>
 
             <div className="max-w-5xl mx-auto">
-              <div className="bg-white rounded-2xl overflow-hidden shadow-2xl border border-indigo-200 membership-card">
+              <div className="bg-gradient-to-br from-pink-500/10 via-purple-500/10 to-indigo-500/10 rounded-2xl overflow-hidden shadow-2xl border border-pink-200/20 membership-card hover:shadow-[0_8px_32px_rgba(255,0,128,0.2)] transition-all duration-300">
                 {/* Header */}
-                <div className="bg-gradient-to-r from-indigo-900 via-purple-900 to-blue-900 p-8 text-center">
-                  <div className="inline-block bg-white text-indigo-900 px-4 py-1 rounded-full text-sm font-bold mb-4 tracking-widest">
+                <div className="bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 p-8 text-center">
+                  <div className="inline-block bg-white/20 backdrop-blur-sm text-[#FFD700] px-4 py-1 rounded-full text-sm font-bold mb-4 tracking-widest animate-pulse">
                     VIP ACCESS
                   </div>
                   <h3 className="text-3xl font-extrabold text-white mb-2">The Phoenixx Club</h3>
-                  <p className="text-indigo-100">Experience Luxury | Live Legacy</p>
+                  <p className="text-white/80">Where Every Night is a Celebration! ✨</p>
                 </div>
 
                 {/* Content */}
@@ -359,18 +357,18 @@ export default function Home() {
                     <div>
                       <div className="mb-8">
                         <h4 className="text-2xl font-bold text-indigo-900 mb-6 flex items-center">
-                          <Star className="w-6 h-6 text-amber-500 mr-2" /> Membership Benefits
+                          <Star className="w-6 h-6 text-pink-500 mr-2" /> Party Perks
                         </h4>
                         <ul className="space-y-4">
                           {[
-                            "Access to 8 exclusive events annually",
-                            "Networking with industry leaders",
-                            "Complimentary VIP guest invites",
-                            "Priority access to private shows"
+                            "8 exclusive parties & events annually",
+                            "Meet amazing people & make new friends",
+                            "Bring your VIP friends to special events",
+                            "Priority access to all club events"
                           ].map((item, i) => (
-                            <li key={i} className="flex items-start list-item">
-                              <div className="w-6 h-6 rounded-full bg-indigo-100 flex items-center justify-center mr-3">
-                                <Check className="w-4 h-4 text-indigo-900" />
+                            <li key={i} className="flex items-start">
+                              <div className="w-6 h-6 rounded-full bg-gradient-to-r from-pink-500 to-purple-500 flex items-center justify-center mr-3">
+                                <Check className="w-4 h-4 text-white" />
                               </div>
                               <span className="text-slate-700">{item}</span>
                             </li>
@@ -380,18 +378,18 @@ export default function Home() {
 
                       <div>
                         <h4 className="text-2xl font-bold text-indigo-900 mb-6 flex items-center">
-                          <Star className="w-6 h-6 text-amber-500 mr-2" /> Exclusive Perks
+                          <Star className="w-6 h-6 text-pink-500 mr-2" /> VIP Benefits
                         </h4>
                         <ul className="space-y-4">
                           {[
-                            "Premium partner benefits",
-                            "Private member communications",
-                            "Dedicated concierge service",
-                            "Host exclusive events"
+                            "Exclusive partner discounts & offers",
+                            "Private member-only communications",
+                            "Personal party concierge service",
+                            "Host your own exclusive events"
                           ].map((item, i) => (
-                            <li key={i} className="flex items-start list-item">
-                              <div className="w-6 h-6 rounded-full bg-indigo-100 flex items-center justify-center mr-3">
-                                <Check className="w-4 h-4 text-indigo-900" />
+                            <li key={i} className="flex items-start">
+                              <div className="w-6 h-6 rounded-full bg-gradient-to-r from-pink-500 to-purple-500 flex items-center justify-center mr-3">
+                                <Check className="w-4 h-4 text-white" />
                               </div>
                               <span className="text-slate-700">{item}</span>
                             </li>
@@ -401,36 +399,35 @@ export default function Home() {
                     </div>
 
                     {/* Right Column */}
-                    <div className="bg-indigo-50 rounded-xl p-8">
+                    <div className="bg-white/50 backdrop-blur-sm rounded-xl p-8">
                       <div className="mb-8">
-                        <div className="text-4xl font-bold text-indigo-900 mb-2">₹55,000</div>
-                        <div className="text-slate-700">Annual Club Access</div>
-                        <div className="text-sm text-slate-500 mt-2">+ ₹5,000 one-time VIP activation</div>
+                        <div className="text-4xl font-bold text-indigo-900 mb-2">₹60,000</div>
+                        <div className="text-slate-700">Annual Party Pass</div>
                       </div>
 
                       <div className="space-y-6 mb-8">
                         <div className="flex items-center text-slate-700">
-                          <Calendar className="w-5 h-5 text-indigo-900 mr-3" />
-                          <span>Valid for 1 calendar year</span>
+                          <Calendar className="w-5 h-5 text-pink-500 mr-3" />
+                          <span>Valid for 1 year of epic parties</span>
                         </div>
                         <div className="flex items-center text-slate-700">
-                          <Users className="w-5 h-5 text-indigo-900 mr-3" />
-                          <span>Only 100 VIP slots available</span>
+                          <Users className="w-5 h-5 text-pink-500 mr-3" />
+                          <span>Only 100 VIP spots available</span>
                         </div>
                         <div className="flex items-center text-slate-700">
-                          <Clock className="w-5 h-5 text-indigo-900 mr-3" />
-                          <span>Unlimited event access</span>
+                          <Clock className="w-5 h-5 text-pink-500 mr-3" />
+                          <span>Unlimited party access</span>
                         </div>
                       </div>
 
                       <Link
                         href="/auth/signup"
-                        className="block w-full py-4 rounded-xl bg-indigo-900 text-white text-center font-bold hover:bg-indigo-800 transition-all duration-300 shadow-md hover:shadow-indigo-900/50 text-lg mb-4"
+                        className="block w-full py-4 rounded-xl bg-gradient-to-r from-pink-500 to-purple-500 text-white text-center font-bold hover:shadow-[0_4px_20px_rgba(255,0,128,0.5)] transition-all duration-300 text-lg mb-4"
                       >
-                        Join the Club Now
+                        Join the Party Now! 🎉
                       </Link>
                       <p className="text-center text-sm text-slate-500">
-                        Questions? <a href="mailto:thephoenixxclub@gmail.com" className="text-indigo-900 hover:underline">thephoenixxclub@gmail.com</a>
+                        Questions? <a href="mailto:thephoenixxclub@gmail.com" className="text-pink-500 hover:underline">thephoenixxclub@gmail.com</a>
                       </p>
                     </div>
                   </div>
@@ -444,40 +441,39 @@ export default function Home() {
         <section id="community" className="py-16 bg-gradient-to-b from-slate-50 to-indigo-50">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12">
-              <h2 className="text-3xl font-bold text-indigo-900 mb-4">Our Community</h2>
+              <h2 className="text-3xl font-bold text-indigo-900 mb-4">Meet Your Party Squad! 🎉</h2>
               <p className="text-slate-700 max-w-2xl mx-auto">
-                Join our growing community of elite professionals and entrepreneurs who value meaningful connections and
-                exclusive experiences.
+                Join our vibrant community of fun-loving, social butterflies who know how to party in style!
               </p>
             </div>
 
             {/* Community Highlights */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto mb-16 community-stats">
-              <div className="bg-white rounded-xl p-8 text-center shadow-lg border border-indigo-100 hover:border-indigo-200 transition-all duration-300">
-                <div className="w-16 h-16 rounded-full bg-indigo-100 flex items-center justify-center mx-auto mb-4">
-                  <Users className="w-8 h-8 text-indigo-900" />
+              <div className="bg-gradient-to-br from-pink-500/10 to-purple-500/10 rounded-xl p-8 text-center shadow-lg border border-pink-200/20 hover:shadow-[0_8px_32px_rgba(255,0,128,0.2)] transition-all duration-300">
+                <div className="w-16 h-16 rounded-full bg-gradient-to-r from-pink-500 to-purple-500 flex items-center justify-center mx-auto mb-4 animate-pulse">
+                  <Users className="w-8 h-8 text-white" />
                 </div>
-                <h3 className="text-xl font-bold text-indigo-900 mb-2">Exclusive Network</h3>
+                <h3 className="text-xl font-bold text-indigo-900 mb-2">Party People</h3>
                 <p className="text-slate-600">
-                  Connect with a carefully curated community of successful professionals and entrepreneurs.
+                  Connect with a fun-loving community of social butterflies who know how to have a good time!
                 </p>
               </div>
-              <div className="bg-white rounded-xl p-8 text-center shadow-lg border border-indigo-100 hover:border-indigo-200 transition-all duration-300">
-                <div className="w-16 h-16 rounded-full bg-indigo-100 flex items-center justify-center mx-auto mb-4">
-                  <Calendar className="w-8 h-8 text-indigo-900" />
+              <div className="bg-gradient-to-br from-purple-500/10 to-indigo-500/10 rounded-xl p-8 text-center shadow-lg border border-purple-200/20 hover:shadow-[0_8px_32px_rgba(128,0,255,0.2)] transition-all duration-300">
+                <div className="w-16 h-16 rounded-full bg-gradient-to-r from-purple-500 to-indigo-500 flex items-center justify-center mx-auto mb-4 animate-pulse">
+                  <Calendar className="w-8 h-8 text-white" />
                 </div>
-                <h3 className="text-xl font-bold text-indigo-900 mb-2">Premium Events</h3>
+                <h3 className="text-xl font-bold text-indigo-900 mb-2">Epic Events</h3>
                 <p className="text-slate-600">
-                  8 meticulously planned events per year, each offering unique experiences and networking opportunities.
+                  8 amazing parties per year, each with its own unique theme and unforgettable experiences!
                 </p>
               </div>
-              <div className="bg-white rounded-xl p-8 text-center shadow-lg border border-indigo-100 hover:border-indigo-200 transition-all duration-300">
-                <div className="w-16 h-16 rounded-full bg-indigo-100 flex items-center justify-center mx-auto mb-4">
-                  <Star className="w-8 h-8 text-amber-500" />
+              <div className="bg-gradient-to-br from-indigo-500/10 to-pink-500/10 rounded-xl p-8 text-center shadow-lg border border-indigo-200/20 hover:shadow-[0_8px_32px_rgba(0,0,255,0.2)] transition-all duration-300">
+                <div className="w-16 h-16 rounded-full bg-gradient-to-r from-indigo-500 to-pink-500 flex items-center justify-center mx-auto mb-4 animate-pulse">
+                  <Star className="w-8 h-8 text-white" />
                 </div>
-                <h3 className="text-xl font-bold text-indigo-900 mb-2">Luxury Experience</h3>
+                <h3 className="text-xl font-bold text-indigo-900 mb-2">VIP Experience</h3>
                 <p className="text-slate-600">
-                  Every detail is crafted to provide a premium experience that reflects our commitment to excellence.
+                  Every event is crafted to provide the ultimate party experience with premium vibes and luxury touches!
                 </p>
               </div>
             </div>
@@ -801,15 +797,20 @@ export default function Home() {
         </section>
       </main>
 
-      <footer className="bg-gradient-to-b from-[#0a0a0a] to-[#1a1a1a] border-t border-pink-500/20">
+      <footer className="bg-gradient-to-b from-indigo-900 via-purple-900 to-slate-900 border-t border-pink-500/20">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 footer-content">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             <div className="md:col-span-1">
               <div className="flex items-center mb-4">
                 <Image src="/logo.png" alt="The Phoenixx Club" width={60} height={60} className="mr-3 drop-shadow-glow animate-pulse" />
-                <span className="text-[#FFD700] font-bold text-xl tracking-wider">The Phoenixx Club</span>
+                <div className="flex flex-col">
+                  <span className="text-[#FFD700] font-bold text-xl tracking-wider">The Phoenixx Club</span>
+                  <span className="text-gray-300 text-xs">Luxury, Laughter and Legacy</span>
+                </div>
               </div>
-              <p className="text-gray-300 mb-4">Luxury, Laughter and Legacy</p>
+              <p className="text-gray-400 text-sm mb-4">
+                Join India's most exclusive social club for premium entertainment and networking experiences.
+              </p>
               <div className="flex space-x-4">
                 <a href="https://www.facebook.com/profile.php?id=61575687517147" className="text-gray-400 hover:text-[#E91E63] transition-colors">
                   <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -837,6 +838,26 @@ export default function Home() {
               </div>
             </div>
             <div>
+              <h3 className="text-sm font-bold text-[#FFD700] uppercase tracking-wider mb-4">Quick Links</h3>
+              <ul className="space-y-2">
+                <li>
+                  <Link href="/" className="text-gray-300 hover:text-[#E91E63] transition-colors">
+                    Home
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/about" className="text-gray-300 hover:text-[#E91E63] transition-colors">
+                    About Us
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/benefit" className="text-gray-300 hover:text-[#E91E63] transition-colors">
+                    Benefits
+                  </Link>
+                </li>
+              </ul>
+            </div>
+            <div>
               <h3 className="text-sm font-bold text-[#FFD700] uppercase tracking-wider mb-4">Membership</h3>
               <ul className="space-y-2">
                 <li>
@@ -854,29 +875,9 @@ export default function Home() {
                     FAQ
                   </Link>
                 </li>
-              </ul>
-            </div>
-            <div>
-              <h3 className="text-sm font-bold text-[#FFD700] uppercase tracking-wider mb-4">Events</h3>
-              <ul className="space-y-2">
                 <li>
-                  <Link href="#" className="text-gray-300 hover:text-[#E91E63] transition-colors">
-                    Calendar
-                  </Link>
-                </li>
-                <li>
-                  <Link href="#" className="text-gray-300 hover:text-[#E91E63] transition-colors">
-                    Past Events
-                  </Link>
-                </li>
-                <li>
-                  <Link href="#" className="text-gray-300 hover:text-[#E91E63] transition-colors">
-                    Host an Event
-                  </Link>
-                </li>
-                <li>
-                  <Link href="#" className="text-gray-300 hover:text-[#E91E63] transition-colors">
-                    Private Events
+                  <Link href="/contact" className="text-gray-300 hover:text-[#E91E63] transition-colors">
+                    Contact Us
                   </Link>
                 </li>
               </ul>
@@ -884,8 +885,28 @@ export default function Home() {
             <div>
               <h3 className="text-sm font-bold text-[#FFD700] uppercase tracking-wider mb-4">Contact</h3>
               <ul className="space-y-2">
-                <li className="text-gray-300">thephoenixxclub@gmail.com</li>
-                <li className="text-gray-300">+91-9977334588</li>
+                <li>
+                  <a
+                    href="mailto:thephoenixxclub@gmail.com"
+                    className="inline-flex items-center text-gray-300 hover:text-[#E91E63] transition-colors"
+                  >
+                    <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                    </svg>
+                    thephoenixxclub@gmail.com
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="tel:+919977334588"
+                    className="inline-flex items-center text-gray-300 hover:text-[#E91E63] transition-colors"
+                  >
+                    <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
+                    </svg>
+                    +91-9977334588
+                  </a>
+                </li>
               </ul>
             </div>
           </div>

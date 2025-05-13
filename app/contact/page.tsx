@@ -20,7 +20,7 @@ return (
 <div className="max-w-3xl mx-auto px-4 py-12">
 <h1 className="text-4xl font-bold text-center mb-6">Contact Us</h1>
 <p className="text-center text-gray-600 mb-10">
-Have questions about the ₹5000 registration, ₹55,000 membership, or our nationwide events? Fill out the form and we’ll reach out!
+Have questions about the ₹60,000 membership or our nationwide events? Fill out the form and we'll reach out!
 </p>
 <form onSubmit={handleSubmit} className="bg-white shadow-lg rounded-lg p-8 space-y-6">
     <div>
