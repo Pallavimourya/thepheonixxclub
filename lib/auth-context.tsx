@@ -1,6 +1,6 @@
 'use client';
 
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { useRouter } from 'next/navigation';
 
 interface User {
@@ -11,12 +11,13 @@ interface User {
   phone: string;
   membershipStatus: string;
   membershipType: string;
-  joinDate: string;
-  lastLogin: string;
+  joinDate?: string;
+  lastLogin?: string;
 }
 
 interface AuthContextType {
   user: User | null;
+  loading: boolean;
   signup: (userData: {
     firstName: string;
     lastName: string;
@@ -24,21 +25,29 @@ interface AuthContextType {
     password: string;
     phone: string;
   }) => Promise<{ success: boolean; message: string }>;
-  signin: (email: string, password: string) => Promise<{ success: boolean; message: string }>;
-  signout: () => Promise<void>;
+  signin: (email: string, password: string) => Promise<{ success: boolean; message?: string }>;
+  signout: () => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-export function AuthProvider({ children }: { children: React.ReactNode }) {
+export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
+  const [loading, setLoading] = useState(true);
   const router = useRouter();
 
   useEffect(() => {
+    // Check for user data in localStorage on mount
     const storedUser = localStorage.getItem('user');
     if (storedUser) {
-      setUser(JSON.parse(storedUser));
+      try {
+        setUser(JSON.parse(storedUser));
+      } catch (error) {
+        console.error('Error parsing stored user data:', error);
+        localStorage.removeItem('user');
+      }
     }
+    setLoading(false);
   }, []);
 
   const signup = async (userData: {
@@ -77,7 +86,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const signin = async (email: string, password: string) => {
     try {
-      const res = await fetch('/api/auth/signin', {
+      const response = await fetch('/api/auth/signin', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -85,47 +94,54 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         body: JSON.stringify({ email, password }),
       });
 
-      const data = await res.json();
+      const data = await response.json();
 
-      if (!res.ok) {
-        throw new Error(data.error || 'Login failed');
+      if (!response.ok) {
+        return {
+          success: false,
+          message: data.message || 'Failed to sign in',
+        };
       }
 
-      setUser(data.user);
-      localStorage.setItem('user', JSON.stringify(data.user));
-      router.push('/dashboard');
+      if (data.success && data.user) {
+        const userData: User = {
+          id: data.user._id,
+          firstName: data.user.firstName,
+          lastName: data.user.lastName,
+          email: data.user.email,
+          phone: data.user.phone,
+          membershipStatus: data.user.membershipStatus,
+          membershipType: data.user.membershipType,
+          joinDate: data.user.joinDate,
+          lastLogin: data.user.lastLogin,
+        };
+        setUser(userData);
+        localStorage.setItem('user', JSON.stringify(userData));
+        router.push('/dashboard');
+        return { success: true };
+      }
 
       return {
-        success: true,
-        message: 'Successfully signed in'
+        success: false,
+        message: 'Invalid response from server',
       };
     } catch (error) {
+      console.error('Sign in error:', error);
       return {
         success: false,
-        message: error instanceof Error ? error.message : 'An error occurred during sign in'
+        message: 'An error occurred during sign in',
       };
     }
   };
 
-  const signout = async () => {
-    try {
-      await fetch('/api/auth/signout', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-    } catch (error) {
-      console.error('Signout error:', error);
-    } finally {
-      setUser(null);
-      localStorage.removeItem('user');
-      router.push('/auth/signin');
-    }
+  const signout = () => {
+    setUser(null);
+    localStorage.removeItem('user');
+    router.push('/auth/signin');
   };
 
   return (
-    <AuthContext.Provider value={{ user, signup, signin, signout }}>
+    <AuthContext.Provider value={{ user, loading, signup, signin, signout }}>
       {children}
     </AuthContext.Provider>
   );

@@ -11,6 +11,7 @@ export default function Home() {
   const { user } = useAuth();
   const [showMoreImages, setShowMoreImages] = useState(false);
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const slides = [
     {
@@ -44,923 +45,773 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-white">
-      {/* Navigation */}
-      <header className="sticky top-0 z-50 bg-white border-b border-gray-100 shadow-sm">
+    <div className="min-h-screen bg-gradient-to-b from-slate-50 to-indigo-50">
+      {/* Navbar */}
+      <header className="sticky top-0 z-50 bg-gradient-to-r from-indigo-900 via-purple-900 to-blue-900 shadow-lg border-b border-indigo-200">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-20">
+            {/* Logo and Title */}
             <div className="flex items-center">
-              <Image src="/logo.png" alt="The Phoenixx Club" width={50} height={50} className="mr-3" />
+              <Image
+                src="/logo.png"
+                alt="The Phoenixx Club"
+                width={50}
+                height={50}
+                className="mr-3 drop-shadow-glow animate-pulse"
+              />
               <div className="flex flex-col">
-                <span className="text-[#0a1433] font-bold text-xl">The Phoenixx Club</span>
-                <span className="text-gray-500 text-xs">Luxury, Laughter and Legacy</span>
+                <span className="text-white font-extrabold text-xl tracking-widest animate-glow">
+                  The Phoenixx Club
+                </span>
+                <span className="text-amber-200 text-xs">Luxury, Laughter and Legacy</span>
               </div>
             </div>
+
+            {/* Navigation */}
             <nav className="hidden md:flex space-x-8">
-              <Link href="#" className="text-[#0a1433] hover:text-[#ffb74d] font-medium">
-                Home
-              </Link>
-              <Link href="#events" className="text-[#0a1433] hover:text-[#ffb74d] font-medium">
-                Events
-              </Link>
-              <Link href="#gallery" className="text-[#0a1433] hover:text-[#ffb74d] font-medium">
-                Gallery
-              </Link>
-              <Link href="#membership" className="text-[#0a1433] hover:text-[#ffb74d] font-medium">
-                Membership
-              </Link>
-              <Link href="#community" className="text-[#0a1433] hover:text-[#ffb74d] font-medium">
-                Community
-              </Link>
-              <Link href="/about" className="text-[#0a1433] hover:text-[#ffb74d] font-medium">
-                About
-              </Link>
+              {["Home", "Events", "Gallery", "Membership", "Community", "About"].map((item, index) => (
+                <Link
+                  key={index}
+                  href={item === "Home" ? "#" : `#${item.toLowerCase()}`}
+                  className="text-white font-semibold hover:text-amber-200 transition-all duration-300 hover:scale-110"
+                >
+                  {item}
+                </Link>
+              ))}
             </nav>
+
+            {/* Action Buttons */}
             <div className="hidden md:flex items-center space-x-4">
               <Link
                 href="/auth/signin"
-                className="px-4 py-2 rounded-md bg-[#0a1433] text-white hover:bg-[#162552] transition-colors"
+                className="px-4 py-2 rounded-full bg-white/10 text-white hover:bg-white/20 transition-all font-bold backdrop-blur-sm"
               >
                 Login
               </Link>
               <Link
-                href="#membership"
-                className="px-4 py-2 rounded-md bg-[#ffb74d] text-[#0a1433] hover:bg-[#ffa726] transition-colors"
-              >
-                Join Now
-              </Link>
+          href="#membership"
+          className="px-4 py-2 rounded-full bg-yellow-300 text-pink-800 hover:bg-white hover:text-pink-600 transition-all font-bold shadow-md animate-bounce"
+        >
+          Join Now
+        </Link>
             </div>
-            <button className="md:hidden text-[#0a1433]">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                className="w-6 h-6"
+
+            {/* Mobile Menu */}
+            <div className="md:hidden relative">
+              <button
+                onClick={() => setIsMenuOpen(!isMenuOpen)}
+                className="text-white focus:outline-none"
               >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-              </svg>
-            </button>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  className="w-6 h-6"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M4 6h16M4 12h16M4 18h16"
+                  />
+                </svg>
+              </button>
+
+              {/* Mobile Dropdown */}
+              {isMenuOpen && (
+                <div className="absolute right-0 mt-2 w-48 bg-indigo-900/95 backdrop-blur-sm border border-indigo-200/20 rounded-lg shadow-lg z-50 py-2 space-y-2">
+                  {["Home", "Events", "Gallery", "Membership", "Community", "About"].map((item, index) => (
+                    <Link
+                      key={index}
+                      href={item === "Home" ? "#" : `#${item.toLowerCase()}`}
+                      className="block px-4 py-2 text-white hover:text-amber-200 transition"
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      {item}
+                    </Link>
+                  ))}
+                  <hr className="border-indigo-200/20" />
+                  <Link
+                    href="/auth/signin"
+                    className="block px-4 py-2 text-white hover:text-amber-200 transition font-semibold"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    Login
+                  </Link>
+                  <Link
+                    href="#membership"
+                    className="block px-4 py-2 text-amber-200 hover:text-white transition font-semibold"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    Join Now
+                  </Link>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </header>
 
-      {/* Hero Section */}
-      <section className="relative h-[60vh] overflow-hidden">
-        <div className="absolute inset-0">
-          <div className="relative w-full h-full">
-            {slides.map((slide, index) => (
-              <div
-                key={index}
-                className={`absolute inset-0 transition-opacity duration-500 ${
-                  index === currentSlide ? 'opacity-100' : 'opacity-0'
-                }`}
-                onClick={handleSlideClick}
-                style={{ cursor: 'pointer' }}
-              >
-                <Image
-                  src={slide.src}
-                  alt={slide.alt}
-                  fill
-                  className="object-cover"
-                  priority={index === 0}
-                />
-                <div className="absolute inset-0 bg-black/50"></div>
-              </div>
-            ))}
-          </div>
-        </div>
-        <div className="relative h-full flex items-center justify-center text-center px-4">
-          <div className="max-w-2xl mx-auto text-center hero-content">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight mb-6">
-              Ignite the Night with Phoenixx Events
-            </h1>
-            <p className="text-xl text-gray-300 mb-8">
-              Experience luxury, laughter and legacy with the most exclusive club events in the city.
-            </p>
-            <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 justify-center hero-buttons">
-              <Link
-                href="#membership"
-                className="px-8 py-3 rounded-md bg-[#ffb74d] text-[#0a1433] font-bold hover:bg-[#ffa726] transition-colors flex items-center justify-center gsap-button-1"
-              >
-                Join Now <ChevronRight className="ml-2 h-5 w-5" />
-              </Link>
-              <Link
-                href="#events"
-                className="px-8 py-3 rounded-md bg-transparent border-2 border-white text-white font-bold hover:bg-white/10 transition-colors flex items-center justify-center gsap-button-2"
-              >
-                Upcoming Events <ChevronRight className="ml-2 h-5 w-5" />
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Video/Slideshow Section */}
-      
-
-      {/* Events Section */}
-      <section id="events" className="py-12">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-[#0a1433] mb-4">Our Events</h2>
-            <p className="text-gray-600 max-w-2xl mx-auto">
-              Join us for our exclusive events throughout the year. We organize 8 premium events annually for our
-              members.
-            </p>
-          </div>
-
-          {/* Featured Event */}
-          <div className="mb-16 bg-white rounded-xl overflow-hidden shadow-xl border-2 border-[#ffb74d]">
-            <div className="grid md:grid-cols-2">
-              <div className="h-64 md:h-auto relative">
-                <Image
-                  src="https://images.unsplash.com/photo-1721133073235-e4b5facb27fa?q=80&w=3540&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                  alt="Luxury Event"
-                  fill
-                  className="object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#0a1433] to-transparent opacity-60"></div>
-                <div className="absolute top-4 left-4 bg-[#ffb74d] text-[#0a1433] px-3 py-1 rounded-md font-bold">
-                  FEATURED EVENT
+      <main>
+        {/* Hero Section */}
+        <section className="relative min-h-[90vh] overflow-hidden">
+          {/* Background with Parallax Effect */}
+          <div className="absolute inset-0">
+            <div className="relative w-full h-full">
+              {slides.map((slide, index) => (
+                <div
+                  key={index}
+                  className={`absolute inset-0 transition-all duration-1000 transform ${
+                    index === currentSlide ? 'opacity-100 scale-100' : 'opacity-0 scale-110'
+                  }`}
+                  onClick={handleSlideClick}
+                  style={{ cursor: 'pointer' }}
+                >
+                  <Image
+                    src={slide.src}
+                    alt={slide.alt}
+                    fill
+                    className="object-cover"
+                    priority={index === 0}
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-r from-slate-900/90 to-slate-900/70"></div>
                 </div>
-                <div className="absolute bottom-4 left-4 bg-white text-[#0a1433] px-3 py-1 rounded-md font-bold flex items-center">
-                  <Clock className="w-4 h-4 mr-2" />
-                  <span>Coming Soon</span>
-                </div>
-              </div>
-              <div className="p-8">
-                <div className="inline-block bg-[#0a1433]/10 text-[#0a1433] px-3 py-1 rounded-md text-sm font-medium mb-4">
-                  Inaugural Event
-                </div>
-                <h3 className="text-2xl font-bold text-[#0a1433] mb-3">Summer Gala Night</h3>
-                <div className="flex items-center text-gray-600 mb-2">
-                  <Calendar className="w-4 h-4 mr-2" />
-                  <span>June 15, 2025 • 8:00 PM</span>
-                </div>
-                <div className="flex items-center text-gray-600 mb-4">
-                  <MapPin className="w-4 h-4 mr-2" />
-                  <span>Grand Ballroom, Luxury Hotel</span>
-                </div>
-                <p className="text-gray-600 mb-6">
-                  Join us for our first exclusive event - an unforgettable night of elegance, entertainment, and
-                  exclusive networking. This inaugural gala will set the standard for all future Phoenixx Club events.
-                </p>
-                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-                  <div className="text-[#0a1433] font-bold">Exclusive to Members</div>
-                  <Link
-                    href="/auth/signup"
-                    className="px-6 py-3 rounded-md bg-[#ffb74d] text-[#0a1433] hover:bg-[#ffa726] transition-colors text-sm font-bold flex items-center"
-                  >
-                    Become a Member <ChevronRight className="ml-2 h-4 w-4" />
-                  </Link>
-                </div>
-              </div>
+              ))}
             </div>
           </div>
 
-          {/* Event Calendar */}
-          {/* <div className="bg-white rounded-xl p-8 shadow-lg mb-12">
-            <h3 className="text-xl font-bold text-[#0a1433] mb-6 text-center">2025 Event Calendar</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              <div className="border border-gray-200 rounded-lg p-4 text-center hover:border-[#ffb74d] transition-colors">
-                <div className="text-lg font-bold text-[#0a1433] mb-1">Q1</div>
-                <div className="text-sm text-gray-600 mb-3">January - March</div>
-                <div className="text-[#ffb74d] font-medium">2 Exclusive Events</div>
-              </div>
-              <div className="border border-gray-200 rounded-lg p-4 text-center hover:border-[#ffb74d] transition-colors">
-                <div className="text-lg font-bold text-[#0a1433] mb-1">Q2</div>
-                <div className="text-sm text-gray-600 mb-3">April - June</div>
-                <div className="text-[#ffb74d] font-medium">2 Exclusive Events</div>
-              </div>
-              <div className="border border-gray-200 rounded-lg p-4 text-center hover:border-[#ffb74d] transition-colors">
-                <div className="text-lg font-bold text-[#0a1433] mb-1">Q3</div>
-                <div className="text-sm text-gray-600 mb-3">July - September</div>
-                <div className="text-[#ffb74d] font-medium">2 Exclusive Events</div>
-              </div>
-              <div className="border border-gray-200 rounded-lg p-4 text-center hover:border-[#ffb74d] transition-colors">
-                <div className="text-lg font-bold text-[#0a1433] mb-1">Q4</div>
-                <div className="text-sm text-gray-600 mb-3">October - December</div>
-                <div className="text-[#ffb74d] font-medium">2 Exclusive Events</div>
-              </div>
-            </div>
-            <div className="text-center text-gray-600 mt-6">
-              Event details will be provided to members as each event approaches.
-            </div>
-          </div> */}
-
-          <div className="text-center">
-            {/* <Link
-              href="/auth/signup"
-              className="inline-flex items-center px-6 py-3 rounded-md bg-[#0a1433] text-white hover:bg-[#162552] transition-colors"
-            >
-              Join to Access All Events <ArrowRight className="ml-2 h-5 w-5" />
-            </Link> */}
-          </div>
-        </div>
-      </section>
-
-      {/* Membership Section */}
-      <section id="membership" className="py-12 bg-gradient-to-b from-white to-gray-50">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-[#0a1433] mb-4">Exclusive Membership</h2>
-            <p className="text-gray-600 max-w-2xl mx-auto text-lg">
-              Join our elite community and unlock a world of luxury experiences, networking opportunities, and exclusive events.
-            </p>
-          </div>
-
-          <div className="max-w-5xl mx-auto">
-            <div className="bg-white rounded-2xl overflow-hidden shadow-2xl border border-[#ffb74d]/20 membership-card">
-              {/* Membership Header */}
-              <div className="bg-gradient-to-r from-[#0a1433] to-[#162552] p-8 text-center">
-                <div className="inline-block bg-[#ffb74d] text-[#0a1433] px-4 py-1 rounded-full text-sm font-bold mb-4">
-                  PREMIUM MEMBERSHIP
-                </div>
-                <h3 className="text-3xl font-bold text-white mb-2">The Phoenixx Club</h3>
-                <p className="text-gray-300">Elevate Your Social Experience</p>
-              </div>
-
-              {/* Membership Content */}
-              <div className="p-8 md:p-12">
-                <div className="grid md:grid-cols-2 gap-12">
-                  {/* Left Column - Benefits */}
-                  <div>
-                    <div className="mb-8">
-                      <h4 className="text-2xl font-bold text-[#0a1433] mb-6 flex items-center">
-                        <Star className="w-6 h-6 text-[#ffb74d] mr-2" /> Membership Benefits
-                      </h4>
-                      <ul className="space-y-4">
-                        <li className="flex items-start">
-                          <div className="flex-shrink-0 w-6 h-6 rounded-full bg-[#ffb74d]/20 flex items-center justify-center mr-3">
-                            <Check className="w-4 h-4 text-[#ffb74d]" />
-                          </div>
-                          <span className="text-gray-700">Access to all 8 exclusive events per year</span>
-                        </li>
-                        <li className="flex items-start">
-                          <div className="flex-shrink-0 w-6 h-6 rounded-full bg-[#ffb74d]/20 flex items-center justify-center mr-3">
-                            <Check className="w-4 h-4 text-[#ffb74d]" />
-                          </div>
-                          <span className="text-gray-700">Premium networking with elite professionals</span>
-                        </li>
-                        <li className="flex items-start">
-                          <div className="flex-shrink-0 w-6 h-6 rounded-full bg-[#ffb74d]/20 flex items-center justify-center mr-3">
-                            <Check className="w-4 h-4 text-[#ffb74d]" />
-                          </div>
-                          <span className="text-gray-700">Complimentary guest passes for select events</span>
-                        </li>
-                        <li className="flex items-start">
-                          <div className="flex-shrink-0 w-6 h-6 rounded-full bg-[#ffb74d]/20 flex items-center justify-center mr-3">
-                            <Check className="w-4 h-4 text-[#ffb74d]" />
-                          </div>
-                          <span className="text-gray-700">Priority access to limited-capacity events</span>
-                        </li>
-                      </ul>
+          {/* Hero Content */}
+          <div className="relative h-full">
+            <div className="container mx-auto px-4 h-full">
+              <div className="grid lg:grid-cols-2 gap-12 items-center h-full py-20">
+                {/* Left Column - Main Content */}
+                <div className="text-left space-y-8">
+                  <div className="space-y-4">
+                    <div className="inline-flex items-center space-x-2 px-4 py-2 rounded-full bg-black/40 backdrop-blur-sm border border-amber-200/20 shadow-[0_0_15px_rgba(0,0,0,0.5)]">
+                      <span className="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
+                      <span className="text-amber-200 text-sm font-medium">Now Accepting New Members</span>
                     </div>
-
-                    <div>
-                      <h4 className="text-2xl font-bold text-[#0a1433] mb-6 flex items-center">
-                        <Star className="w-6 h-6 text-[#ffb74d] mr-2" /> Additional Perks
-                      </h4>
-                      <ul className="space-y-4">
-                        <li className="flex items-start">
-                          <div className="flex-shrink-0 w-6 h-6 rounded-full bg-[#ffb74d]/20 flex items-center justify-center mr-3">
-                            <Check className="w-4 h-4 text-[#ffb74d]" />
-                          </div>
-                          <span className="text-gray-700">Exclusive partner benefits and discounts</span>
-                        </li>
-                        <li className="flex items-start">
-                          <div className="flex-shrink-0 w-6 h-6 rounded-full bg-[#ffb74d]/20 flex items-center justify-center mr-3">
-                            <Check className="w-4 h-4 text-[#ffb74d]" />
-                          </div>
-                          <span className="text-gray-700">Access to members-only communication channels</span>
-                        </li>
-                        <li className="flex items-start">
-                          <div className="flex-shrink-0 w-6 h-6 rounded-full bg-[#ffb74d]/20 flex items-center justify-center mr-3">
-                            <Check className="w-4 h-4 text-[#ffb74d]" />
-                          </div>
-                          <span className="text-gray-700">Personalized concierge service</span>
-                        </li>
-                        <li className="flex items-start">
-                          <div className="flex-shrink-0 w-6 h-6 rounded-full bg-[#ffb74d]/20 flex items-center justify-center mr-3">
-                            <Check className="w-4 h-4 text-[#ffb74d]" />
-                          </div>
-                          <span className="text-gray-700">Opportunity to host club events</span>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-
-                  {/* Right Column - Pricing & CTA */}
-                  <div className="bg-gray-50 rounded-xl p-8">
-                    <div className="mb-8">
-                      <div className="text-4xl font-bold text-[#0a1433] mb-2">₹55,000</div>
-                      <div className="text-gray-600">Annual Membership</div>
-                      <div className="text-sm text-gray-500 mt-2">+ ₹5,000 one-time registration</div>
-                    </div>
-
-                    <div className="space-y-6 mb-8">
-                      <div className="flex items-center text-gray-700">
-                        <Calendar className="w-5 h-5 text-[#ffb74d] mr-3" />
-                        <span>Valid for one calendar year</span>
-                      </div>
-                      <div className="flex items-center text-gray-700">
-                        <Users className="w-5 h-5 text-[#ffb74d] mr-3" />
-                        <span>Limited memberships available</span>
-                      </div>
-                      <div className="flex items-center text-gray-700">
-                        <Clock className="w-5 h-5 text-[#ffb74d] mr-3" />
-                        <span>Access to all 8 annual events</span>
-                      </div>
-                    </div>
-
-                    <Link
-                      href="/auth/signup"
-                      className="block w-full py-4 rounded-xl bg-[#0a1433] text-white text-center font-bold hover:bg-[#162552] transition-colors text-lg mb-4"
-                    >
-                      Apply for Membership
-                    </Link>
-                    <p className="text-center text-sm text-gray-500">
-                      For inquiries: <a href="mailto:thephoenixxclub@gmail.com" className="text-[#0a1433] hover:underline">thephoenixxclub@gmail.com</a>
+                    <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-tight drop-shadow-[0_2px_4px_rgba(0,0,0,0.7)]">
+                      <span className="block">Elevate Your</span>
+                      <span className="block mt-2 bg-gradient-to-r from-amber-200 via-white to-amber-200 bg-clip-text text-transparent drop-shadow-[0_2px_4px_rgba(0,0,0,0.7)]">
+                        Social Experience
+                      </span>
+                    </h1>
+                    <p className="text-lg text-slate-200 max-w-lg leading-relaxed drop-shadow-[0_2px_4px_rgba(0,0,0,0.7)]">
+                      Join an exclusive community where luxury meets legacy. Experience curated events, premium networking, and unforgettable moments.
                     </p>
                   </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
 
-      {/* Community Section */}
-      <section id="community" className="py-16">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-[#0a1433] mb-4">Our Community</h2>
-            <p className="text-gray-600 max-w-2xl mx-auto">
-              Join our growing community of elite professionals and entrepreneurs who value meaningful connections and
-              exclusive experiences.
-            </p>
-          </div>
+                  <div className="flex flex-col sm:flex-row gap-4">
+                    <Link
+                      href="#membership"
+                      className="group relative px-8 py-4 bg-amber-500 text-slate-900 font-bold rounded-lg overflow-hidden shadow-[0_4px_12px_rgba(0,0,0,0.5)]"
+                    >
+                      <span className="relative z-10 flex items-center">
+                        Join Now
+                        <ChevronRight className="ml-2 h-5 w-5 transform group-hover:translate-x-1 transition-transform" />
+                      </span>
+                      <div className="absolute inset-0 bg-amber-400 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></div>
+                    </Link>
+                    <Link
+                      href="#events"
+                      className="group px-8 py-4 bg-white/10 backdrop-blur-sm text-white font-bold rounded-lg border border-amber-200/20 hover:bg-white/20 transition-all duration-300 shadow-[0_4px_12px_rgba(0,0,0,0.5)]"
+                    >
+                      <span className="flex items-center">
+                        View Events
+                        <ChevronRight className="ml-2 h-5 w-5 transform group-hover:translate-x-1 transition-transform" />
+                      </span>
+                    </Link>
+                  </div>
 
-          {/* Community Highlights */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto mb-16 community-stats">
-            <div className="bg-white rounded-xl p-8 text-center shadow-lg">
-              <div className="w-16 h-16 rounded-full bg-[#ffb74d]/20 flex items-center justify-center mx-auto mb-4">
-                <Users className="w-8 h-8 text-[#ffb74d]" />
-              </div>
-              <h3 className="text-xl font-bold text-[#0a1433] mb-2">Exclusive Network</h3>
-              <p className="text-gray-600">
-                Connect with a carefully curated community of successful professionals and entrepreneurs.
-              </p>
-            </div>
-            <div className="bg-white rounded-xl p-8 text-center shadow-lg">
-              <div className="w-16 h-16 rounded-full bg-[#ffb74d]/20 flex items-center justify-center mx-auto mb-4">
-                <Calendar className="w-8 h-8 text-[#ffb74d]" />
-              </div>
-              <h3 className="text-xl font-bold text-[#0a1433] mb-2">Premium Events</h3>
-              <p className="text-gray-600">
-                8 meticulously planned events per year, each offering unique experiences and networking opportunities.
-              </p>
-            </div>
-            <div className="bg-white rounded-xl p-8 text-center shadow-lg">
-              <div className="w-16 h-16 rounded-full bg-[#ffb74d]/20 flex items-center justify-center mx-auto mb-4">
-                <Star className="w-8 h-8 text-[#ffb74d]" />
-              </div>
-              <h3 className="text-xl font-bold text-[#0a1433] mb-2">Luxury Experience</h3>
-              <p className="text-gray-600">
-                Every detail is crafted to provide a premium experience that reflects our commitment to excellence.
-              </p>
-            </div>
-          </div>
-
-          {/* Member Profiles */}
-          {/* <div className="mb-16">
-            <h3 className="text-2xl font-bold text-[#0a1433] text-center mb-8">Our Distinguished Members</h3>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-              <div className="bg-white rounded-xl overflow-hidden shadow-lg">
-                <div className="h-48 bg-[#0a1433]/90 relative flex items-center justify-center">
-                  <div className="w-24 h-24 rounded-full bg-[#ffb74d] flex items-center justify-center text-[#0a1433] text-3xl font-bold">
-                    E
+                  {/* Quick Stats */}
+                  <div className="grid grid-cols-3 gap-8 pt-8">
+                  
                   </div>
                 </div>
-                <div className="p-6 text-center">
-                  <h4 className="font-bold text-[#0a1433] text-xl mb-1">Entrepreneurs</h4>
-                  <p className="text-gray-600 mb-4">
-                    Visionary business leaders who are shaping industries and creating new opportunities.
-                  </p>
-                  <div className="flex justify-center">
-                    <div className="inline-block bg-[#0a1433]/10 text-[#0a1433] px-3 py-1 rounded-full text-sm font-medium">
-                      30% of our community
-                    </div>
-                  </div>
-                </div>
-              </div>
 
-              <div className="bg-white rounded-xl overflow-hidden shadow-lg">
-                <div className="h-48 bg-[#0a1433]/90 relative flex items-center justify-center">
-                  <div className="w-24 h-24 rounded-full bg-[#ffb74d] flex items-center justify-center text-[#0a1433] text-3xl font-bold">
-                    P
-                  </div>
-                </div>
-                <div className="p-6 text-center">
-                  <h4 className="font-bold text-[#0a1433] text-xl mb-1">Professionals</h4>
-                  <p className="text-gray-600 mb-4">
-                    Accomplished executives and experts from various industries seeking valuable connections.
-                  </p>
-                  <div className="flex justify-center">
-                    <div className="inline-block bg-[#0a1433]/10 text-[#0a1433] px-3 py-1 rounded-full text-sm font-medium">
-                      45% of our community
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="bg-white rounded-xl overflow-hidden shadow-lg">
-                <div className="h-48 bg-[#0a1433]/90 relative flex items-center justify-center">
-                  <div className="w-24 h-24 rounded-full bg-[#ffb74d] flex items-center justify-center text-[#0a1433] text-3xl font-bold">
-                    I
-                  </div>
-                </div>
-                <div className="p-6 text-center">
-                  <h4 className="font-bold text-[#0a1433] text-xl mb-1">Influencers</h4>
-                  <p className="text-gray-600 mb-4">
-                    Thought leaders and innovators who are driving change and setting new standards.
-                  </p>
-                  <div className="flex justify-center">
-                    <div className="inline-block bg-[#0a1433]/10 text-[#0a1433] px-3 py-1 rounded-full text-sm font-medium">
-                      25% of our community
+                {/* Right Column - Feature Card */}
+                <div className="hidden lg:block">
+                  <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-amber-200/20">
+                    <div className="space-y-6">
+                      <div className="flex items-center space-x-4">
+                        <div className="w-12 h-12 rounded-full bg-amber-500/20 flex items-center justify-center">
+                          <Star className="w-6 h-6 text-amber-200" />
+                        </div>
+                        <div>
+                          <h3 className="text-xl font-bold text-white">Premium Membership</h3>
+                          <p className="text-slate-200">Exclusive access to all events</p>
+                        </div>
+                      </div>
+                      <div className="flex items-center space-x-4">
+                        <div className="w-12 h-12 rounded-full bg-amber-500/20 flex items-center justify-center">
+                          <Users className="w-6 h-6 text-amber-200" />
+                        </div>
+                        <div>
+                          <h3 className="text-xl font-bold text-white">Elite Network</h3>
+                          <p className="text-slate-200">Connect with industry leaders</p>
+                        </div>
+                      </div>
+                      <div className="flex items-center space-x-4">
+                        <div className="w-12 h-12 rounded-full bg-amber-500/20 flex items-center justify-center">
+                          <Calendar className="w-6 h-6 text-amber-200" />
+                        </div>
+                        <div>
+                          <h3 className="text-xl font-bold text-white">Curated Events</h3>
+                          <p className="text-slate-200">8 premium events annually</p>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div> */}
+          </div>
+        </section>
 
-          {/* Founding Members */}
-          {/* <div className="bg-white rounded-xl p-8 shadow-xl border border-[#ffb74d] max-w-4xl mx-auto">
-            <h3 className="text-2xl font-bold text-[#0a1433] text-center mb-6">Founding Members Opportunity</h3>
-            <p className="text-gray-600 text-center mb-8">
-              We're currently accepting applications for our exclusive founding members. As a founding member, you'll
-              enjoy special privileges and help shape the future of The Phoenixx Club.
-            </p>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-              <div className="bg-gray-50 p-5 rounded-lg">
-                <h4 className="font-bold text-[#0a1433] mb-3 flex items-center">
-                  <Star className="w-5 h-5 text-[#ffb74d] mr-2" /> Founding Member Benefits
-                </h4>
-                <ul className="space-y-2">
-                  <li className="flex items-start">
-                    <Check className="w-5 h-5 text-[#ffb74d] mr-2 mt-0.5 flex-shrink-0" />
-                    <span className="text-gray-600">Lifetime recognition as a founding member</span>
-                  </li>
-                  <li className="flex items-start">
-                    <Check className="w-5 h-5 text-[#ffb74d] mr-2 mt-0.5 flex-shrink-0" />
-                    <span className="text-gray-600">Input on future club events and initiatives</span>
-                  </li>
-                  <li className="flex items-start">
-                    <Check className="w-5 h-5 text-[#ffb74d] mr-2 mt-0.5 flex-shrink-0" />
-                    <span className="text-gray-600">Special recognition at club events</span>
-                  </li>
-                </ul>
-              </div>
-              <div className="bg-gray-50 p-5 rounded-lg">
-                <h4 className="font-bold text-[#0a1433] mb-3 flex items-center">
-                  <Star className="w-5 h-5 text-[#ffb74d] mr-2" /> Limited Availability
-                </h4>
-                <ul className="space-y-2">
-                  <li className="flex items-start">
-                    <Check className="w-5 h-5 text-[#ffb74d] mr-2 mt-0.5 flex-shrink-0" />
-                    <span className="text-gray-600">Only 50 founding memberships available</span>
-                  </li>
-                  <li className="flex items-start">
-                    <Check className="w-5 h-5 text-[#ffb74d] mr-2 mt-0.5 flex-shrink-0" />
-                    <span className="text-gray-600">Application and interview process required</span>
-                  </li>
-                  <li className="flex items-start">
-                    <Check className="w-5 h-5 text-[#ffb74d] mr-2 mt-0.5 flex-shrink-0" />
-                    <span className="text-gray-600">Standard membership fees apply</span>
-                  </li>
-                </ul>
+        {/* Events Section */}
+        <section id="events" className="py-16 bg-gradient-to-b from-slate-50 to-indigo-50">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-12">
+              <h2 className="text-4xl font-bold text-indigo-900 mb-4 tracking-wide uppercase">Upcoming Events</h2>
+              <p className="text-slate-700 max-w-2xl mx-auto text-lg">
+                Join us for our exclusive events throughout the year. We organize 8 premium events annually for our
+                members.
+              </p>
+            </div>
+
+            {/* Featured Event */}
+            <div className="mb-16 bg-white rounded-xl overflow-hidden shadow-2xl border border-indigo-200">
+              <div className="grid md:grid-cols-2">
+                <div className="h-64 md:h-auto relative">
+                  <Image
+                    src="https://images.unsplash.com/photo-1721133073235-e4b5facb27fa?q=80&w=3540&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                    alt="Upcoming Event"
+                    fill
+                    className="object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-indigo-900/60 to-transparent opacity-60"></div>
+                  <div className="absolute top-4 left-4 bg-indigo-900 text-white px-3 py-1 rounded-md font-bold">
+                    FEATURED EVENT
+                  </div>
+                  <div className="absolute bottom-4 left-4 bg-white/90 backdrop-blur-sm text-indigo-900 px-3 py-1 rounded-md font-bold flex items-center">
+                    <Clock className="w-4 h-4 mr-2" />
+                    <span>Coming Soon</span>
+                  </div>
+                </div>
+                <div className="p-8">
+                  <div className="inline-block bg-indigo-100 text-indigo-900 px-3 py-1 rounded-md text-sm font-medium mb-4">
+                    Upcoming Event
+                  </div>
+                  <h3 className="text-2xl font-bold text-indigo-900 mb-3">Coming Soon</h3>
+                  <div className="flex items-center text-slate-700 mb-2">
+                    <Calendar className="w-4 h-4 mr-2" />
+                    <span>Date Not Declared</span>
+                  </div>
+                  <div className="flex items-center text-slate-700 mb-4">
+                    <MapPin className="w-4 h-4 mr-2" />
+                    <span>Venue Not Declared</span>
+                  </div>
+                  <p className="text-slate-700 mb-6">
+                    Details of our upcoming event will be revealed soon. Stay tuned for exciting announcements!
+                  </p>
+                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                    <div className="text-indigo-900 font-bold">Exclusive to Members</div>
+                    <Link
+                      href="/auth/signup"
+                      className="px-6 py-3 rounded-md bg-indigo-900 text-white hover:bg-indigo-800 transition-all duration-300 text-sm font-bold flex items-center"
+                    >
+                      Become a Member <ChevronRight className="ml-2 h-4 w-4" />
+                    </Link>
+                  </div>
+                </div>
               </div>
             </div>
+          </div>
+        </section>
+
+        {/* Membership Section */}
+        <section id="membership" className="py-16 bg-gradient-to-b from-slate-50 to-indigo-50">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-12">
+              <h2 className="text-4xl font-bold text-indigo-900 mb-4 tracking-wide uppercase">Club Phoenixx Membership</h2>
+              <p className="text-slate-700 max-w-2xl mx-auto text-lg">
+                Unlock elite access to exclusive events, VIP lounges, and unforgettable experiences.
+              </p>
+            </div>
+
+            <div className="max-w-5xl mx-auto">
+              <div className="bg-white rounded-2xl overflow-hidden shadow-2xl border border-indigo-200 membership-card">
+                {/* Header */}
+                <div className="bg-gradient-to-r from-indigo-900 via-purple-900 to-blue-900 p-8 text-center">
+                  <div className="inline-block bg-white text-indigo-900 px-4 py-1 rounded-full text-sm font-bold mb-4 tracking-widest">
+                    VIP ACCESS
+                  </div>
+                  <h3 className="text-3xl font-extrabold text-white mb-2">The Phoenixx Club</h3>
+                  <p className="text-indigo-100">Experience Luxury | Live Legacy</p>
+                </div>
+
+                {/* Content */}
+                <div className="p-8 md:p-12">
+                  <div className="grid md:grid-cols-2 gap-12">
+                    {/* Left Column */}
+                    <div>
+                      <div className="mb-8">
+                        <h4 className="text-2xl font-bold text-indigo-900 mb-6 flex items-center">
+                          <Star className="w-6 h-6 text-amber-500 mr-2" /> Membership Benefits
+                        </h4>
+                        <ul className="space-y-4">
+                          {[
+                            "Access to 8 exclusive events annually",
+                            "Networking with industry leaders",
+                            "Complimentary VIP guest invites",
+                            "Priority access to private shows"
+                          ].map((item, i) => (
+                            <li key={i} className="flex items-start list-item">
+                              <div className="w-6 h-6 rounded-full bg-indigo-100 flex items-center justify-center mr-3">
+                                <Check className="w-4 h-4 text-indigo-900" />
+                              </div>
+                              <span className="text-slate-700">{item}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+
+                      <div>
+                        <h4 className="text-2xl font-bold text-indigo-900 mb-6 flex items-center">
+                          <Star className="w-6 h-6 text-amber-500 mr-2" /> Exclusive Perks
+                        </h4>
+                        <ul className="space-y-4">
+                          {[
+                            "Premium partner benefits",
+                            "Private member communications",
+                            "Dedicated concierge service",
+                            "Host exclusive events"
+                          ].map((item, i) => (
+                            <li key={i} className="flex items-start list-item">
+                              <div className="w-6 h-6 rounded-full bg-indigo-100 flex items-center justify-center mr-3">
+                                <Check className="w-4 h-4 text-indigo-900" />
+                              </div>
+                              <span className="text-slate-700">{item}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    </div>
+
+                    {/* Right Column */}
+                    <div className="bg-indigo-50 rounded-xl p-8">
+                      <div className="mb-8">
+                        <div className="text-4xl font-bold text-indigo-900 mb-2">₹55,000</div>
+                        <div className="text-slate-700">Annual Club Access</div>
+                        <div className="text-sm text-slate-500 mt-2">+ ₹5,000 one-time VIP activation</div>
+                      </div>
+
+                      <div className="space-y-6 mb-8">
+                        <div className="flex items-center text-slate-700">
+                          <Calendar className="w-5 h-5 text-indigo-900 mr-3" />
+                          <span>Valid for 1 calendar year</span>
+                        </div>
+                        <div className="flex items-center text-slate-700">
+                          <Users className="w-5 h-5 text-indigo-900 mr-3" />
+                          <span>Only 100 VIP slots available</span>
+                        </div>
+                        <div className="flex items-center text-slate-700">
+                          <Clock className="w-5 h-5 text-indigo-900 mr-3" />
+                          <span>Unlimited event access</span>
+                        </div>
+                      </div>
+
+                      <Link
+                        href="/auth/signup"
+                        className="block w-full py-4 rounded-xl bg-indigo-900 text-white text-center font-bold hover:bg-indigo-800 transition-all duration-300 shadow-md hover:shadow-indigo-900/50 text-lg mb-4"
+                      >
+                        Join the Club Now
+                      </Link>
+                      <p className="text-center text-sm text-slate-500">
+                        Questions? <a href="mailto:thephoenixxclub@gmail.com" className="text-indigo-900 hover:underline">thephoenixxclub@gmail.com</a>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Community Section */}
+        <section id="community" className="py-16 bg-gradient-to-b from-slate-50 to-indigo-50">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl font-bold text-indigo-900 mb-4">Our Community</h2>
+              <p className="text-slate-700 max-w-2xl mx-auto">
+                Join our growing community of elite professionals and entrepreneurs who value meaningful connections and
+                exclusive experiences.
+              </p>
+            </div>
+
+            {/* Community Highlights */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto mb-16 community-stats">
+              <div className="bg-white rounded-xl p-8 text-center shadow-lg border border-indigo-100 hover:border-indigo-200 transition-all duration-300">
+                <div className="w-16 h-16 rounded-full bg-indigo-100 flex items-center justify-center mx-auto mb-4">
+                  <Users className="w-8 h-8 text-indigo-900" />
+                </div>
+                <h3 className="text-xl font-bold text-indigo-900 mb-2">Exclusive Network</h3>
+                <p className="text-slate-600">
+                  Connect with a carefully curated community of successful professionals and entrepreneurs.
+                </p>
+              </div>
+              <div className="bg-white rounded-xl p-8 text-center shadow-lg border border-indigo-100 hover:border-indigo-200 transition-all duration-300">
+                <div className="w-16 h-16 rounded-full bg-indigo-100 flex items-center justify-center mx-auto mb-4">
+                  <Calendar className="w-8 h-8 text-indigo-900" />
+                </div>
+                <h3 className="text-xl font-bold text-indigo-900 mb-2">Premium Events</h3>
+                <p className="text-slate-600">
+                  8 meticulously planned events per year, each offering unique experiences and networking opportunities.
+                </p>
+              </div>
+              <div className="bg-white rounded-xl p-8 text-center shadow-lg border border-indigo-100 hover:border-indigo-200 transition-all duration-300">
+                <div className="w-16 h-16 rounded-full bg-indigo-100 flex items-center justify-center mx-auto mb-4">
+                  <Star className="w-8 h-8 text-amber-500" />
+                </div>
+                <h3 className="text-xl font-bold text-indigo-900 mb-2">Luxury Experience</h3>
+                <p className="text-slate-600">
+                  Every detail is crafted to provide a premium experience that reflects our commitment to excellence.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Features Section */}
+        <section className="py-16 bg-gradient-to-b from-indigo-50 to-slate-50">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl font-bold text-indigo-900 mb-4">Why Join The Phoenixx Club?</h2>
+              <p className="text-slate-700 max-w-2xl mx-auto">
+                Discover the benefits that make our club the premier destination for those seeking luxury, excellence, and
+                legacy.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {/* Feature 1 */}
+              <div className="bg-white rounded-xl p-6 shadow-lg border border-indigo-100 hover:border-indigo-200 transition-all duration-300 feature-card">
+                <div className="w-12 h-12 rounded-full bg-indigo-100 flex items-center justify-center mb-4">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    className="w-6 h-6 text-indigo-900"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
+                    />
+                  </svg>
+                </div>
+                <h3 className="text-xl font-bold text-indigo-900 mb-2">Exclusive Networking</h3>
+                <p className="text-slate-600">
+                  Connect with influential professionals, entrepreneurs, and like-minded individuals in a curated
+                  environment.
+                </p>
+              </div>
+
+              {/* Feature 2 */}
+              <div className="bg-white rounded-xl p-6 shadow-lg border border-indigo-100 hover:border-indigo-200 transition-all duration-300 feature-card">
+                <div className="w-12 h-12 rounded-full bg-indigo-100 flex items-center justify-center mb-4">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    className="w-6 h-6 text-indigo-900"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M21 15.546c-.523 0-1.046.151-1.5.454a2.704 2.704 0 01-3 0 2.704 2.704 0 00-3 0 2.704 2.704 0 01-3 0 2.701 2.701 0 00-1.5-.454M9 6v2m3-2v2m3-2v2M9 3h.01M12 3h.01M15 3h.01M21 21v-7a2 2 0 00-2-2H5a2 2 0 00-2 2v7h18zm-3-9v-2a2 2 0 00-2-2H8a2 2 0 00-2 2v2h12z"
+                    />
+                  </svg>
+                </div>
+                <h3 className="text-xl font-bold text-indigo-900 mb-2">Premium Events</h3>
+                <p className="text-slate-600">
+                  Attend carefully curated events ranging from elegant galas to intimate workshops, all designed to create
+                  memorable experiences.
+                </p>
+              </div>
+
+              {/* Feature 3 */}
+              <div className="bg-white rounded-xl p-6 shadow-lg border border-indigo-100 hover:border-indigo-200 transition-all duration-300 feature-card">
+                <div className="w-12 h-12 rounded-full bg-indigo-100 flex items-center justify-center mb-4">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    className="w-6 h-6 text-indigo-900"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                    />
+                  </svg>
+                </div>
+                <h3 className="text-xl font-bold text-indigo-900 mb-2">Exclusive Perks</h3>
+                <p className="text-slate-600">
+                  Enjoy special privileges, priority access, and unique benefits with our partner brands and venues.
+                </p>
+              </div>
+
+              {/* Feature 4 */}
+              <div className="bg-white rounded-xl p-6 shadow-lg border border-indigo-100 hover:border-indigo-200 transition-all duration-300 feature-card">
+                <div className="w-12 h-12 rounded-full bg-indigo-100 flex items-center justify-center mb-4">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    className="w-6 h-6 text-indigo-900"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"
+                    />
+                  </svg>
+                </div>
+                <h3 className="text-xl font-bold text-indigo-900 mb-2">Personalized Experience</h3>
+                <p className="text-slate-600">
+                  Receive tailored recommendations and concierge services that cater to your preferences and lifestyle.
+                </p>
+              </div>
+
+              {/* Feature 5 */}
+              <div className="bg-white rounded-xl p-6 shadow-lg border border-indigo-100 hover:border-indigo-200 transition-all duration-300 feature-card">
+                <div className="w-12 h-12 rounded-full bg-indigo-100 flex items-center justify-center mb-4">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    className="w-6 h-6 text-indigo-900"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
+                    />
+                  </svg>
+                </div>
+                <h3 className="text-xl font-bold text-indigo-900 mb-2">Privacy & Exclusivity</h3>
+                <p className="text-slate-600">
+                  Enjoy a discreet environment where your privacy is respected and exclusivity is guaranteed.
+                </p>
+              </div>
+
+              {/* Feature 6 */}
+              <div className="bg-white rounded-xl p-6 shadow-lg border border-indigo-100 hover:border-indigo-200 transition-all duration-300 feature-card">
+                <div className="w-12 h-12 rounded-full bg-indigo-100 flex items-center justify-center mb-4">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    className="w-6 h-6 text-indigo-900"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                  </svg>
+                </div>
+                <h3 className="text-xl font-bold text-indigo-900 mb-2">Growth Opportunities</h3>
+                <p className="text-slate-600">
+                  Access workshops, seminars, and mentorship programs designed to help you grow personally and
+                  professionally.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Gallery Section */}
+        <section id="gallery" className="py-12 bg-gradient-to-b from-slate-50 to-indigo-50 scroll-mt-20">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-8">
+              <h2 className="text-3xl font-bold text-indigo-900 mb-3">Gallery</h2>
+              <p className="text-slate-700 max-w-2xl mx-auto">
+                Capturing moments from our exclusive events
+              </p>
+            </div>
+
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+              {/* Gallery Image 1 */}
+              <div className="group relative overflow-hidden rounded-lg aspect-square gallery-item border border-indigo-100 hover:border-indigo-200 transition-all duration-300">
+                <Image
+                  src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?q=80&w=3538&auto=format&fit=crop"
+                  alt="Luxury Gala"
+                  fill
+                  className="object-cover transform group-hover:scale-105 transition-transform duration-500"
+                />
+                <div className="absolute inset-0 bg-indigo-900/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                  <span className="text-white text-sm font-medium">Luxury Gala</span>
+                </div>
+              </div>
+
+              {/* Gallery Image 2 */}
+              <div className="group relative overflow-hidden rounded-lg aspect-square gallery-item border border-indigo-100 hover:border-indigo-200 transition-all duration-300">
+                <Image
+                  src="https://images.unsplash.com/photo-1605744435823-b88e4e9bc044?q=80&w=3540&auto=format&fit=crop"
+                  alt="Cocktail Evening"
+                  fill
+                  className="object-cover transform group-hover:scale-105 transition-transform duration-500"
+                />
+                <div className="absolute inset-0 bg-indigo-900/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                  <span className="text-white text-sm font-medium">Cocktail Evening</span>
+                </div>
+              </div>
+
+              {/* Gallery Image 3 */}
+              <div className="group relative overflow-hidden rounded-lg aspect-square gallery-item border border-indigo-100 hover:border-indigo-200 transition-all duration-300">
+                <Image
+                  src="https://images.unsplash.com/photo-1524368535928-5b5e00ddc76b?q=80&w=3540&auto=format&fit=crop"
+                  alt="VIP Lounge"
+                  fill
+                  className="object-cover transform group-hover:scale-105 transition-transform duration-500"
+                />
+                <div className="absolute inset-0 bg-indigo-900/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                  <span className="text-white text-sm font-medium">VIP Lounge</span>
+                </div>
+              </div>
+
+              {/* Gallery Image 4 */}
+              <div className="group relative overflow-hidden rounded-lg aspect-square gallery-item border border-indigo-100 hover:border-indigo-200 transition-all duration-300">
+                <Image
+                  src="https://images.unsplash.com/photo-1527529482837-4698179dc6ce?q=80&w=3540&auto=format&fit=crop"
+                  alt="Exclusive Event"
+                  fill
+                  className="object-cover transform group-hover:scale-105 transition-transform duration-500"
+                />
+                <div className="absolute inset-0 bg-indigo-900/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                  <span className="text-white text-sm font-medium">Exclusive Event</span>
+                </div>
+              </div>
+
+              {/* Gallery Image 5 */}
+              <div className="group relative overflow-hidden rounded-lg aspect-square gallery-item border border-indigo-100 hover:border-indigo-200 transition-all duration-300">
+                <Image
+                  src="https://images.unsplash.com/photo-1566737236500-c8ac43014a67?q=80&w=3000&auto=format&fit=crop"
+                  alt="Wine Tasting"
+                  fill
+                  className="object-cover transform group-hover:scale-105 transition-transform duration-500"
+                />
+                <div className="absolute inset-0 bg-indigo-900/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                  <span className="text-white text-sm font-medium">Wine Tasting</span>
+                </div>
+              </div>
+
+              {/* Additional Images (shown when showMoreImages is true) */}
+              {showMoreImages && (
+                <>
+                  {/* Gallery Image 6 */}
+                  <div className="group relative overflow-hidden rounded-lg aspect-square gallery-item border border-indigo-100 hover:border-indigo-200 transition-all duration-300">
+                    <Image
+                      src="https://images.unsplash.com/photo-1623281722102-1bde4c57c90c?q=80&w=3088&auto=format&fit=crop"
+                      alt="Business Mixer"
+                      fill
+                      className="object-cover transform group-hover:scale-105 transition-transform duration-500"
+                    />
+                    <div className="absolute inset-0 bg-indigo-900/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                      <span className="text-white text-sm font-medium">Business Mixer</span>
+                    </div>
+                  </div>
+
+                  {/* Gallery Image 7 */}
+                  <div className="group relative overflow-hidden rounded-lg aspect-square gallery-item border border-indigo-100 hover:border-indigo-200 transition-all duration-300">
+                    <Image
+                      src="https://images.unsplash.com/photo-1519671482749-fd09be7ccebf?q=80&w=3540&auto=format&fit=crop"
+                      alt="Art Night"
+                      fill
+                      className="object-cover transform group-hover:scale-105 transition-transform duration-500"
+                    />
+                    <div className="absolute inset-0 bg-indigo-900/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                      <span className="text-white text-sm font-medium">Art Night</span>
+                    </div>
+                  </div>
+
+                  {/* Gallery Image 8 */}
+                  <div className="group relative overflow-hidden rounded-lg aspect-square gallery-item border border-indigo-100 hover:border-indigo-200 transition-all duration-300">
+                    <Image
+                      src="https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?q=80&w=3540&auto=format&fit=crop"
+                      alt="Summer Gala"
+                      fill
+                      className="object-cover transform group-hover:scale-105 transition-transform duration-500"
+                    />
+                    <div className="absolute inset-0 bg-indigo-900/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                      <span className="text-white text-sm font-medium">Summer Gala</span>
+                    </div>
+                  </div>
+
+                  {/* Gallery Image 9 */}
+                  <div className="group relative overflow-hidden rounded-lg aspect-square gallery-item border border-indigo-100 hover:border-indigo-200 transition-all duration-300">
+                    <Image
+                      src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?q=80&w=3538&auto=format&fit=crop"
+                      alt="Charity Ball"
+                      fill
+                      className="object-cover transform group-hover:scale-105 transition-transform duration-500"
+                    />
+                    <div className="absolute inset-0 bg-indigo-900/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                      <span className="text-white text-sm font-medium">Charity Ball</span>
+                    </div>
+                  </div>
+
+                  {/* Gallery Image 10 */}
+                  <div className="group relative overflow-hidden rounded-lg aspect-square gallery-item border border-indigo-100 hover:border-indigo-200 transition-all duration-300">
+                    <Image
+                      src="https://images.unsplash.com/photo-1605744435823-b88e4e9bc044?q=80&w=3540&auto=format&fit=crop"
+                      alt="New Year's Eve"
+                      fill
+                      className="object-cover transform group-hover:scale-105 transition-transform duration-500"
+                    />
+                    <div className="absolute inset-0 bg-indigo-900/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                      <span className="text-white text-sm font-medium">New Year's Eve</span>
+                    </div>
+                  </div>
+                </>
+              )}
+            </div>
+
             <div className="text-center mt-8">
-              <Link
-                href="#"
-                className="inline-flex items-center px-6 py-3 rounded-md bg-[#0a1433] text-white hover:bg-[#162552] transition-colors"
+              <button
+                onClick={() => setShowMoreImages(!showMoreImages)}
+                className="inline-flex items-center px-6 py-2 rounded-md bg-indigo-900 text-white hover:bg-indigo-800 transition-colors text-sm"
               >
-                Apply for Founding Membership <ArrowRight className="ml-2 h-5 w-5" />
-              </Link>
-            </div>
-          </div> */}
-        </div>
-      </section>
-
-      {/* Features Section */}
-      <section className="py-16 bg-gray-50">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-[#0a1433] mb-4">Why Join The Phoenixx Club?</h2>
-            <p className="text-gray-600 max-w-2xl mx-auto">
-              Discover the benefits that make our club the premier destination for those seeking luxury, laughter, and
-              legacy.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {/* Feature 1 */}
-            <div className="bg-white rounded-xl p-6 shadow-lg feature-card">
-              <div className="w-12 h-12 rounded-full bg-[#ffb74d]/20 flex items-center justify-center mb-4">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  className="w-6 h-6 text-[#ffb74d]"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
-                  />
-                </svg>
-              </div>
-              <h3 className="text-xl font-bold text-[#0a1433] mb-2">Exclusive Networking</h3>
-              <p className="text-gray-600">
-                Connect with influential professionals, entrepreneurs, and like-minded individuals in a curated
-                environment.
-              </p>
-            </div>
-
-            {/* Feature 2 */}
-            <div className="bg-white rounded-xl p-6 shadow-lg feature-card">
-              <div className="w-12 h-12 rounded-full bg-[#ffb74d]/20 flex items-center justify-center mb-4">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  className="w-6 h-6 text-[#ffb74d]"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M21 15.546c-.523 0-1.046.151-1.5.454a2.704 2.704 0 01-3 0 2.704 2.704 0 00-3 0 2.704 2.704 0 01-3 0 2.701 2.701 0 00-1.5-.454M9 6v2m3-2v2m3-2v2M9 3h.01M12 3h.01M15 3h.01M21 21v-7a2 2 0 00-2-2H5a2 2 0 00-2 2v7h18zm-3-9v-2a2 2 0 00-2-2H8a2 2 0 00-2 2v2h12z"
-                  />
-                </svg>
-              </div>
-              <h3 className="text-xl font-bold text-[#0a1433] mb-2">Premium Events</h3>
-              <p className="text-gray-600">
-                Attend carefully curated events ranging from elegant galas to intimate workshops, all designed to create
-                memorable experiences.
-              </p>
-            </div>
-
-            {/* Feature 3 */}
-            <div className="bg-white rounded-xl p-6 shadow-lg feature-card">
-              <div className="w-12 h-12 rounded-full bg-[#ffb74d]/20 flex items-center justify-center mb-4">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  className="w-6 h-6 text-[#ffb74d]"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                  />
-                </svg>
-              </div>
-              <h3 className="text-xl font-bold text-[#0a1433] mb-2">Exclusive Perks</h3>
-              <p className="text-gray-600">
-                Enjoy special discounts, priority access, and unique benefits with our partner brands and venues.
-              </p>
-            </div>
-
-            {/* Feature 4 */}
-            <div className="bg-white rounded-xl p-6 shadow-lg feature-card">
-              <div className="w-12 h-12 rounded-full bg-[#ffb74d]/20 flex items-center justify-center mb-4">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  className="w-6 h-6 text-[#ffb74d]"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"
-                  />
-                </svg>
-              </div>
-              <h3 className="text-xl font-bold text-[#0a1433] mb-2">Personalized Experience</h3>
-              <p className="text-gray-600">
-                Receive tailored recommendations and concierge services that cater to your preferences and lifestyle.
-              </p>
-            </div>
-
-            {/* Feature 5 */}
-            <div className="bg-white rounded-xl p-6 shadow-lg feature-card">
-              <div className="w-12 h-12 rounded-full bg-[#ffb74d]/20 flex items-center justify-center mb-4">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  className="w-6 h-6 text-[#ffb74d]"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
-                  />
-                </svg>
-              </div>
-              <h3 className="text-xl font-bold text-[#0a1433] mb-2">Privacy & Exclusivity</h3>
-              <p className="text-gray-600">
-                Enjoy a discreet environment where your privacy is respected and exclusivity is guaranteed.
-              </p>
-            </div>
-
-            {/* Feature 6 */}
-            <div className="bg-white rounded-xl p-6 shadow-lg feature-card">
-              <div className="w-12 h-12 rounded-full bg-[#ffb74d]/20 flex items-center justify-center mb-4">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  className="w-6 h-6 text-[#ffb74d]"
-                >
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                </svg>
-              </div>
-              <h3 className="text-xl font-bold text-[#0a1433] mb-2">Growth Opportunities</h3>
-              <p className="text-gray-600">
-                Access workshops, seminars, and mentorship programs designed to help you grow personally and
-                professionally.
-              </p>
+                {showMoreImages ? 'Show Less' : 'View More'}
+                <ArrowRight className={`ml-2 h-4 w-4 transition-transform duration-300 ${showMoreImages ? 'rotate-90' : ''}`} />
+              </button>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      </main>
 
-      {/* Call to Action */}
-      {/* <section className="py-12 bg-[#0a1433] relative">
-  <div className="absolute inset-0 bg-[url('/hero-pattern.png')] bg-cover opacity-5"></div>
-  <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-    <div className="flex flex-col lg:flex-row items-center justify-center space-y-8 lg:space-y-0 lg:space-x-12"> */}
-      {/* Left Side - Call to Action */}
-      {/* <div className="text-center lg:text-left max-w-md mx-auto">
-        <h2 className="text-2xl font-bold text-white mb-4">Join The Phoenixx Club</h2>
-        <p className="text-lg text-gray-300 mb-6">
-          Be part of an exclusive community with access to events, collaborations, and more.
-        </p>
-        <Link
-          href="/auth/signup"
-          className="px-6 py-2 rounded-md bg-[#ffb74d] text-[#0a1433] font-bold hover:bg-[#ffa726] transition-colors"
-        >
-          Join Now
-        </Link>
-      </div> */}
-
-      {/* Right Side - Wider Contact Form */}
-      {/* <div className="bg-white p-6 rounded-xl shadow-lg w-full max-w-[700px]">
-        <h3 className="text-xl font-semibold text-[#0a1433] mb-4">Contact Us</h3>
-        <form action="#" method="POST" className="space-y-4">
-          <div className="flex space-x-6">
-            <div className="flex-1">
-              <label className="block text-[#0a1433] font-medium mb-2" htmlFor="name">
-                Name
-              </label>
-              <input
-                type="text"
-                name="name"
-                id="name"
-                required
-                className="w-full border border-gray-300 rounded-md p-3"
-                placeholder="Your Name"
-              />
-            </div>
-            <div className="flex-1">
-              <label className="block text-[#0a1433] font-medium mb-2" htmlFor="email">
-                Email
-              </label>
-              <input
-                type="email"
-                name="email"
-                id="email"
-                required
-                className="w-full border border-gray-300 rounded-md p-3"
-                placeholder="you@example.com"
-              />
-            </div>
-          </div> */}
-
-          {/* <div>
-            <label className="block text-[#0a1433] font-medium mb-2" htmlFor="message">
-              Message
-            </label>
-            <textarea
-              name="message"
-              id="message"
-              rows={3}
-              required
-              className="w-full border border-gray-300 rounded-md p-3"
-              placeholder="Your Message"
-            ></textarea>
-          </div>
-
-          <button
-            type="submit"
-            className="w-full px-6 py-2 bg-[#ffb74d] text-[#0a1433] font-bold rounded-md hover:bg-[#ffa726] transition-colors"
-          >
-            Send Message
-          </button>
-        </form>
-      </div>
-    </div>
-  </div>
-</section> */}
-
-      {/* Party Gallery Section */}
-      <section className="py-12 bg-white">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-8">
-            <h2 className="text-3xl font-bold text-[#0a1433] mb-3">Gallery</h2>
-            <p className="text-gray-600 max-w-2xl mx-auto">
-              Moments from our exclusive events
-            </p>
-          </div>
-
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-            {/* Gallery Image 1 */}
-            <div className="group relative overflow-hidden rounded-lg aspect-square gallery-item">
-              <Image
-                src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?q=80&w=3538&auto=format&fit=crop"
-                alt="Luxury Gala"
-                fill
-                className="object-cover transform group-hover:scale-105 transition-transform duration-500"
-              />
-              <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                <span className="text-white text-sm font-medium">Luxury Gala</span>
-              </div>
-            </div>
-
-            {/* Gallery Image 2 */}
-            <div className="group relative overflow-hidden rounded-lg aspect-square gallery-item">
-              <Image
-                src="https://images.unsplash.com/photo-1605744435823-b88e4e9bc044?q=80&w=3540&auto=format&fit=crop"
-                alt="Cocktail Evening"
-                fill
-                className="object-cover transform group-hover:scale-105 transition-transform duration-500"
-              />
-              <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                <span className="text-white text-sm font-medium">Cocktail Evening</span>
-              </div>
-            </div>
-
-            {/* Gallery Image 3 */}
-            <div className="group relative overflow-hidden rounded-lg aspect-square gallery-item">
-              <Image
-                src="https://images.unsplash.com/photo-1524368535928-5b5e00ddc76b?q=80&w=3540&auto=format&fit=crop"
-                alt="VIP Lounge"
-                fill
-                className="object-cover transform group-hover:scale-105 transition-transform duration-500"
-              />
-              <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                <span className="text-white text-sm font-medium">VIP Lounge</span>
-              </div>
-            </div>
-
-            {/* Gallery Image 4 */}
-            <div className="group relative overflow-hidden rounded-lg aspect-square gallery-item">
-              <Image
-                src="https://images.unsplash.com/photo-1527529482837-4698179dc6ce?q=80&w=3540&auto=format&fit=crop"
-                alt="Exclusive Party"
-                fill
-                className="object-cover transform group-hover:scale-105 transition-transform duration-500"
-              />
-              <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                <span className="text-white text-sm font-medium">Exclusive Party</span>
-              </div>
-            </div>
-
-            {/* Gallery Image 5 */}
-            <div className="group relative overflow-hidden rounded-lg aspect-square gallery-item">
-              <Image
-                src="https://images.unsplash.com/photo-1566737236500-c8ac43014a67?q=80&w=3000&auto=format&fit=crop"
-                alt="Wine Tasting"
-                fill
-                className="object-cover transform group-hover:scale-105 transition-transform duration-500"
-              />
-              <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                <span className="text-white text-sm font-medium">Wine Tasting</span>
-              </div>
-            </div>
-
-            {/* Additional Images (shown when showMoreImages is true) */}
-            {showMoreImages && (
-              <>
-                {/* Gallery Image 6 */}
-                <div className="group relative overflow-hidden rounded-lg aspect-square gallery-item">
-                  <Image
-                    src="https://images.unsplash.com/photo-1623281722102-1bde4c57c90c?q=80&w=3088&auto=format&fit=crop"
-                    alt="Business Mixer"
-                    fill
-                    className="object-cover transform group-hover:scale-105 transition-transform duration-500"
-                  />
-                  <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                    <span className="text-white text-sm font-medium">Business Mixer</span>
-                  </div>
-                </div>
-
-                {/* Gallery Image 7 */}
-                <div className="group relative overflow-hidden rounded-lg aspect-square gallery-item">
-                  <Image
-                    src="https://images.unsplash.com/photo-1519671482749-fd09be7ccebf?q=80&w=3540&auto=format&fit=crop"
-                    alt="Art Night"
-                    fill
-                    className="object-cover transform group-hover:scale-105 transition-transform duration-500"
-                  />
-                  <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                    <span className="text-white text-sm font-medium">Art Night</span>
-                  </div>
-                </div>
-
-                {/* Gallery Image 8 */}
-                <div className="group relative overflow-hidden rounded-lg aspect-square gallery-item">
-                  <Image
-                    src="https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?q=80&w=3540&auto=format&fit=crop"
-                    alt="Summer Gala"
-                    fill
-                    className="object-cover transform group-hover:scale-105 transition-transform duration-500"
-                  />
-                  <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                    <span className="text-white text-sm font-medium">Summer Gala</span>
-                  </div>
-                </div>
-
-                {/* Gallery Image 9 */}
-                <div className="group relative overflow-hidden rounded-lg aspect-square gallery-item">
-                  <Image
-                    src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?q=80&w=3538&auto=format&fit=crop"
-                    alt="Charity Ball"
-                    fill
-                    className="object-cover transform group-hover:scale-105 transition-transform duration-500"
-                  />
-                  <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                    <span className="text-white text-sm font-medium">Charity Ball</span>
-                  </div>
-                </div>
-
-                {/* Gallery Image 10 */}
-                <div className="group relative overflow-hidden rounded-lg aspect-square gallery-item">
-                  <Image
-                    src="https://images.unsplash.com/photo-1605744435823-b88e4e9bc044?q=80&w=3540&auto=format&fit=crop"
-                    alt="New Year's Eve"
-                    fill
-                    className="object-cover transform group-hover:scale-105 transition-transform duration-500"
-                  />
-                  <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                    <span className="text-white text-sm font-medium">New Year's Eve</span>
-                  </div>
-                </div>
-              </>
-            )}
-          </div>
-
-          <div className="text-center mt-8">
-            <button
-              onClick={() => setShowMoreImages(!showMoreImages)}
-              className="inline-flex items-center px-6 py-2 rounded-md bg-[#0a1433] text-white hover:bg-[#162552] transition-colors text-sm"
-            >
-              {showMoreImages ? 'Show Less' : 'View More'}
-              <ArrowRight className={`ml-2 h-4 w-4 transition-transform duration-300 ${showMoreImages ? 'rotate-90' : ''}`} />
-            </button>
-          </div>
-        </div>
-      </section>
-
-      {/* Footer */}
-      <footer className="bg-white border-t border-gray-200">
+      <footer className="bg-gradient-to-b from-[#0a0a0a] to-[#1a1a1a] border-t border-pink-500/20">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 footer-content">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             <div className="md:col-span-1">
               <div className="flex items-center mb-4">
-                <Image src="/logo.png" alt="The Phoenixx Club" width={60} height={60} className="mr-3" />
-                <span className="text-[#0a1433] font-bold text-xl">The Phoenixx Club</span>
+                <Image src="/logo.png" alt="The Phoenixx Club" width={60} height={60} className="mr-3 drop-shadow-glow animate-pulse" />
+                <span className="text-[#FFD700] font-bold text-xl tracking-wider">The Phoenixx Club</span>
               </div>
-              <p className="text-gray-600 mb-4">Luxury, Laughter and Legacy</p>
+              <p className="text-gray-300 mb-4">Luxury, Laughter and Legacy</p>
               <div className="flex space-x-4">
-                <a href="https://www.facebook.com/profile.php?id=61575687517147" className="text-gray-400 hover:text-[#ffb74d]">
+                <a href="https://www.facebook.com/profile.php?id=61575687517147" className="text-gray-400 hover:text-[#E91E63] transition-colors">
                   <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                     <path
                       fillRule="evenodd"
@@ -969,7 +820,7 @@ export default function Home() {
                     ></path>
                   </svg>
                 </a>
-                <a href="https://www.instagram.com/thephoenixxclub?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" className="text-gray-400 hover:text-[#ffb74d]">
+                <a href="https://www.instagram.com/thephoenixxclub?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" className="text-gray-400 hover:text-[#E91E63] transition-colors">
                   <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                     <path
                       fillRule="evenodd"
@@ -978,7 +829,7 @@ export default function Home() {
                     ></path>
                   </svg>
                 </a>
-                <a href="mailto:thephoenixxclub@gmail.com" className="text-gray-400 hover:text-[#ffb74d]">
+                <a href="mailto:thephoenixxclub@gmail.com" className="text-gray-400 hover:text-[#E91E63] transition-colors">
                  <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                    <path d="M2 6.5V17.5C2 18.328 2.672 19 3.5 19H20.5C21.328 19 22 18.328 22 17.5V6.5C22 5.672 21.328 5 20.5 5H3.5C2.672 5 2 5.672 2 6.5ZM20.5 6L12 11.25L3.5 6H20.5ZM3 7.465L12 12.25L21 7.465V16.535L12 11.75L3 16.535V7.465Z"></path>
                  </svg>
@@ -986,71 +837,70 @@ export default function Home() {
               </div>
             </div>
             <div>
-              <h3 className="text-sm font-bold text-[#0a1433] uppercase tracking-wider mb-4">Membership</h3>
+              <h3 className="text-sm font-bold text-[#FFD700] uppercase tracking-wider mb-4">Membership</h3>
               <ul className="space-y-2">
                 <li>
-                  <Link href="#membership" className="text-gray-600 hover:text-[#ffb74d]">
+                  <Link href="#membership" className="text-gray-300 hover:text-[#E91E63] transition-colors">
                     Join Now
                   </Link>
                 </li>
                 <li>
-                  <Link href="/benefit" className="text-gray-600 hover:text-[#ffb74d]">
+                  <Link href="/benefit" className="text-gray-300 hover:text-[#E91E63] transition-colors">
                     Benefits
                   </Link>
                 </li>
                 <li>
-                  <Link href="/FAQ" className="text-gray-600 hover:text-[#ffb74d]">
+                  <Link href="/FAQ" className="text-gray-300 hover:text-[#E91E63] transition-colors">
                     FAQ
                   </Link>
                 </li>
               </ul>
             </div>
             <div>
-              <h3 className="text-sm font-bold text-[#0a1433] uppercase tracking-wider mb-4">Events</h3>
+              <h3 className="text-sm font-bold text-[#FFD700] uppercase tracking-wider mb-4">Events</h3>
               <ul className="space-y-2">
                 <li>
-                  <Link href="#" className="text-gray-600 hover:text-[#ffb74d]">
+                  <Link href="#" className="text-gray-300 hover:text-[#E91E63] transition-colors">
                     Calendar
                   </Link>
                 </li>
                 <li>
-                  <Link href="#" className="text-gray-600 hover:text-[#ffb74d]">
+                  <Link href="#" className="text-gray-300 hover:text-[#E91E63] transition-colors">
                     Past Events
                   </Link>
                 </li>
                 <li>
-                  <Link href="#" className="text-gray-600 hover:text-[#ffb74d]">
+                  <Link href="#" className="text-gray-300 hover:text-[#E91E63] transition-colors">
                     Host an Event
                   </Link>
                 </li>
                 <li>
-                  <Link href="#" className="text-gray-600 hover:text-[#ffb74d]">
+                  <Link href="#" className="text-gray-300 hover:text-[#E91E63] transition-colors">
                     Private Events
                   </Link>
                 </li>
               </ul>
             </div>
             <div>
-              <h3 className="text-sm font-bold text-[#0a1433] uppercase tracking-wider mb-4">Contact</h3>
+              <h3 className="text-sm font-bold text-[#FFD700] uppercase tracking-wider mb-4">Contact</h3>
               <ul className="space-y-2">
-               
-                <li className="text-gray-600">thephoenixxclub@gmail.com</li>
-                <li className="text-gray-600">+91-9977334588</li>
+                <li className="text-gray-300">thephoenixxclub@gmail.com</li>
+                <li className="text-gray-300">+91-9977334588</li>
               </ul>
             </div>
           </div>
-          <div className="mt-12 pt-8 border-t border-gray-200 flex flex-col md:flex-row justify-between items-center">
-            <p className="text-gray-500 text-sm mb-4 md:mb-0">
+          <div className="mt-12 pt-8 border-t border-pink-500/20 flex flex-col md:flex-row justify-between items-center">
+            <p className="text-gray-400 text-sm mb-4 md:mb-0">
               &copy; {new Date().getFullYear()} The Phoenixx Club. All rights reserved.
             </p>
             <div className="flex space-x-6">
-              <Link href="/privacy-policy" className="text-gray-500 hover:text-[#0a1433] text-sm">
+              <Link href="/privacy-policy" className="text-gray-400 hover:text-[#E91E63] transition-colors text-sm">
                 Privacy Policy
               </Link>
-              <Link href="/terms" className="text-gray-500 hover:text-[#0a1433] text-sm">
+              <Link href="/terms" className="text-gray-400 hover:text-[#E91E63] transition-colors text-sm">
                 Terms of Service
               </Link>
-              <Link href="/cookie-policy" className="text-gray-500 hover:text-[#0a1433] text-sm">
+              <Link href="/cookie-policy" className="text-gray-400 hover:text-[#E91E63] transition-colors text-sm">
                 Cookie Policy
               </Link>
             </div>

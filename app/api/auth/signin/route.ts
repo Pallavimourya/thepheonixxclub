@@ -1,54 +1,36 @@
 import { NextResponse } from 'next/server';
-import dbConnect from '@/lib/db';
+import { verifyPassword } from '@/lib/user-store';
+import connectDB from '@/lib/mongodb';
 import User from '@/models/User';
 
 export async function POST(request: Request) {
   try {
-    console.log('Starting signin process...');
-    await dbConnect();
-    console.log('Database connected');
-
-    const rawBody = await request.text();
-    console.log('Raw request body:', rawBody);
-    
-    let body;
-    try {
-      body = JSON.parse(rawBody);
-    } catch (parseError) {
-      console.error('JSON Parse Error:', parseError);
-      return NextResponse.json(
-        { error: 'Invalid JSON format in request body' },
-        { status: 400 }
-      );
-    }
-
+    const body = await request.json();
     const { email, password } = body;
-    console.log('Attempting signin for email:', email);
 
+    // Validate required fields
     if (!email || !password) {
-      console.log('Missing email or password');
       return NextResponse.json(
         { error: 'Email and password are required' },
         { status: 400 }
       );
     }
 
-    const user = await User.findOne({ email });
-    console.log('User found:', user ? 'Yes' : 'No');
+    // Connect to MongoDB
+    await connectDB();
 
+    // Find user by email
+    const user = await User.findOne({ email });
     if (!user) {
-      console.log('User not found');
       return NextResponse.json(
         { error: 'Invalid credentials' },
         { status: 401 }
       );
     }
 
-    const isValidPassword = await user.comparePassword(password);
-    console.log('Password valid:', isValidPassword);
-
+    // Verify password
+    const isValidPassword = await verifyPassword(password, user.password);
     if (!isValidPassword) {
-      console.log('Invalid password');
       return NextResponse.json(
         { error: 'Invalid credentials' },
         { status: 401 }
@@ -58,22 +40,33 @@ export async function POST(request: Request) {
     // Update last login
     user.lastLogin = new Date();
     await user.save();
-    console.log('Last login updated');
 
-    // Remove password from response
-    const userResponse = user.toObject();
-    delete userResponse.password;
-
-    console.log('Signin successful for user:', userResponse.email);
+    // Return user data without password
+    const { password: _, ...userWithoutPassword } = user.toObject();
+    
     return NextResponse.json({
       success: true,
       message: 'Successfully signed in',
-      user: userResponse
+      user: {
+        id: user._id.toString(),
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email: user.email,
+        phone: user.phone,
+        membershipStatus: user.membershipStatus,
+        membershipType: user.membershipType,
+        joinDate: user.joinDate.toISOString(),
+        lastLogin: user.lastLogin.toISOString()
+      }
     });
   } catch (error) {
-    console.error('Detailed signin error:', error);
+    console.error('Signin error:', error);
     return NextResponse.json(
-      { error: 'Authentication failed' },
+      { 
+        success: false,
+        error: 'Internal server error',
+        message: error instanceof Error ? error.message : 'An error occurred during sign in'
+      },
       { status: 500 }
     );
   }

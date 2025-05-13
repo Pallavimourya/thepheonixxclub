@@ -21,6 +21,8 @@ export default function SignInPage() {
       ...formData,
       [e.target.name]: e.target.value,
     });
+    // Clear error when user starts typing
+    if (error) setError('');
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -31,10 +33,13 @@ export default function SignInPage() {
     try {
       const result = await signin(formData.email, formData.password);
       if (!result.success) {
-        setError(result.message);
+        setError(result.message || 'Failed to sign in');
+      } else {
+        // Clear form on success
+        setFormData({ email: '', password: '' });
       }
     } catch (err) {
-      setError('An error occurred during sign in');
+      setError('An error occurred during sign in. Please try again.');
     } finally {
       setLoading(false);
     }
@@ -69,6 +74,7 @@ export default function SignInPage() {
               onChange={handleChange}
               className="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-200"
               placeholder="john@example.com"
+              disabled={loading}
             />
           </div>
 
@@ -86,6 +92,7 @@ export default function SignInPage() {
               onChange={handleChange}
               className="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-200"
               placeholder="••••••••"
+              disabled={loading}
             />
           </div>
 

@@ -23,7 +23,7 @@ export const initAnimations = () => {
   });
 
   // Features section animations
-  gsap.utils.toArray('.feature-card').forEach((card, i) => {
+  gsap.utils.toArray<HTMLElement>('.feature-card').forEach((card, i) => {
     gsap.from(card, {
       scrollTrigger: {
         trigger: card,
@@ -39,7 +39,7 @@ export const initAnimations = () => {
   });
 
   // Gallery section animations
-  gsap.utils.toArray('.gallery-item').forEach((item, i) => {
+  gsap.utils.toArray<HTMLElement>('.gallery-item').forEach((item, i) => {
     gsap.from(item, {
       scrollTrigger: {
         trigger: item,
