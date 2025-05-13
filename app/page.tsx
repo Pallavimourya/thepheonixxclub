@@ -400,10 +400,7 @@ export default function Home() {
 
                     {/* Right Column */}
                     <div className="bg-white/50 backdrop-blur-sm rounded-xl p-8">
-                      <div className="mb-8">
-                        <div className="text-4xl font-bold text-indigo-900 mb-2">₹60,000</div>
-                        <div className="text-slate-700">Annual Party Pass</div>
-                      </div>
+                      
 
                       <div className="space-y-6 mb-8">
                         <div className="flex items-center text-slate-700">
