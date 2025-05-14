@@ -1,6 +1,20 @@
-import mongoose from 'mongoose';
+import mongoose, { Document } from 'mongoose';
 
-const userSchema = new mongoose.Schema({
+export interface IUser {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  membershipType: 'basic' | 'premium' | 'vip';
+  membershipStatus: 'active' | 'inactive' | 'pending';
+  password: string;
+  joinDate?: Date;
+  lastLogin?: Date;
+}
+
+export interface IUserDocument extends IUser, Document {}
+
+const userSchema = new mongoose.Schema<IUserDocument>({
   firstName: {
     type: String,
     required: [true, 'First name is required'],
@@ -50,10 +64,10 @@ const userSchema = new mongoose.Schema({
   timestamps: true
 });
 
-// Create index for phone only since email is already indexed via unique: true
+// Create index for phone since email is already indexed via unique: true
 userSchema.index({ phone: 1 });
 
 // Delete the model if it exists to prevent OverwriteModelError
-const User = mongoose.models.User || mongoose.model('User', userSchema);
+const User = mongoose.models.User || mongoose.model<IUserDocument>('User', userSchema);
 
 export default User; 
