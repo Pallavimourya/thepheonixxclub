@@ -1,21 +1,22 @@
-import './globals.css';
-import { Inter } from 'next/font/google';
-import { AuthProvider } from '@/lib/auth-context';
+import type { Metadata } from "next";
+import { Inter } from "next/font/google";
+import "./globals.css";
 
-const inter = Inter({ subsets: ['latin'] });
+const inter = Inter({ subsets: ["latin"] });
+
+export const metadata: Metadata = {
+  title: "The Phoenixx Club",
+  description: "Where Luxury, Laughter and Legacy come together!",
+};
 
 export default function RootLayout({
   children,
-}: {
+}: Readonly<{
   children: React.ReactNode;
-}) {
+}>) {
   return (
     <html lang="en">
-      <body className={inter.className}>
-        <AuthProvider>
-          {children}
-        </AuthProvider>
-      </body>
+      <body className={inter.className}>{children}</body>
     </html>
   );
 }

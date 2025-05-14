@@ -24,8 +24,7 @@ const PrivacyPolicy = () => {
               <ul className="list-disc list-inside space-y-2 text-gray-700">
                 <li>Your name and contact details (so we can invite you to awesome events!)</li>
                 <li>Your preferences (to make sure we throw parties you'll love)</li>
-                <li>Event attendance history (to track your VIP status)</li>
-                <li>Payment information (kept super secure, promise!)</li>
+                <li>Event attendance history (to improve our events)</li>
               </ul>
             </div>
 
@@ -35,30 +34,35 @@ const PrivacyPolicy = () => {
                 <li>To send you exclusive event invites</li>
                 <li>To personalize your club experience</li>
                 <li>To keep you updated on upcoming parties</li>
-                <li>To make sure you get all your VIP benefits</li>
+                <li>To improve our events and services</li>
               </ul>
             </div>
 
             <div className="space-y-4">
-              <h3 className="text-xl font-bold text-indigo-900">Your Rights 🎭</h3>
-              <p className="text-gray-700">
-                You're the VIP here! You can:
-              </p>
+              <h3 className="text-xl font-bold text-indigo-900">Your Rights 📋</h3>
               <ul className="list-disc list-inside space-y-2 text-gray-700">
-                <li>Access your personal information</li>
-                <li>Update your preferences anytime</li>
-                <li>Opt-out of communications (but we hope you don't!)</li>
-                <li>Request data deletion (though we'll be sad to see you go)</li>
+                <li>Access your personal data</li>
+                <li>Request data correction</li>
+                <li>Ask us to delete your data</li>
+                <li>Opt-out of communications</li>
               </ul>
             </div>
 
             <div className="space-y-4">
-              <h3 className="text-xl font-bold text-indigo-900">Contact Us 📱</h3>
+              <h3 className="text-xl font-bold text-indigo-900">Data Security 🔒</h3>
+              <p className="text-gray-700">
+                We use industry-standard security measures to protect your information. Your data is encrypted 
+                and stored securely, accessible only to authorized personnel.
+              </p>
+            </div>
+
+            <div className="space-y-4">
+              <h3 className="text-xl font-bold text-indigo-900">Contact Us 📬</h3>
               <p className="text-gray-700">
                 Questions about your privacy? We're here to help! Reach out to us at{' '}
-                <a href="mailto:thephoenixxclub@gmail.com" className="text-pink-600 hover:text-pink-700">
-                  thephoenixxclub@gmail.com
-                </a>
+                <Link href="/contact" className="text-pink-500 hover:text-pink-600 font-semibold">
+                  Contact Us
+                </Link>
               </p>
             </div>
           </div>

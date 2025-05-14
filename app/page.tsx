@@ -4,11 +4,9 @@ import React, { useState, useEffect } from 'react';
 import Image from "next/image"
 import Link from "next/link"
 import { ChevronRight, Calendar, MapPin, Star, Users, ArrowRight, Clock, Check } from "lucide-react"
-import { useAuth } from '@/lib/auth-context';
 import { initAnimations } from '@/lib/animations';
 
 export default function Home() {
-  const { user } = useAuth();
   const [showMoreImages, setShowMoreImages] = useState(false);
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -82,12 +80,7 @@ export default function Home() {
 
             {/* Action Buttons */}
             <div className="hidden md:flex items-center space-x-4">
-              <Link
-                href="/auth/signin"
-                className="px-4 py-2 rounded-full bg-white/10 text-white hover:bg-white/20 transition-all font-bold backdrop-blur-sm"
-              >
-                Login
-              </Link>
+              
               <Link
           href="#membership"
           className="px-4 py-2 rounded-full bg-yellow-300 text-pink-800 hover:bg-white hover:text-pink-600 transition-all font-bold shadow-md animate-bounce"
@@ -193,13 +186,13 @@ export default function Home() {
                       <span className="text-amber-200 text-sm font-medium">Join the Party! Limited Spots Available</span>
                     </div>
                     <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-tight drop-shadow-[0_2px_4px_rgba(0,0,0,0.7)]">
-                      <span className="block">Where Fun Meets</span>
+                      <span className="block">Elevate Your Fun</span>
                       <span className="block mt-2 bg-gradient-to-r from-pink-500 via-amber-200 to-purple-500 bg-clip-text text-transparent drop-shadow-[0_2px_4px_rgba(0,0,0,0.7)] animate-gradient">
-                        Elite Social Life
+                      Embrace the Elite
                       </span>
                     </h1>
                     <p className="text-lg text-slate-200 max-w-lg leading-relaxed drop-shadow-[0_2px_4px_rgba(0,0,0,0.7)]">
-                      Experience the most exclusive parties, meet amazing people, and create unforgettable memories. Your VIP journey starts here! 🎉
+                    Let's step into a world of exclusive parties, incredible people, and memories that last a lifetime. Your adventure begins now - Let's make every moment mesmerizing and unforgettable! 🎉
                     </p>
                   </div>
 
@@ -317,7 +310,7 @@ export default function Home() {
                   <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                     <div className="text-indigo-900 font-bold">Exclusive to Members</div>
                     <Link
-                      href="/auth/signup"
+                      href="/contact"
                       className="px-6 py-3 rounded-md bg-indigo-900 text-white hover:bg-indigo-800 transition-all duration-300 text-sm font-bold flex items-center"
                     >
                       Become a Member <ChevronRight className="ml-2 h-4 w-4" />
@@ -437,7 +430,7 @@ export default function Home() {
                       </div>
 
                       <Link
-                        href="/auth/signup"
+                        href="/contact"
                         className="block w-full py-4 rounded-xl bg-gradient-to-r from-pink-500 to-purple-500 text-white text-center font-bold hover:shadow-[0_4px_20px_rgba(255,0,128,0.5)] transition-all duration-300 text-lg mb-4"
                       >
                         Join the Party Now! 🎉
@@ -655,115 +648,80 @@ export default function Home() {
 
         {/* Founders Section */}
         <section className="py-20 bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-900 relative overflow-hidden">
-          {/* Background Elements */}
-          <div className="absolute inset-0 opacity-10">
-            <div className="absolute top-0 left-0 w-72 h-72 bg-pink-500 rounded-full filter blur-3xl"></div>
-            <div className="absolute bottom-0 right-0 w-72 h-72 bg-purple-500 rounded-full filter blur-3xl"></div>
-          </div>
+  {/* Background Elements */}
+  <div className="absolute inset-0 opacity-10">
+    <div className="absolute top-0 left-0 w-72 h-72 bg-pink-500 rounded-full filter blur-3xl"></div>
+    <div className="absolute bottom-0 right-0 w-72 h-72 bg-purple-500 rounded-full filter blur-3xl"></div>
+  </div>
 
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative">
-            <div className="text-center mb-16">
-              <h2 className="text-5xl font-bold text-white mb-6 drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)]">
-                Meet Our Founders
-              </h2>
-              <p className="text-xl text-gray-300 max-w-2xl mx-auto leading-relaxed">
-                The visionaries behind The Phoenixx Club, bringing luxury and entertainment to life
-              </p>
+  <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative">
+    <div className="text-center mb-16">
+      <h2 className="text-5xl font-bold text-white mb-6 drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)]">
+        Meet Our Founders
+      </h2>
+      <p className="text-xl text-gray-300 max-w-2xl mx-auto leading-relaxed">
+        The visionaries behind The Phoenixx Club, bringing luxury and entertainment to life
+      </p>
+    </div>
+
+    {/* Grid: 3 columns only */}
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10 max-w-6xl mx-auto">
+      {[
+        {
+          src: "/images/founders/img1.jpg",
+          name: "Nipun & Prachi Agrawal",
+          pos: "center 30%",
+        },
+        {
+          src: "/images/founders/img2.jpg",
+          name: "Shikhar & Nikita Goyal",
+          pos: "center 25%",
+        },
+        {
+          src: "/images/founders/img3.jpg",
+          name: "Raghav & Purva Bagdi",
+          pos: "center 20%",
+        },
+        {
+          src: "/images/founders/img4.jpg",
+          name: "Anshul & Kratika Singhal",
+          pos: "center 25%",
+        },
+        {
+          src: "/images/founders/img5.jpg",
+          name: "Vaibhav & Trupti Singhal",
+          pos: "center 30%",
+        },
+        {
+          src: "/images/founders/img6.jpg",
+          name: "Ayush & Ayushi Agrawal",
+          pos: "center 30%",
+        },
+      ].map((founder, index) => (
+        <div
+          key={index}
+          className="group transform hover:-translate-y-2 transition-all duration-300"
+        >
+          <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20 hover:border-pink-500/50 transition-all duration-300">
+            <div className="relative w-40 h-40 mx-auto mb-6 rounded-xl overflow-hidden">
+              <Image
+                src={founder.src}
+                alt={founder.name}
+                width={160}
+                height={160}
+                className="object-cover w-full h-full group-hover:scale-110 transition-transform duration-300"
+                style={{ objectPosition: founder.pos }}
+              />
             </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 max-w-7xl mx-auto">
-              {/* Founder 1 */}
-              <div className="group lg:col-span-1 transform hover:-translate-y-2 transition-all duration-300">
-                <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20 hover:border-pink-500/50 transition-all duration-300">
-                  <div className="relative w-40 h-40 mx-auto mb-6 rounded-xl overflow-hidden">
-                    <Image
-                      src="/images/founders/img1.jpg"
-                      alt="Rahul Sharma"
-                      width={160}
-                      height={160}
-                      className="object-cover w-full h-full group-hover:scale-110 transition-transform duration-300"
-                      style={{ objectPosition: 'center 30%' }}
-                    />
-                  </div>
-                  <h3 className="text-xl font-bold text-white text-center mb-2">Nipun & Prachi Agrawal</h3>
-                  <p className="text-pink-300 text-center text-sm">Founder</p>
-                </div>
-              </div>
-
-              {/* Founder 2 */}
-              <div className="group lg:col-span-1 transform hover:-translate-y-2 transition-all duration-300">
-                <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20 hover:border-pink-500/50 transition-all duration-300">
-                  <div className="relative w-40 h-40 mx-auto mb-6 rounded-xl overflow-hidden">
-                    <Image
-                      src="/images/founders/img2.jpg"
-                      alt="Shikhar & Nikita Goyal"
-                      width={160}
-                      height={160}
-                      className="object-cover w-full h-full group-hover:scale-110 transition-transform duration-300"
-                      style={{ objectPosition: 'center 25%' }}
-                    />
-                  </div>
-                  <h3 className="text-xl font-bold text-white text-center mb-2">Shikhar & Nikita Goyal</h3>
-                  <p className="text-pink-300 text-center text-sm">Founder</p>
-                </div>
-              </div>
-
-              {/* Founder 3 */}
-              <div className="group lg:col-span-1 transform hover:-translate-y-2 transition-all duration-300">
-                <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20 hover:border-pink-500/50 transition-all duration-300">
-                  <div className="relative w-40 h-40 mx-auto mb-6 rounded-xl overflow-hidden">
-                    <Image
-                      src="/images/founders/img3.jpg"
-                      alt="Arjun Mehta"
-                      width={160}
-                      height={160}
-                      className="object-cover w-full h-full group-hover:scale-110 transition-transform duration-300"
-                      style={{ objectPosition: 'center 20%' }}
-                    />
-                  </div>
-                  <h3 className="text-xl font-bold text-white text-center mb-2">Raghav & Purva Bagdi</h3>
-                  <p className="text-pink-300 text-center text-sm">Founder</p>
-                </div>
-              </div>
-
-              {/* Founder 4 */}
-              <div className="group lg:col-span-1 transform hover:-translate-y-2 transition-all duration-300">
-                <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20 hover:border-pink-500/50 transition-all duration-300">
-                  <div className="relative w-40 h-40 mx-auto mb-6 rounded-xl overflow-hidden">
-                    <Image
-                      src="/images/founders/img4.jpg"
-                      alt="Ananya Singh"
-                      width={160}
-                      height={160}
-                      className="object-cover w-full h-full group-hover:scale-110 transition-transform duration-300"
-                      style={{ objectPosition: 'center 25%' }}
-                    />
-                  </div>
-                  <h3 className="text-xl font-bold text-white text-center mb-2">Anshul & Kratika Singhal</h3>
-                  <p className="text-pink-300 text-center text-sm">Founder</p>
-                </div>
-              </div>
-
-              {/* Founder 5 */}
-              <div className="group lg:col-span-1 transform hover:-translate-y-2 transition-all duration-300">
-                <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20 hover:border-pink-500/50 transition-all duration-300">
-                  <div className="relative w-40 h-40 mx-auto mb-6 rounded-xl overflow-hidden">
-                    <Image
-                      src="/images/founders/img5.jpg"
-                      alt="Vikram Malhotra"
-                      width={160}
-                      height={160}
-                      className="object-cover w-full h-full group-hover:scale-110 transition-transform duration-300"
-                      style={{ objectPosition: 'center 30%' }}
-                    />
-                  </div>
-                  <h3 className="text-xl font-bold text-white text-center mb-2">Vaibhav & Trupti Singhal</h3>
-                  <p className="text-pink-300 text-center text-sm">Founder</p>
-                </div>
-              </div>
-            </div>
+            <h3 className="text-xl font-bold text-white text-center mb-2">{founder.name}</h3>
+            <p className="text-pink-300 text-center text-sm">Founder</p>
           </div>
-        </section>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
 
         {/* Gallery Section */}
         <section id="gallery" className="py-12 bg-gradient-to-b from-slate-50 to-indigo-50 scroll-mt-20">

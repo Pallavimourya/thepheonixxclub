@@ -84,10 +84,10 @@ const AboutPage = () => {
               Become part of The Phoenixx Club and experience a world of luxury, entertainment, and meaningful connections.
             </p>
             <Link
-              href="/auth/signup"
+              href="mailto:thephoenixxclub@gmail.com"
               className="inline-block px-8 py-4 bg-gradient-to-r from-pink-500 to-purple-500 text-white font-bold rounded-lg hover:shadow-lg transition-all duration-300"
             >
-              Become a Member
+              Contact Us
             </Link>
           </div>
         </div>
