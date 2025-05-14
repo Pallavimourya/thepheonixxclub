@@ -653,6 +653,118 @@ export default function Home() {
           </div>
         </section>
 
+        {/* Founders Section */}
+        <section className="py-20 bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-900 relative overflow-hidden">
+          {/* Background Elements */}
+          <div className="absolute inset-0 opacity-10">
+            <div className="absolute top-0 left-0 w-72 h-72 bg-pink-500 rounded-full filter blur-3xl"></div>
+            <div className="absolute bottom-0 right-0 w-72 h-72 bg-purple-500 rounded-full filter blur-3xl"></div>
+          </div>
+
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative">
+            <div className="text-center mb-16">
+              <h2 className="text-5xl font-bold text-white mb-6 drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)]">
+                Meet Our Founders
+              </h2>
+              <p className="text-xl text-gray-300 max-w-2xl mx-auto leading-relaxed">
+                The visionaries behind The Phoenixx Club, bringing luxury and entertainment to life
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 max-w-7xl mx-auto">
+              {/* Founder 1 */}
+              <div className="group lg:col-span-1 transform hover:-translate-y-2 transition-all duration-300">
+                <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20 hover:border-pink-500/50 transition-all duration-300">
+                  <div className="relative w-40 h-40 mx-auto mb-6 rounded-xl overflow-hidden">
+                    <Image
+                      src="/founders/img1.jpg"
+                      alt="Rahul Sharma"
+                      width={160}
+                      height={160}
+                      className="object-cover w-full h-full group-hover:scale-110 transition-transform duration-300"
+                      style={{ objectPosition: 'center 30%' }}
+                    />
+                  </div>
+                  <h3 className="text-xl font-bold text-white text-center mb-2">Nipun & Prachi Agrawal</h3>
+                  <p className="text-pink-300 text-center text-sm">Founder</p>
+                </div>
+              </div>
+
+              {/* Founder 2 */}
+              <div className="group lg:col-span-1 transform hover:-translate-y-2 transition-all duration-300">
+                <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20 hover:border-pink-500/50 transition-all duration-300">
+                  <div className="relative w-40 h-40 mx-auto mb-6 rounded-xl overflow-hidden">
+                    <Image
+                      src="/founders/img2.jpg"
+                      alt="Shikhar & Nikita Goyal"
+                      width={160}
+                      height={160}
+                      className="object-cover w-full h-full group-hover:scale-110 transition-transform duration-300"
+                      style={{ objectPosition: 'center 25%' }}
+                    />
+                  </div>
+                  <h3 className="text-xl font-bold text-white text-center mb-2">Shikhar & Nikita Goyal</h3>
+                  <p className="text-pink-300 text-center text-sm">Founder</p>
+                </div>
+              </div>
+
+              {/* Founder 3 */}
+              <div className="group lg:col-span-1 transform hover:-translate-y-2 transition-all duration-300">
+                <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20 hover:border-pink-500/50 transition-all duration-300">
+                  <div className="relative w-40 h-40 mx-auto mb-6 rounded-xl overflow-hidden">
+                    <Image
+                      src="/founders/img3.jpg"
+                      alt="Arjun Mehta"
+                      width={160}
+                      height={160}
+                      className="object-cover w-full h-full group-hover:scale-110 transition-transform duration-300"
+                      style={{ objectPosition: 'center 20%' }}
+                    />
+                  </div>
+                  <h3 className="text-xl font-bold text-white text-center mb-2">Raghav & Purva Bagdi</h3>
+                  <p className="text-pink-300 text-center text-sm">Founder</p>
+                </div>
+              </div>
+
+              {/* Founder 4 */}
+              <div className="group lg:col-span-1 transform hover:-translate-y-2 transition-all duration-300">
+                <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20 hover:border-pink-500/50 transition-all duration-300">
+                  <div className="relative w-40 h-40 mx-auto mb-6 rounded-xl overflow-hidden">
+                    <Image
+                      src="/founders/img4.jpg"
+                      alt="Ananya Singh"
+                      width={160}
+                      height={160}
+                      className="object-cover w-full h-full group-hover:scale-110 transition-transform duration-300"
+                      style={{ objectPosition: 'center 25%' }}
+                    />
+                  </div>
+                  <h3 className="text-xl font-bold text-white text-center mb-2">Anshul & Kratika Singhal</h3>
+                  <p className="text-pink-300 text-center text-sm">Founder</p>
+                </div>
+              </div>
+
+              {/* Founder 5 */}
+              <div className="group lg:col-span-1 transform hover:-translate-y-2 transition-all duration-300">
+                <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20 hover:border-pink-500/50 transition-all duration-300">
+                  <div className="relative w-40 h-40 mx-auto mb-6 rounded-xl overflow-hidden">
+                    <Image
+                      src="/founders/img5.jpg"
+                      alt="Vikram Malhotra"
+                      width={160}
+                      height={160}
+                      className="object-cover w-full h-full group-hover:scale-110 transition-transform duration-300"
+                      style={{ objectPosition: 'center 30%' }}
+                    />
+                  </div>
+                  <h3 className="text-xl font-bold text-white text-center mb-2">Vaibhav & Trupti Singhal</h3>
+                  <p className="text-pink-300 text-center text-sm">Founder</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* Gallery Section */}
         <section id="gallery" className="py-12 bg-gradient-to-b from-slate-50 to-indigo-50 scroll-mt-20">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
