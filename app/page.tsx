@@ -677,8 +677,8 @@ export default function Home() {
                 <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20 hover:border-pink-500/50 transition-all duration-300">
                   <div className="relative w-40 h-40 mx-auto mb-6 rounded-xl overflow-hidden">
                     <Image
-                      src="/founders/img1.jpg"
-                      alt="Nipun & Prachi Agrawal"
+                      src="/images/founders/img1.jpg"
+                      alt="Rahul Sharma"
                       width={160}
                       height={160}
                       className="object-cover w-full h-full group-hover:scale-110 transition-transform duration-300"
@@ -695,7 +695,7 @@ export default function Home() {
                 <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20 hover:border-pink-500/50 transition-all duration-300">
                   <div className="relative w-40 h-40 mx-auto mb-6 rounded-xl overflow-hidden">
                     <Image
-                      src="/founders/img2.jpg"
+                      src="/images/founders/img2.jpg"
                       alt="Shikhar & Nikita Goyal"
                       width={160}
                       height={160}
@@ -713,8 +713,8 @@ export default function Home() {
                 <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20 hover:border-pink-500/50 transition-all duration-300">
                   <div className="relative w-40 h-40 mx-auto mb-6 rounded-xl overflow-hidden">
                     <Image
-                      src="/founders/img3.jpg"
-                      alt="Raghav & Purva Bagdi"
+                      src="/images/founders/img3.jpg"
+                      alt="Arjun Mehta"
                       width={160}
                       height={160}
                       className="object-cover w-full h-full group-hover:scale-110 transition-transform duration-300"
@@ -731,8 +731,8 @@ export default function Home() {
                 <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20 hover:border-pink-500/50 transition-all duration-300">
                   <div className="relative w-40 h-40 mx-auto mb-6 rounded-xl overflow-hidden">
                     <Image
-                      src="/founders/img4.jpg"
-                      alt="Anshul & Kratika Singhal"
+                      src="/images/founders/img4.jpg"
+                      alt="Ananya Singh"
                       width={160}
                       height={160}
                       className="object-cover w-full h-full group-hover:scale-110 transition-transform duration-300"
@@ -749,8 +749,8 @@ export default function Home() {
                 <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20 hover:border-pink-500/50 transition-all duration-300">
                   <div className="relative w-40 h-40 mx-auto mb-6 rounded-xl overflow-hidden">
                     <Image
-                      src="/founders/img5.jpg"
-                      alt="Vaibhav & Trupti Singhal"
+                      src="/images/founders/img5.jpg"
+                      alt="Vikram Malhotra"
                       width={160}
                       height={160}
                       className="object-cover w-full h-full group-hover:scale-110 transition-transform duration-300"
