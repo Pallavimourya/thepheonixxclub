@@ -69,10 +69,10 @@ export default function Home() {
 
             {/* Navigation */}
             <nav className="hidden md:flex space-x-8">
-              {["Home", "Events", "Gallery", "Membership", "Community", "About", "FAQ", "Benefits"].map((item, index) => (
+              {["Home", "Events", "Gallery", "Membership", "Community", "About"].map((item, index) => (
                 <Link
                   key={index}
-                  href={item === "Home" ? "/" : item === "About" ? "/about" : item === "FAQ" ? "/FAQ" : item === "Benefits" ? "/benefit" : `#${item.toLowerCase()}`}
+                  href={item === "Home" ? "/" : item === "About" ? "/about" : `#${item.toLowerCase()}`}
                   className="text-white font-semibold hover:text-amber-200 transition-all duration-300 hover:scale-110"
                 >
                   {item}
