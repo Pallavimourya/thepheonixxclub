@@ -750,7 +750,7 @@ export default function Home() {
                   <div className="relative w-40 h-40 mx-auto mb-6 rounded-xl overflow-hidden">
                     <Image
                       src="/founders/img5.jpg"
-                      alt=""
+                      alt="Vaibhav & Trupti Singhal"
                       width={160}
                       height={160}
                       className="object-cover w-full h-full group-hover:scale-110 transition-transform duration-300"
