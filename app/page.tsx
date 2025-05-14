@@ -678,7 +678,7 @@ export default function Home() {
                   <div className="relative w-40 h-40 mx-auto mb-6 rounded-xl overflow-hidden">
                     <Image
                       src="/founders/img1.jpg"
-                      alt="Rahul Sharma"
+                      alt="Nipun & Prachi Agrawal"
                       width={160}
                       height={160}
                       className="object-cover w-full h-full group-hover:scale-110 transition-transform duration-300"
@@ -714,7 +714,7 @@ export default function Home() {
                   <div className="relative w-40 h-40 mx-auto mb-6 rounded-xl overflow-hidden">
                     <Image
                       src="/founders/img3.jpg"
-                      alt="Arjun Mehta"
+                      alt="Raghav & Purva Bagdi"
                       width={160}
                       height={160}
                       className="object-cover w-full h-full group-hover:scale-110 transition-transform duration-300"
@@ -732,7 +732,7 @@ export default function Home() {
                   <div className="relative w-40 h-40 mx-auto mb-6 rounded-xl overflow-hidden">
                     <Image
                       src="/founders/img4.jpg"
-                      alt="Ananya Singh"
+                      alt="Anshul & Kratika Singhal"
                       width={160}
                       height={160}
                       className="object-cover w-full h-full group-hover:scale-110 transition-transform duration-300"
@@ -750,7 +750,7 @@ export default function Home() {
                   <div className="relative w-40 h-40 mx-auto mb-6 rounded-xl overflow-hidden">
                     <Image
                       src="/founders/img5.jpg"
-                      alt="Vikram Malhotra"
+                      alt=""
                       width={160}
                       height={160}
                       className="object-cover w-full h-full group-hover:scale-110 transition-transform duration-300"
