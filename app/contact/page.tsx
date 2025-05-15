@@ -109,7 +109,7 @@ Welcome to the club! ✨`;
               className="mx-auto mb-2"
             />
             <h2 className="text-2xl font-bold text-gray-800">New Member Registration</h2>
-            <p className="text-gray-600">We're excited to have you join our exclusive club!</p>
+            <p className="text-gray-600">We&apos;re excited to have you join our exclusive club!</p>
           </CardHeader>
 
           <CardContent className="p-6">

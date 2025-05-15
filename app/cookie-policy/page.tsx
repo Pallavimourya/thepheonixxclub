@@ -14,7 +14,7 @@ const CookiePolicy = () => {
             <div className="space-y-4">
               <h2 className="text-2xl font-bold text-indigo-900">Our Cookie Story 🍪</h2>
               <p className="text-gray-700">
-                No, we're not talking about the delicious kind! These cookies are tiny pieces of data that help us make your 
+                No, we&apos;re not talking about the delicious kind! These cookies are tiny pieces of data that help us make your 
                 experience at The Phoenixx Club even better. Think of them as your VIP pass to a smoother website experience!
               </p>
             </div>
@@ -29,7 +29,7 @@ const CookiePolicy = () => {
                 <li>Remember your login status</li>
                 <li>Keep track of your preferences</li>
                 <li>Make our website faster and more reliable</li>
-                <li>Show you content you'll love</li>
+                <li>Show you content you&apos;ll love</li>
               </ul>
             </div>
 
@@ -39,14 +39,14 @@ const CookiePolicy = () => {
                 <li>Essential Cookies (keeping the party running!)</li>
                 <li>Preference Cookies (making it your kind of party)</li>
                 <li>Analytics Cookies (helping us throw better parties)</li>
-                <li>Marketing Cookies (showing you events you'll love)</li>
+                <li>Marketing Cookies (showing you events you&apos;ll love)</li>
               </ul>
             </div>
 
             <div className="space-y-4">
               <h3 className="text-xl font-bold text-indigo-900">Your Cookie Choices 🎭</h3>
               <p className="text-gray-700">
-                You're in control! You can:
+                You&apos;re in control! You can:
               </p>
               <ul className="list-disc list-inside space-y-2 text-gray-700">
                 <li>Accept all cookies (recommended for the best experience)</li>
@@ -57,7 +57,7 @@ const CookiePolicy = () => {
             </div>
 
             <div className="space-y-4">
-              <h3 className="text-xl font-bold text-indigo-900">Questions? We're Here! 📱</h3>
+              <h3 className="text-xl font-bold text-indigo-900">Questions? We&apos;re Here! 📱</h3>
               <p className="text-gray-700">
                 Want to know more about our cookies? Drop us a line at{' '}
                 <a href="mailto:thephoenixxclub@gmail.com" className="text-pink-600 hover:text-pink-700">

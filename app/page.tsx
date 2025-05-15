@@ -32,7 +32,7 @@ export default function Home() {
     }, 3000);
 
     return () => clearInterval(timer);
-  }, []);
+  }, [slides.length]);
 
   useEffect(() => {
     initAnimations();
@@ -192,7 +192,7 @@ export default function Home() {
                       </span>
                     </h1>
                     <p className="text-lg text-slate-200 max-w-lg leading-relaxed drop-shadow-[0_2px_4px_rgba(0,0,0,0.7)]">
-                    Let's step into a world of exclusive parties, incredible people, and memories that last a lifetime. Your adventure begins now - Let's make every moment mesmerizing and unforgettable! 🎉
+                    Let&apos;s step into a world of exclusive parties, incredible people, and memories that last a lifetime. Your adventure begins now - Let&apos;s make every moment mesmerizing and unforgettable! 🎉
                     </p>
                   </div>
 
@@ -212,7 +212,7 @@ export default function Home() {
                       className="group px-8 py-4 bg-white/10 backdrop-blur-sm text-white font-bold rounded-lg border border-amber-200/20 hover:bg-white/20 transition-all duration-300 shadow-[0_4px_12px_rgba(0,0,0,0.5)] hover:shadow-[0_4px_20px_rgba(255,215,0,0.3)]"
                     >
                       <span className="flex items-center">
-                        See What's Hot
+                        See What&apos;s Hot
                         <ChevronRight className="ml-2 h-5 w-5 transform group-hover:translate-x-1 transition-transform" />
                       </span>
                     </Link>
@@ -895,7 +895,7 @@ export default function Home() {
                 </div>
               </div>
               <p className="text-gray-400 text-sm mb-4">
-                Join India's most exclusive social club for premium entertainment and networking experiences.
+                Join India&apos;s most exclusive social club for premium entertainment and networking experiences.
               </p>
               <div className="flex space-x-4">
                 <a href="https://www.facebook.com/profile.php?id=61575687517147" className="text-gray-400 hover:text-[#E91E63] transition-colors">

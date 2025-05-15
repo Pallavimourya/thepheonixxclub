@@ -96,7 +96,7 @@ const FAQPage = () => {
           <div className="max-w-3xl mx-auto text-center">
             <h2 className="text-3xl font-bold text-indigo-900 mb-6">Still Have Questions?</h2>
             <p className="text-gray-700 mb-8">
-              We're here to help! Reach out to us through any of these channels:
+              We&apos;re here to help! Reach out to us through any of these channels:
             </p>
             <div className="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-8">
               <a

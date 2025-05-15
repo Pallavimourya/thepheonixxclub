@@ -1,9 +1,8 @@
 'use client';
 
 import React from 'react';
-import Image from 'next/image';
 import Link from 'next/link';
-import { Star, Users, Calendar, MapPin } from 'lucide-react';
+import { Star, Users, Calendar } from 'lucide-react';
 
 const AboutPage = () => {
   return (
@@ -14,7 +13,7 @@ const AboutPage = () => {
           <div className="text-center text-white">
             <h1 className="text-5xl font-bold mb-6">About The Phoenixx Club</h1>
             <p className="text-xl text-gray-200 max-w-3xl mx-auto">
-              Where luxury meets entertainment, and every moment becomes a celebration of life's finest experiences.
+              Where luxury meets entertainment, and every moment becomes a celebration of life&apos;s finest experiences.
             </p>
           </div>
         </div>
@@ -27,10 +26,10 @@ const AboutPage = () => {
             <h2 className="text-3xl font-bold text-indigo-900 mb-8 text-center">Our Story</h2>
             <div className="bg-white rounded-xl shadow-lg p-8 space-y-6">
               <p className="text-gray-700 leading-relaxed">
-                The Phoenixx Club was born from a vision to create an exclusive social haven where like-minded individuals could come together to celebrate life's finest moments. We believe in creating unforgettable experiences that blend luxury, entertainment, and meaningful connections.
+                The Phoenixx Club was born from a vision to create an exclusive social haven where like-minded individuals could come together to celebrate life&apos;s finest moments. We believe in creating unforgettable experiences that blend luxury, entertainment, and meaningful connections.
               </p>
               <p className="text-gray-700 leading-relaxed">
-                Our club is more than just a venue – it's a vibrant community where members can enjoy premium events, forge lasting friendships, and create memories that last a lifetime. With our carefully curated events and premium services, we ensure that every moment spent with us is nothing short of extraordinary.
+                Our club is more than just a venue – it&apos;s a vibrant community where members can enjoy premium events, forge lasting friendships, and create memories that last a lifetime. With our carefully curated events and premium services, we ensure that every moment spent with us is nothing short of extraordinary.
               </p>
             </div>
           </div>
