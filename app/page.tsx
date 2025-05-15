@@ -687,7 +687,7 @@ export default function Home() {
                   pos: "center 25%",
                 },
                 {
-                  src: "/images/founders/img5.jpgad",
+                  src: "/images/founders/img5.jpg",
                   name: "Vaibhav & Trupti Singhal",
                   pos: "center 30%",
                 },
