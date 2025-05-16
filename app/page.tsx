@@ -672,27 +672,27 @@ export default function Home() {
                   pos: "center 30%",
                 },
                 {
-                  src: "/images/founders/img2.jpg",
+                  src: "/images/founders/img8.jpg",
                   name: "Shikhar & Nikita Goyal",
                   pos: "center 25%",
                 },
                 {
-                  src: "/images/founders/img3.jpg",
+                  src: "/images/founders/img9.jpg",
                   name: "Raghav & Purva Bagdi",
                   pos: "center 20%",
                 },
                 {
-                  src: "/images/founders/img4.jpg",
+                  src: "/images/founders/img10.jpg",
                   name: "Anshul & Kratika Singhal",
                   pos: "center 25%",
                 },
                 {
-                  src: "/images/founders/img5.jpg",
+                  src: "/images/founders/img11.jpg",
                   name: "Vaibhav & Trupti Singhal",
                   pos: "center 30%",
                 },
                 {
-                  src: "/images/founders/img6.jpg",
+                  src: "/images/founders/img12.jpg",
                   name: "Ayush & Ayushi Agrawal",
                   pos: "center 30%",
                 },
