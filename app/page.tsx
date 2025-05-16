@@ -667,7 +667,7 @@ export default function Home() {
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10 max-w-6xl mx-auto">
               {[
                 {
-                  src: "/images/founders/img1.jpg",
+                  src: "/images/founders/img7.jpg",
                   name: "Nipun & Prachi Agrawal",
                   pos: "center 30%",
                 },
