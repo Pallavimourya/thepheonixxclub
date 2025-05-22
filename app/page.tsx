@@ -667,8 +667,13 @@ export default function Home() {
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10 max-w-6xl mx-auto">
               {[
                 {
-                  src: "/images/founders/img1.jpg",
-                  name: "Nipun & Prachi Agrawal",
+                  src: "/images/founders/img3.jpg",
+                  name: "Raghav & Purva Bagdi",
+                  pos: "center 20%",
+                },
+                {
+                  src: "/images/founders/img5.jpg",
+                  name: "Vaibhav & Trupti Singhal",
                   pos: "center 30%",
                 },
                 {
@@ -677,19 +682,14 @@ export default function Home() {
                   pos: "center 25%",
                 },
                 {
-                  src: "/images/founders/img3.jpg",
-                  name: "Raghav & Purva Bagdi",
-                  pos: "center 20%",
+                  src: "/images/founders/img1.jpg",
+                  name: "Nipun & Prachi Agrawal",
+                  pos: "center 30%",
                 },
                 {
                   src: "/images/founders/img4.jpg",
                   name: "Anshul & Kratika Singhal",
                   pos: "center 25%",
-                },
-                {
-                  src: "/images/founders/img5.jpg",
-                  name: "Vaibhav & Trupti Singhal",
-                  pos: "center 30%",
                 },
                 {
                   src: "/images/founders/img6.jpg",
